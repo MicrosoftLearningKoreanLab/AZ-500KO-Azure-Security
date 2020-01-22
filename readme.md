@@ -1,6 +1,6 @@
 ﻿# AZ-500 애플리케이션 보안
 
-- **MCT이신가요?** - Microsoft의 [MCT용 GitHub 사용자 가이드](https://microsoftlearning.github.io/MCT-User-Guide/)를 살펴보세요.
+- **MCT이신가요?** - Microsoft의 [MCT용 GitHub 사용자 가이드](https://microsoftlearning.github.io/MCT-User-Guide-KO/)를 살펴보세요.
 - **랩 지침을 수동으로 작성해야 하나요?** - [MicrosoftLearning/Docker-Build](https://github.com/MicrosoftLearning/Docker-Build) 리포지토리에서 지침이 제공됩니다.
 
 > [MCT 교육 과정 자료 포럼](https://www.microsoft.com/ko-kr/learning/mct-central.aspx)에서 과정 콘텐츠 관련 제안 사항이나 일반 설명을 확인하세요. [교육 과정 자료 지원 포럼](https://trainingsupport.microsoft.com/ko-kr)에서 버그 및 과정 오류를 보고할 수도 있습니다.
