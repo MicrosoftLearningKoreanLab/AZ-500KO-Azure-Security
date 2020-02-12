@@ -20,9 +20,9 @@ The Managing Identities course also covers Azure RBAC and Azure Active Directory
 
 ## Azure AD Privileged Identity Management
 
-## Exercise 1 - Discover and Manage Azure Resources
+### Exercise 1 - Discover and Manage Azure Resources
 
-### Task 1: Lab Setup
+#### Task 1: Lab Setup
 
 
 This lab requires creating a user that will be used for PIM.
@@ -47,6 +47,7 @@ This lab requires creating a user that will be used for PIM.
     ```powershell
      New-AzureADUser -DisplayName "Isabella Simonsen" -PasswordProfile $PasswordProfile -UserPrincipalName "Isabella@$domain" -AccountEnabled $true -MailNickName "Isabella" -UsageLocation "US"
     ```
+
 ### Task 2:  Enable Azure AD Premium P2 trial and create a test user.
 
 1.  In the Azure Portal, on the Hub menu click **Azure Active Directory**.
@@ -63,7 +64,7 @@ This lab requires creating a user that will be used for PIM.
 
 **You may need to log out of the Azure portal and log in again for this to refresh**
 
-### Task 3: Discover resources
+#### Task 3: Discover resources
 
 1.  In the Azure Portal, click **All services** and search for and select **Azure AD Privileged Identity Management**.
 
@@ -101,9 +102,9 @@ This lab requires creating a user that will be used for PIM.
     **Note**: Once a management group or subscription is set to managed, it can't be unmanaged. This prevents another resource administrator from removing PIM settings.
 
 
-## Exercise 2 - Assign Directory Roles
+### Exercise 2 - Assign Directory Roles
 
-### Task 1:  Make a user eligible for a role
+#### Task 1:  Make a user eligible for a role
 
 
 In the following task you will make  a user eligible for an Azure AD directory role.
@@ -156,7 +157,7 @@ In the following task you will make  a user eligible for an Azure AD directory r
 1.  When the role is assigned, the user you selected will appear in the members list as **Eligible** for the role.
 
 
-### Task 2: Make a role assignment permanent
+#### Task 2: Make a role assignment permanent
 
 
 By default, new users are only eligible for a directory role. Follow these steps if you want to make a role assignment permanent.
@@ -187,7 +188,7 @@ By default, new users are only eligible for a directory role. Follow these steps
 **Results**: The role is now listed as **permanent**.
 
 
-### Task 3: Remove a user from a role
+#### Task 3: Remove a user from a role
 
 
 You can remove users from role assignments, but make sure there is always at least one user who is a permanent Global Administrator.
@@ -218,9 +219,9 @@ You can remove users from role assignments, but make sure there is always at lea
 
 
 
-## Exercise 3 - Activate and Deactivate PIM Roles
+### Exercise 3 - Activate and Deactivate PIM Roles
 
-### Task 1: Activate a role
+#### Task 1: Activate a role
 
 
 When you need to take on an Azure AD directory role, you can request activation by using the **My roles** navigation option in PIM.
@@ -288,7 +289,7 @@ By default, roles do not require approval unless configured explicitly in settin
  If the role requires approval to activate, a notification will appear in the upper right corner of your browser informing you the request is pending approval.
 
 
-### Task 2: Use a role immediately after activation
+#### Task 2: Use a role immediately after activation
 
 
 When you activate a role in PIM, it can take up to 10 minutes before you can access the desired administrative portal or perform functions within a specific administrative workload. To force an update of your permissions, use the **Application access** page as described in the following steps.
@@ -301,7 +302,7 @@ When you activate a role in PIM, it can take up to 10 minutes before you can acc
 1.  Log back in as Isabella.
 
 
-### Task 3: View the status of your requests
+#### Task 3: View the status of your requests
 
 
 You can view the status of your pending requests to activate.
@@ -317,7 +318,7 @@ You can view the status of your pending requests to activate.
 
      ![Screenshot](../Media/Module-1/2d924aa8-a60e-4291-bd06-70f02694a313.png)
 
-### Task 4: Deactivate a role
+#### Task 4: Deactivate a role
 
 
 Once a role has been activated, it automatically deactivates when its time limit (eligible duration) is reached.
@@ -349,7 +350,7 @@ If you complete your administrator tasks early, you can also deactivate a role m
 1.  Click **Yes** to confirm.
 
 
-### Task 5: Cancel a pending request
+#### Task 5: Cancel a pending request
 
 
 If you do not require activation of a role that requires approval, you can cancel a pending request at any time.
@@ -368,9 +369,9 @@ If you do not require activation of a role that requires approval, you can cance
 When you click Cancel, the request will be cancelled. To activate the role again, you will have to submit a new request for activation.
 
 
-## Exercise 4 - Directory Roles (General)
+### Exercise 4 - Directory Roles (General)
 
-### Task 1: Start an access review for Azure AD directory roles in PIM
+#### Task 1: Start an access review for Azure AD directory roles in PIM
 
 
 Role assignments become "stale" when users have privileged access that they don't need anymore. In order to reduce the risk associated with these stale role assignments, privileged role administrators or global administrators should regularly create access reviews to ask admins to review the roles that users have been given. This task covers the steps for starting an access review in Azure AD Privileged Identity Management (PIM).
@@ -400,7 +401,7 @@ Role assignments become "stale" when users have privileged access that they don'
 
      ![Screenshot](../Media/Module-1/04c32a26-be67-48dd-bf3d-7b60e81e2fff.png)
 
-### Task 2: Approve or deny access
+#### Task 2: Approve or deny access
 
 
 When you approve or deny access, you're just telling the reviewer whether you still use this role or not. Choose Approve if you want to stay in the role, or Deny if you don't need the access anymore. Your status won't change right away, until the reviewer applies the results. Follow these steps to find and complete the access review:
@@ -418,7 +419,7 @@ When you approve or deny access, you're just telling the reviewer whether you st
 
 5.  Close the **Review Azure AD roles** blade.
 
-### Task 3: Complete an access review for Azure AD directory roles in PIM
+#### Task 3: Complete an access review for Azure AD directory roles in PIM
 
 
 Privileged role administrators can review privileged access once an access review has been started. Azure AD Privileged Identity Management (PIM) will automatically send an email prompting users to review their access. If a user did not get an email, you can send them the instructions in how to perform an access review.
@@ -442,7 +443,7 @@ After the access review period is over, or all the users have finished their sel
      ![Screenshot](../Media/Module-1/1e6f3ff2-0797-4903-98ef-fc9cf2fccaad.png)
 
 
-### Task 4: Configure security alerts for Azure AD directory roles in PIM
+#### Task 4: Configure security alerts for Azure AD directory roles in PIM
 
 
 You can customize some of the security alerts in PIM to work with your environment and security goals. Follow these steps to open the security alert settings:
@@ -459,9 +460,9 @@ You can customize some of the security alerts in PIM to work with your environme
 1.  Click an alert name to configure the setting for that alert.
 
 
-## Exercise 5 - PIM Resource Workflows
+### Exercise 5 - PIM Resource Workflows
 
-### Task 1:  Configure the Global Administrator role to require approval.
+#### Task 1:  Configure the Global Administrator role to require approval.
 
 1.  Open **Azure AD Privileged Identity Management**.
 
@@ -475,7 +476,7 @@ You can customize some of the security alerts in PIM to work with your environme
 
      ![Screenshot](../Media/Module-1/da35f974-b196-4ce4-bab7-7ca071d59124.png)
 
-### Task 2: Enable Isabella for Global Administrator privileges.
+#### Task 2: Enable Isabella for Global Administrator privileges.
 
 1.  Open **Azure AD Privileged Identity Management**.
 
@@ -520,7 +521,7 @@ You can customize some of the security alerts in PIM to work with your environme
      ![Screenshot](../Media/Module-1/e41c4fff-d9aa-4fe9-b1d1-b3c8dac98597.png)
 
 
-### Task 3: Approve or deny requests for Azure resource roles in PIM
+#### Task 3: Approve or deny requests for Azure resource roles in PIM
 
 
 With Azure AD Privileged Identity Management (PIM), you can configure roles to require approval for activation, and choose one or multiple users or groups as delegated approvers. Follow the steps in this article to approve or deny requests for Azure resource roles.
@@ -556,13 +557,13 @@ As a delegated approver, you'll receive an email notification when an Azure reso
 
      ![Screenshot](../Media/Module-1/fe734263-57c8-4cc9-b79f-848d7d4f9488.png)
 
-## Exercise 6 - View audit history for Azure AD roles in PIM
+### Exercise 6 - View audit history for Azure AD roles in PIM
 
 
 You can use the Azure Active Directory (Azure AD) Privileged Identity Management (PIM) audit history to see all the role assignments and activations within the past 30 days for all privileged roles. If you want to see the full audit history of activity in your directory, including administrator, end user, and synchronization activity, you can use the [Azure Active Directory security and activity reports](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/overview-reports).
 
 
-### Task 1: View audit history
+#### Task 1: View audit history
 
 
 Follow these steps to view the audit history for Azure AD roles.
@@ -590,7 +591,7 @@ Follow these steps to view the audit history for Azure AD roles.
 
 1.  To sort the audit history, click the **Time**, **Action**, and **Role** buttons.
 
-### Task 2: Filter audit history
+#### Task 2: Filter audit history
 
 1.  At the top of the audit history page, click the **Filter** button.
 
@@ -605,6 +606,3 @@ Follow these steps to view the audit history for Azure AD roles.
 
 
 **Results**: You have now completed this lab.
-
-
-
