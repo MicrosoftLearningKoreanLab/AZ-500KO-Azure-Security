@@ -6,188 +6,181 @@ lab:
 
 # 랩: 가상 네트워크 만들기
 
-**Scenario**
+이 모듈에서는 Azure 가상 네트워크를 소개합니다. 가상 네트워크란 무엇이며 어떻게 구성 되는지 템플릿, PowerShell, CLI 또는 Azure Portal을 사용하여 가상 네트워크를 어떻게 만들고 구성하는지 퍼블릭, 프라이빗, 정적 및 동적 IP 주소 지정의 차이점은 무엇인지 시스템 경로, 라우팅 테이블 및 라우팅 알고리즘은 어떻게 사용되는지 알아봅니다. 이번 랩에서 알아볼 내용은 다음과 같습니다.
 
-In this module, you'll will be introduced to Azure virtual networks. What are virtual networks and how are they organized? How do you create and configure virtual networks with templates, PowerShell, CLI, or the Azure portal? What is the difference between public, private, static, and dynamic IP addressing? How are system routes, routing tables, and routing algorithms used? Lessons include:
+- 가상 네트워크 소개
+- 가상 네트워크 만들기
+- IP 주소 리뷰
 
-- Introducing Virtual Networks
-- Creating Azure Virtual Networks
-- Review of IP Addressing
+### 연습 1: Azure Portal을 사용하여 가상 네트워크 만들기
 
+가상 네트워크는 Azure의 개인 네트워크를 위한 기본 구성입니다. VM(가상 컴퓨터)과 같은 Azure 리소스가 서로 안전하게 통신 할 수 있습니다. 이 연습에서는 Azure Portal을 사용하여 가상 네트워크를 만드는 방법을 배웁니다. 그런 다음 두 개의 VM을 가상 네트워크에 배포하고 두 VM간에 안전하게 통신하고 인터넷에서 VM에 연결할 수 있습니다.
 
-## Exercise 1: Create a virtual network using the Azure portal
+#### 작업 1: 가상 네트워크 만들기
 
+1. <a href="https://portal.azure.com" target="_blank"><span style="color: #0066cc;" color="#0066cc">Azure Portal</span></a>에 로그인 합니다.
 
-**Scenario**
+1. **+ 리소스 만들기**를 클릭한 다음 **virtual network**를 입력하고 **virtual network**를 클릭합니다.
 
-A virtual network is the fundamental building block for your private network in Azure. It enables Azure resources, like virtual machines (VMs), to securely communicate with each other and with the internet. In this lab, you will learn how to create a virtual network using the Azure portal. Then, you can deploy two VMs into the virtual network, securely communicate between the two VMs, and connect to the VMs from the internet.
+1. **가상 네트워크** 블레이드가 뜨면 **만들기** 버튼을 클릭합니다.
 
+1. **가상 네트워크 만들기** 블레이드가 뜨면 다음을 참고하여 정보를 입력합니다.
 
-### Task 1: Create a virtual network
+    | 설정 | 값 |
+    | --- | --- |
+    | 이름 | **az5000204vnet** |
+    | 주소 공간 | **10.1.0.0/16** |
+    | 구독 | 이 랩에서 사용할 구독 |
+    | 리소스 그룹 | **az5000204**로 새로 만들기 |
+    | 위치 | **(아시아 태평양)한국 중부** |
+    | 서브넷 - 이름 | **Subnet** |
+    | 서브넷 - 주소 범위 | **10.1.0.0/24** |
 
-1.  On the upper-left side of the screen, select **Create a resource** > **Networking** > **Virtual network**.
+1. 나머진 기본값으로 두고 **만들기** 버튼을 클릭합니다.
 
-1.  In **Create virtual network**, enter or select this information:
+#### 작업 2: 가상 머신 만들기
 
-    | Setting | Value |
-    | ------- | ----- |
-    | Name | Enter *myVirtualNetwork*. |
-    | Address space | Enter *10.1.0.0/16*. |
-    | Subscription | Select your subscription.|
-    | Resource group | Select **Create new**, enter *myResourceGroup*, then select **OK**. |
-    | Location | Select **East US**.|
-    | Subnet - Name | Enter *myVirtualSubnet*. |
-    | Subnet - Address range | Enter *10.1.0.0/24*. |
+생성한 가상 네트워크에 두 개의 가상 머신을 배포합니다.
 
-1.  Leave the rest as default and select **Create**.
+1. **+ 리소스 만들기**를 클릭한 다음 **windows server**를 입력하고 **Windows Server**를 클릭합니다.
 
-### Task 2: Create virtual machines
+1. **Windows Server** 블레이드가 뜨면 소프트웨어 플랜 선택 드롭다운 메뉴를 클릭하여 **Windows Server 2019 Datacenter**를 선택한 후 **만들기** 버튼을 클릭합니다.
 
+1. **가상 머신 만들기** 블레이드가 뜨면 다음을 참고하여 정보를 입력합니다.
 
-Create two VMs in the virtual network:
+    | 설정 | 값 |
+    | --- | --- |
+    | 구독 | 이 랩에서 사용할 구독 |
+    | 리소스 그룹 | **az5000204** |
+    | 가상 머신 이름 | **az5000204vm01** |
+    | 지역 | **(아시아 태평양)한국 중부** |
+    | 이미지 | **Windows Server 2019 Datacenter** |
+    | 크기 | **Standard DS2 v2** |
+    | 사용자 이름 | **student** |
+    | 암호 | **Pa55w.rd1234** |
+    | 공용 인바운드포트 | **없음** |
 
+1. **다음: 디스크** 버튼을 클릭합니다.
 
-1.  On the upper-left side of the screen, select **Create a resource** > **Compute** > **Windows Server 2019 Datacenter**.
+1. **다음: 네트워킹** 버튼을 클릭합니다.
 
-1.  In **Create a virtual machine - Basics**, enter or select this information:
+1. 네트워킹 탭에서 다음을 참고하여 정보를 입력합니다.
 
-    | Setting | Value |
-    | ------- | ----- |
-    | **PROJECT DETAILS** | |
-    | Subscription | Select your subscription. |
-    | Resource group | Select **myResourceGroup**. You created this in the previous section. |
-    | **INSTANCE DETAILS** |  |
-    | Virtual machine name | Enter *myVm1*. |
-    | Region | Select **East US**. |
-    | Availability options | Leave the default **No infrastructure redundancy required**. |
-    | Image | Leave the default **Windows Server 2019 Datacenter**. |
-    | Size | Leave the default **Standard DS1 v2**. |
-    | **ADMINISTRATOR ACCOUNT** |  |
-    | Username | Enter a username of your choosing. |
-    | Password | Pa55w.rd1234 |
-    | Confirm Password | Reenter password. |
-    | **INBOUND PORT RULES** |  |
-    | Public inbound ports | Leave the default **None**. |
-    | **SAVE MONEY** |  |
-    | Already have a Windows license? | Leave the default **No**. |
+    | 설정 | 값 |
+    | --- | --- |
+    | 가상 네트워크 | **az5000204vnet** |
+    | 서브넷 | **Subnet(10.1.0.0/24)** |
+    | 공용 IP | **(새로 만드는 중) az5000204vm01-ip**. |
+    | 공용 인바운드 포트 | **선택한 포트 허용** |
+    | 인바운드 포트 선택 | **HTTP**와 **RDP** |
 
-1.  Select **Next : Disks**.
+1. **다음: 관리** 버튼을 클릭합니다.
 
-1.  In **Create a virtual machine - Disks**, leave the defaults and select **Next : Networking**.
+1. 관리 탭에서 **진단 스토리지 계정**에 있는 **새로 만들기**를 클릭합니다.
 
-1.  In **Create a virtual machine - Networking**, select this information:
+1. 오른쪽에 **스토리지 계정 만들기** 컨텍스트 창이 뜨면 다음을 참고하여 입력하고 **확인** 버튼을 클릭합니다.
 
-    | Setting | Value |
-    | ------- | ----- |
-    | Virtual network | Leave the default **myVirtualNetwork**. |
-    | Subnet | Leave the default **myVirtualSubnet (10.1.0.0/24)**. |
-    | Public IP | Leave the default **(new) myVm-ip**. |
-    | Public inbound ports | Select **Allow selected ports**. |
-    | Select inbound ports | Select **HTTP** and **RDP**.
+    | 설정 | 값 |
+    | --- | --- |
+    | 이름 | **az5000204diagxxx** (xxx는 유니크 해야 함) |
+    | 계정 종류 | **Storage (범용 v1)**. |
+    | 성능 | **표준**. |
+    | 복제 | **LRS(로컬 중복 스토리지)** |
 
-1.  Select **Next : Management**.
+1. **검토 + 만들기** 버튼을 클릭한 후 유효성 검사가 완료되면 **만들기** 버튼을 클릭하여 가상 머신을 배포한다.
 
-1.  In **Create a virtual machine - Management**, for **Diagnostics storage account**, select **Create New**.
+> **참고**: 배포가 완료되길 기다리지 않고 다음을 진행해도 됩니다.
 
-1.  In **Create storage account**, enter or select this information:
+#### 작업 3: 두번째 VM 배포
 
-    | Setting | Value |
-    | ------- | ----- |
-    | Name | Enter *myvmstorageaccount*. If this name is taken, create a unique name.|
-    | Account kind | Leave the default **Storage (general purpose v1)**. |
-    | Performance | Leave the default **Standard**. |
-    | Replication | Leave the default **Locally-redundant storage (LRS)**. |
+1. 다음 정보를 참고하여 배포된 VM과 동일한 설정으로 두번째 VM을 배포합니다.
 
-1.  Select **OK**
+    **기본 사항**
+    | 설정 | 값 |
+    | --- | --- |
+    | 구독 | 이 랩에서 사용할 구독 |
+    | 리소스 그룹 | **az5000204** |
+    | 가상 머신 이름 | **az5000204vm02** |
+    | 지역 | **(아시아 태평양)한국 중부** |
+    | 이미지 | **Windows Server 2019 Datacenter** |
+    | 크기 | **Standard DS2 v2** |
+    | 사용자 이름 | **student** |
+    | 암호 | **Pa55w.rd1234** |
+    | 공용 인바운드포트 | **없음** |
 
-1.  Select **Review + create**. You're taken to the **Review + create** page where Azure validates your configuration.
+    **네트워킹**
+    | 설정 | 값 |
+    | --- | --- |
+    | 가상 네트워크 | **az5000204vnet** |
+    | 서브넷 | **Subnet(10.1.0.0/24)** |
+    | 공용 IP | **(새로 만드는 중) az5000204vm02-ip**. |
+    | 공용 인바운드 포트 | **선택한 포트 허용** |
+    | 인바운드 포트 선택 | **HTTP**와 **RDP** |
 
-1.  When you see the **Validation passed** message, select **Create**.
+    **관리**
+    | 설정 | 값 |
+    | --- | --- |
+    | 진단 스토리지 계정 | **az5000204diagxxx** (az5000204vm01에서 생성한 스토리지 계정) |
 
-### Task 3:  Create the second VM
+1. **검토 + 만들기** 버튼을 클릭한 후 유효성 검사가 완료되면 **만들기** 버튼을 클릭하여 가상 머신을 배포한다.
 
-1.  Complete steps 1 and 9 from above.
+#### 작업 4: 가상 머신에 연결
 
-    **Note**: In step 2, for the **Virtual machine name**, enter *myVm2*.  In step 7, for **Diagnosis storage account**, make sure you select **myvmstorageaccount**.
+1. Azure Portal에서 생성한 **az5000204vm01**을 탐색합니다.
 
+1. **연결**을 클릭합니다.
 
-1.  Select **Review + create**. You're taken to the **Review + create** page and Azure validates your configuration.
+1. 오른쪽에 **가상 머신에 연결** 컨텍스트 창이 뜨면 **RDP 파일 다운로드** 버튼을 클릭하여 *.rdp* 파일을 다운로드 합니다.
 
-1.  When you see the **Validation passed** message, select **Create**.
+    > **참고**: Mac OS의 경우 App Store에서 Microsoft에서 배포한 Remote Desktop App을 설치한 후 접속합니다.
 
-### Task 4:  Connect to a VM from the internet
+1. 다운로드 받은 *.rdp* 파일을 실행합니다.
 
+1. 앞서 입력한 사용자 이름과 암호를 이용하여 Windows Server 2019 Datacenter에 로그인 합니다.
 
-After you've created *myVm1*, connect to the internet.
+#### 작업 5: VM간 통신 확인
 
+1. 접속한 **az5000204vm01**에서 PowerShell(또는 Command Line)을 실행합니다.
 
-1.  In the portal's search bar, enter *myVm1*.
+1. 다음 명령어를 이용하여 **az5000204vm02**과 통신이 되는지 확인합니다.
 
-1.  Select the **Connect** button.
+    ```PowerShell
+    ping az5000204vm02
+    ```
 
-
-    After selecting the **Connect** button, **Connect to virtual machine** opens.
-
-1.  Select **Download RDP File**. Azure creates a Remote Desktop Protocol (*.rdp*) file and downloads it to your computer.
-
-1.  Open the downloaded *.rdp* file.
-
-    1. If prompted, select **Connect**.
-
-    1. Enter the username and password you specified when creating the VM.
-
-    **Note**: You may need to select **More choices** > **Use a different account**, to specify the credentials you entered when you created the VM.
-
-
-1.  Select **OK**.
-
-1.  You may receive a certificate warning during the sign in process. If you receive a certificate warning, select **Yes** or **Continue**.
-
-1.  Once the VM desktop appears, minimize it to go back to your local desktop.
-
-### Task 5: Communicate between VMs
-
-1.  In the Remote Desktop of *myVm1*, open PowerShell.
-
-1.  Enter `ping myVm2`
-
-    You'll receive a message similar to this:
-
-    ```powershell
-    Pinging myVm2.0v0zze1s0uiedpvtxz5z0r0cxg.bx.internal.clouda
+    ```Execute
+    Pinging az5000204vm02.iui5rgnfs22ublc3xy34urwtwa.syx.internal.cloudapp.net [10.1.0.5] with 32 bytes of data:
     Request timed out.
     Request timed out.
     Request timed out.
     Request timed out.
 
     Ping statistics for 10.1.0.5:
-    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+        Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
     ```
 
-    The `ping` fails, because `ping` uses the Internet Control Message Protocol (ICMP). By default, ICMP isn't allowed through the Windows firewall.
+1. `ping` 명령어가 실패하는 것을 확인할 수 있습니다. 이는 Windows Server의 운영체제 방화벽에서 기본적으로 ICMP 패킷을 차단하기 때문입니다. **az5000204vm01**에 접속한 방법을 사용하요 **az5000204vm02**에 접속합니다.
 
-1.  To allow *myVm2* to ping *myVm1* in a later step, enter this command:
+1. **az5000204vm02**에 접속하여 PowerShell을 실행하고 다음 명령어를 입력하여 운영체제 방화벽에서 ICMP 프로토콜을 허용합니다.
 
     ```powershell
     New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
     ```
 
-    This command allows ICMP inbound through the Windows firewall:
+1. **az5000204vm01**에 다시 연결합니다.
 
-1.  Close the remote desktop connection to *myVm1*.
+1. **az5000204vm01**에서 PowerShell을 실행하여 다음 명령어를 이용하여 **az5000204vm02**과 통신이 되는지 확인합니다.
 
-1.  Complete the steps in **Connect to a VM from the internet** task again, but connect to *myVm2*.
+    ```PowerShell
+    ping az5000204vm02
+    ```
 
-1.  From a command prompt, enter `ping myvm1`.
-
-    You'll get back something like this message:
-
-    ```powershell
-    Pinging myVm1.0v0zze1s0uiedpvtxz5z0r0cxg.bx.internal.cloudapp.net [10.1.0.4] with 32 bytes of data:
-    Reply from 10.1.0.4: bytes=32 time=1ms TTL=128
-    Reply from 10.1.0.4: bytes=32 time<1ms TTL=128
-    Reply from 10.1.0.4: bytes=32 time<1ms TTL=128
-    Reply from 10.1.0.4: bytes=32 time<1ms TTL=128
+    ```Execute
+    Pinging az5000204vm02.iui5rgnfs22ublc3xy34urwtwa.syx.internal.cloudapp.net [10.1.0.5] with 32 bytes of data:
+    Reply from 10.1.0.5: bytes=32 time=1ms TTL=128
+    Reply from 10.1.0.5: bytes=32 time<1ms TTL=128
+    Reply from 10.1.0.5: bytes=32 time<1ms TTL=128
+    Reply from 10.1.0.5: bytes=32 time<1ms TTL=128
 
     Ping statistics for 10.1.0.4:
         Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
@@ -195,12 +188,32 @@ After you've created *myVm1*, connect to the internet.
         Minimum = 0ms, Maximum = 1ms, Average = 0ms
     ```
 
-    You receive replies from *myVm1*, because you allowed ICMP through the Windows firewall on the *myVm1* VM in step 3.
+1. 두 가상 머신간 통신이 정상적임을 확인하였습니다.
 
-1.  Close the remote desktop connection to *myVm2*.
+### 연습 2: 랩 리소스 삭제
 
+#### 작업 1: Cloud Shell 열기
 
-| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
-| --- |
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 엽니다.
 
-**Results**: You have now completed this lab.
+1. Cloud Shell 인터페이스에서 **Bash**를 선택합니다.
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv
+    ```
+
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인합니다. 이 그룹은 다음 작업에서 삭제됩니다.
+
+#### 작업 2: 리소스 그룹 삭제하기
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+    ```
+
+1. **Cloud Shell** 명령 프롬프트를 닫습니다.
+
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.

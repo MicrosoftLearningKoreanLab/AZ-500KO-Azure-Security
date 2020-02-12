@@ -6,97 +6,112 @@ lab:
 
 # 랩: Monitor & Autoscale
 
-Autoscale is a built-in feature of Cloud Services, Mobile Services, Virtual Machines, and Websites that helps applications perform their best when demand changes. Of course, performance means different things for different applications. Some apps are CPU-bound, others memory-bound. For example, you could have a web app that handles millions of requests during the day and none at night. Autoscale can scale your service by any of these-or by a custom metric you define.
+Autoscale은 클라우드 서비스, 모바일 서비스, 가상 머신 및 웹 사이트의 기본으로 제공되는 기능으로 Request가 변경 될 때 응용프로그램이 최상의 성능을 발휘하도록 도와줍니다. 물론 성능은 응용프로그램마다 다릅니다. 일부 응용프로그램은 CPU에 민감하고 다른 응용프로그램은 메모리에 민감할 수 있습니다. 예를 들어 낮에는 수백만 건의 요청을 처리하고 밤에는 처리하지 않는 웹 앱이 있다면 Autoscale은 이중 하나 또는 사용자 정의 메트릭으로 서비스를 확장 또는 축소할 수 있습니다.
 
+### 연습 1: 랩 설정
 
-## Exercise 1: Lab setup
+1. 웹 브라우저에 [이 URL](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod2_Lab01%2Ftemplate.json)로 접속합니다.
 
-1.  Go to the following URL in the browser:
+    *ARM Template으로 새로운 App과 App Service Plan을 배포한 다음 모듈 02 랩 1의 확장 옵션을 사용하는데 사용합니다.*
 
-    https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod2_Lab01%2Ftemplate.json
+1. 리소스 그룹에서 **새로 만들기**를 선택하고 `az5000201`을 입력합니다.
 
+1. 위치는 실습에서 가장 가까운 지역을 선택합니다.
 
-    *This will deploy a new app and app service plan from a template that can then be used to demonstrate the scale up options in AZ500 Mod2 Lab 1.*
+1. **Site Name**에 `az5000201xxx` (xxx에는 **유니크**한 이름)을 입력합니다.
 
-1.  Select **Create a new Resource Group**  
+1. **Service Plan**에 `az5000201-plan`을 입력합니다.
 
-1.  Type a **unique** name for the **Site Name** and **Service Plan**. 
+1. **위에 명시된 사용 약관에 동의함** 체크박스에 체크를 한 후 **구매**버튼을 클릭합니다.
 
-1.  Agree to the terms and click **Purchase**
+### 연습 2: 자동 크기 조정 설정 만들기
 
-## Exercise 2: Create your first Autoscale setting
+이제 간단한 단계별 연습을 통해 자동 크기 조정 설정을 만들어 봅니다.
 
+1. **모니터**를 탐색하고 설정 섹션에 있는 **자동 크기 조정**을 선택합니다. `연습 1`에서 생성한 구독과 리소스 그룹을 선택하여 생성된 App Service Plan을 선택합니다.
 
-Let's now go through a simple step-by-step walkthrough to create your first Autoscale setting.
+1. 현재 인스턴스의 수는 1입니다. **사용자 지정 자공 크기 조정**을 선택합니다.
 
+1. **자동 크기 조정 설정 이름**을 임의로 입력한 후 규칙 섹션에 있는 **+ 규칙 추가**를 클릭합니다.
 
-1.  Open the **Autoscale** blade in Azure Monitor and select a resource that you want to scale. You can select the app service plan that you created during the setup
-1.  Note that the current instance count is 1. Click **Custom autoscale**.
+1. 오른쪽 컨텍스트 창이 열리면 크기 조정 규칙을 확인합니다. 기본적으로 CPU 백분율이 70%를 초과하는 경우 인스턴스의 수를 1씩 추가하는 옵션이 설정되어 있습니다. 기본값을 그대로 두고 **추가** 버튼을 클릭합니다.
 
-1.  Provide a name for the scale setting, and then click **Add a rule**. 
+1. 자동 크기 조정 정책을 추가하였습니다. `규칙에 배율이 하나 이상 있는 것이 좋습니다. 하이퍼링크를 클릭하여 새 규칙을 만들 수 있습니다`라는 정보창이 뜨는데 이를 구성하려면 다음을 이용하여 규칙을 하나 더 추가합니다.
 
-1.  Notice the scale rule options that open as a context pane on the right side. By default, this sets the option to scale your instance count by 1 if the CPU percentage of the resource exceeds 70 percent. Leave it at its default values and click **Add**.
+    - `연산자`: **보다 작음**
+    - `크기 조정 작업을 트리거하는 메트릭 임계값`: **20**
+    - `작업`: **다음을 기준으로 개수 줄이기**
 
-1.  You've now created your first scale rule. Note that the UX recommends best practices and states that "It is recommended to have at least one scale in rule." To do so:
+1. **추가** 버튼을 클릭합니다.
 
-    - Click **Add a rule**.
+1. 상단에 **저장**을 클릭하여 자동 크기 조정 설정을 저장합니다.
 
-    - Set **Operator** to **Less than**.
+이로써 CPU 사용량을 기준으로 한 자동 크기 조정 설정을 만들었습니다.
 
-    - Set **Threshold** to **20**.
+### 연습 3: 일정 기반 크기 조정
 
-    - Set **Operation** to **Decrease count by**.
+CPU 기반 크기 조정 외에 특정 일정에 따라 크기 조정을 설정할 수 있습니다.
 
-1.  Click **Add**
+1. 하단에 **+ 크기 조건 추가**를 클릭합니다.
 
-1.  Click **Save**.
+1. **크기 조정 모드**에 있는 **특정 인스턴스 수로 크기 조정**으로 변경합니다.
 
+1. **일정**에 있는 **시작/종료 날짜 지정**을 선택하고 임의로 정보를 입력합니다.
 
-**Congratulations**! You've now successfully created your first scale setting to autoscale your web app based on CPU usage.
+1. 상단에 **저장**을 클릭하여 자동 크기 조정 설정을 저장합니다.
 
+이로써 특정 일정을 기준으로 한 자동 크기 조정 설정을 만들었습니다.
 
-## Exercise 3: Scale based on a schedule
+### 연습 4: 특정 요일에 따라 크기 조정
 
+CPU 기반 크기 조정 외에 특정 요일에 따라 크기 조정을 설정할 수 있습니다.
 
-In addition to scale based on CPU, you can set your scale differently for specific days of the week.
+1. 하단에 **+ 크기 조건 추가**를 클릭합니다.
 
+1. **크기 조정 모드**에 있는 **특정 인스턴스 수로 크기 조정**으로 변경합니다.
 
-1.  Click **Add a scale condition**.
+1. **일정**에 있는 **특정 일 반복**을 선택하고 임의로 정보를 입력합니다.
 
-1.  Setting the scale mode and the rules is the same as the default condition.
-1.  Select **Repeat specific days** for the schedule.
-1.  Select the days and the start/end time for when the scale condition should be applied.
+1. 상단에 **저장**을 클릭하여 자동 크기 조정 설정을 저장합니다.
 
+이로써 특정 요일을 기준으로 한 자동 크기 조정 설정을 만들었습니다.
 
-## Exercise 4: Scale differently on specific dates
+### 연습 5: 리소스의 크기 조정 기록 확인
 
+1. 리소스가 확장 또는 축소가 될 때마다 이벤트가 활동 로그에 기록됩니다. **실행 기록** 탭으로 전환하여 지난 24시간 동안 리소스의 크기 조정 기록을 볼 수 있씁니다.
 
-In addition to scale based on CPU, you can set your scale differently for specific dates.
+1. 전체 크기 조정 이력을 보려면 (최대 90일) **활동 로그에서 자세한 내용 확인**을 선택합니다. 리소스의 필터를 기반으로 자동 크기 조정이 미리 선택된 활동 로그가 열립니다.
 
+### 연습 6: 리소스 크기 조정 정의 확인
 
-1.  Click **Add a scale condition**.
+1. 자동 크기 조정은 Azure Resource Manager의 리소스 입니다. **자동 크기 조정 설정**에서 **JSON**탭으로 이동하면 JSON으로 정의된 자동 크기 조정 정의를 확인할 수 있습니다.
 
-1.  Setting the scale mode and the rules is the same as the default condition.
-1.  Select **Specify start/end dates** for the schedule.
-1.  Select the start/end dates and the start/end time for when the scale condition should be applied.
+1. 필요한 경우 **JSON**을 직접 변경할 수 있습니다.
 
+### 연습 7: 랩 리소스 삭제
 
+#### 작업 1: Cloud Shell 열기
 
-## Exercise 5:  View the scale history of your resource
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 엽니다.
 
-1.  Whenever your resource is scaled up or down, an event is logged in the activity log. You can view the scale history of your resource for the past 24 hours by switching to the **Run history** tab.
+1. Cloud Shell 인터페이스에서 **Bash**를 선택합니다.
 
-1.  If you want to view the complete scale history (for up to 90 days), select **Click here to see more details**. The activity log opens, with Autoscale pre-selected for your resource and category.
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열합니다.
 
-## Exercise 6: View the scale definition of your resource
+   ```sh
+   az group list --query "[?starts_with(name,'az500')].name" --output tsv
+   ```
 
-1.  Autoscale is an Azure Resource Manager resource. You can view the scale definition in JSON by switching to the **JSON** tab.
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인합니다. 이 그룹은 다음 작업에서 삭제됩니다.
 
-1.  You can make changes in **JSON** directly, if required. These changes will be reflected after you save them.
+#### 작업 2: 리소스 그룹 삭제하기
 
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제합니다.
 
-| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
-| --- |
+   ```sh
+   az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+   ```
 
+1. **Cloud Shell** 명령 프롬프트를 닫습니다.
 
-**Results**: You have now completed this lab.
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.
