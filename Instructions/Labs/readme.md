@@ -1,8 +1,6 @@
-﻿# AZ500 랩 지침 파일
+# AZ500 Lab Instruction Files
 
-## 제공 예정
-
-이 리포지토리에는 AZ500 랩용 랩 설명서가 포함되어 있습니다. 이러한 서명서를 통해 AZ500 Azure 보안 과정을 보완할 수 있습니다. 
+This repository is a collection of lab manuals for the AZ500 labs. They compliment the AZ500 Azure Security course. 
 
 
 

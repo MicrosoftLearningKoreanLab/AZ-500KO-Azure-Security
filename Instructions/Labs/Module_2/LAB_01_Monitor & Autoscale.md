@@ -1,104 +1,102 @@
-﻿---
+---
 lab:
-    title: '랩 1 - 모니터링 및 자동 크기 조정'
-    module: '모듈 2 - 플랫폼 보호 구현'
+    title: 'Monitor & Autoscale'
+    module: '모듈 02 - 플랫폼 보호'
 ---
 
-# 모듈 2: 랩 1 - 모니터링 및 자동 크기 조정
+# 랩: Monitor & Autoscale
+
+Autoscale is a built-in feature of Cloud Services, Mobile Services, Virtual Machines, and Websites that helps applications perform their best when demand changes. Of course, performance means different things for different applications. Some apps are CPU-bound, others memory-bound. For example, you could have a web app that handles millions of requests during the day and none at night. Autoscale can scale your service by any of these-or by a custom metric you define.
 
 
-Cloud Services, Mobile Services, Virtual Machines 및 웹 사이트의 기본 제공 기능인 자동 크기 조정을 활용하면 수요가 변경되어도 애플리케이션이 최적 성능으로 작동할 수 있습니다. 물론 성능의 의미는 애플리케이션마다 다릅니다. 앱에 따라 CPU, 메모리 등을 기준으로 성능이 결정됩니다. 예를 들어 주간에는 요청 수백만 건을 처리하지만 야간에는 요청을 전혀 처리하지 않는 웹앱이 있는 경우 자동 크기 조정을 통해 위의 기준 중 하나를 사용하거나 사용자가 정의하는 사용자 지정 메트릭을 사용하여 서비스의 크기를 조정할 수 있습니다.
+## Exercise 1: Lab setup
+
+1.  Go to the following URL in the browser:
+
+    https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod2_Lab01%2Ftemplate.json
 
 
-## 연습 1: 랩 설정
+    *This will deploy a new app and app service plan from a template that can then be used to demonstrate the scale up options in AZ500 Mod2 Lab 1.*
 
-1.  PowerShell을 열고 다음 명령을 실행합니다.
+1.  Select **Create a new Resource Group**  
 
-     ```powershell
-    start "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod2_Lab01%2Ftemplate.json"
-     ```
+1.  Type a **unique** name for the **Site Name** and **Service Plan**. 
 
-    *그러면 템플릿에서 배포되는 새 앱과 App Service 계획을 사용하여 AZ500 모듈 2 랩 1의 강화 옵션을 시연할 수 있습니다.*
+1.  Agree to the terms and click **Purchase**
 
-1.  **새 리소스 그룹 만들기** 를 선택합니다.  
-
-1.  **사이트 이름** 및 **서비스 계획** 에 **고유** 한 이름을 입력합니다. 
-
-1.  약관에 동의하고 구매를 클릭합니다.
-
-## 연습 2: 첫 번째 자동 크기 조정 설정 만들기
+## Exercise 2: Create your first Autoscale setting
 
 
-이제 간단한 단계별 연습을 통해 첫 번째 자동 크기 조정 설정을 만들어 보겠습니다.
+Let's now go through a simple step-by-step walkthrough to create your first Autoscale setting.
 
 
-1.  Azure Monitor에서 **자동 크기 조정** 블레이드를 열고 크기를 조정할 리소스를 선택합니다. 설정 중에 만든 App Service 계획을 선택할 수 있습니다
-1.  현재 인스턴스 수는 1입니다. **자동 크기 조정 사용** 을 클릭합니다.
+1.  Open the **Autoscale** blade in Azure Monitor and select a resource that you want to scale. You can select the app service plan that you created during the setup
+1.  Note that the current instance count is 1. Click **Custom autoscale**.
 
-1.  크기 조정 설정의 이름을 입력하고 **규칙 추가** 를 클릭합니다. 
+1.  Provide a name for the scale setting, and then click **Add a rule**. 
 
-1.  오른쪽 열리는 컨텍스트 창에 크기 조정 규칙 옵션이 표시됩니다. 기본적으로는 리소스의 CPU 백분율이 70%를 초과하면 인스턴스 수를 1개씩 늘리는 옵션이 설정됩니다. 기본값을 그대로 두고 **추가** 를 클릭합니다.
+1.  Notice the scale rule options that open as a context pane on the right side. By default, this sets the option to scale your instance count by 1 if the CPU percentage of the resource exceeds 70 percent. Leave it at its default values and click **Add**.
 
-1.  이제 첫 번째 크기 조정 규칙이 작성되었습니다. UX에 권장 모범 사례와 "하나 이상의 규모 감축 규칙이 있는 것이 좋습니다."라는 메시지가 표시됩니다. 이렇게 하려면 다음 단계를 수행합니다.
+1.  You've now created your first scale rule. Note that the UX recommends best practices and states that "It is recommended to have at least one scale in rule." To do so:
 
-    - **규칙 추가** 를 클릭합니다.
+    - Click **Add a rule**.
 
-    - **연산자** 를 **보다 작음** 으로 설정합니다.
+    - Set **Operator** to **Less than**.
 
-    - **임계값** 을 **20** 으로 설정합니다.
+    - Set **Threshold** to **20**.
 
-    - **연산** 을 **다음을 기준으로 개수 줄이기** 로 설정합니다.
+    - Set **Operation** to **Decrease count by**.
 
-1.  **추가** 를 클릭합니다.
+1.  Click **Add**
 
-1.  **저장** 을 클릭합니다.
-
-
-**축하합니다**! CPU 사용량을 기준으로 웹앱 크기를 자동으로 조정하는 첫 번째 크기 조정 설정을 생성했습니다.
+1.  Click **Save**.
 
 
-## 연습 3: 일정에 따라 크기 조정
+**Congratulations**! You've now successfully created your first scale setting to autoscale your web app based on CPU usage.
 
 
-CPU를 기준으로 크기를 조정할 수 있을 뿐 아니라 특정 요일별로 크기를 다르게 조정하도록 설정할 수도 있습니다.
+## Exercise 3: Scale based on a schedule
 
 
-1.  **크기 조건 추가** 를 클릭합니다.
-
-1.  크기 조정 모드와 규칙을 설정하는 과정은 기본 조건과 같습니다.
-1.  일정으로 **특정 일 반복** 을 선택합니다.
-1.  크기 조정 조건을 적용할 요일과 시작/종료 시간을 선택합니다.
+In addition to scale based on CPU, you can set your scale differently for specific days of the week.
 
 
-## 연습 4: 특정 날짜별로 다르게 크기 조정
+1.  Click **Add a scale condition**.
+
+1.  Setting the scale mode and the rules is the same as the default condition.
+1.  Select **Repeat specific days** for the schedule.
+1.  Select the days and the start/end time for when the scale condition should be applied.
 
 
-CPU를 기준으로 크기를 조정할 수 있을 뿐 아니라 특정 날짜별로 크기를 다르게 조정하도록 설정할 수도 있습니다.
+## Exercise 4: Scale differently on specific dates
 
 
-1.  **크기 조건 추가** 를 클릭합니다.
+In addition to scale based on CPU, you can set your scale differently for specific dates.
 
-1.  크기 조정 모드와 규칙을 설정하는 과정은 기본 조건과 같습니다.
-1.  일정으로 **시작/종료 날짜 지정** 을 선택합니다.
-1.  크기 조정 조건을 적용할 시작/종료 날짜와 시작/종료 시간을 선택합니다.
+
+1.  Click **Add a scale condition**.
+
+1.  Setting the scale mode and the rules is the same as the default condition.
+1.  Select **Specify start/end dates** for the schedule.
+1.  Select the start/end dates and the start/end time for when the scale condition should be applied.
 
 
 
-## 연습 5:  리소스의 크기 조정 기록 확인
+## Exercise 5:  View the scale history of your resource
 
-1.  리소스를 강화하거나 규모 축소할 때마다 활동 로그에 이벤트가 기록됩니다. **실행 기록** 탭으로 전환하면 지난 24시간 동안의 리소스 크기 조정 기록을 확인할 수 있습니다.
+1.  Whenever your resource is scaled up or down, an event is logged in the activity log. You can view the scale history of your resource for the past 24 hours by switching to the **Run history** tab.
 
-1.  전체 크기 조정 기록(최대 90일)을 확인하려면 **자세한 내용을 보려면 여기를 클릭하세요.** 를 선택합니다. 그러면 리소스와 범주로 자동 크기 조정이 미리 선택된 활동 로그가 열립니다.
+1.  If you want to view the complete scale history (for up to 90 days), select **Click here to see more details**. The activity log opens, with Autoscale pre-selected for your resource and category.
 
-## 연습 6: 리소스의 크기 조정 정의 확인
+## Exercise 6: View the scale definition of your resource
 
-1.  자동 크기 조정은 Azure Resource Manager 리소스입니다. **JSON** 탭으로 전환하면 JSON 형식의 크기 조정 정의를 확인할 수 있습니다.
+1.  Autoscale is an Azure Resource Manager resource. You can view the scale definition in JSON by switching to the **JSON** tab.
 
-1.  필요한 경우 **JSON** 을 직접 변경할 수 있습니다. 이러한 변경 내용은 저장하고 나면 반영됩니다.
+1.  You can make changes in **JSON** directly, if required. These changes will be reflected after you save them.
 
 
-| 경고: 계속하기 전에 이 랩에서 사용한 모든 리소스를 제거해야 합니다.  **Azure Portal** 에서 리소스를 제거하려면 **리소스 그룹** 을 클릭합니다.  랩에서 만든 리소스 그룹을 모두 선택합니다.  리소스 그룹 블레이드에서 **리소스 그룹 삭제** 를 클릭하고 리소스 그룹 이름을 입력한 다음 **삭제** 를 클릭합니다.  추가로 만든 리소스 그룹이 있으면 이 프로세스를 반복합니다. **리소스 그룹을 삭제하지 않으면 다른 랩에서 문제가 발생할 수 있습니다.** |
+| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
 | --- |
 
 
-**결과**: 이 랩이 완료되었습니다.
+**Results**: You have now completed this lab.

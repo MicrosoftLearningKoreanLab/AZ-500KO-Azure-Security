@@ -1,309 +1,310 @@
-﻿---
+---
 lab:
-    title: '랩 10 - 부하 분산 장치'
-    module: '모듈 2 - 플랫폼 보호 구현'
+    title: 'Load Balancer'
+    module: '모듈 02 - 플랫폼 보호'
 ---
 
-# 모듈 2: 랩 10 - 부하 분산 장치
+# 랩: Load Balancer
 
+**Scenario**
 
-**시나리오**
+In this module, you will learn about three ways to distribute network traffic: Azure Load Balancer, Azure Traffic Manager, and Azure Application Gateway. The Azure Load Balancer delivers high availability and network performance to your applications. The Azure Traffic Manager allows you to control the distribution of user traffic to your service endpoints. The Azure Application Gateway is a web traffic load balancer that enables you to manage traffic to your web applications. 
 
-이 모듈에서는 네트워크 트래픽을 분산하는 세 가지 방식인 Azure Load Balancer, Azure Traffic Manager, Azure Application Gateway에 대해 알아봅니다. Azure Load Balancer는 애플리케이션에 고가용성 및 네트워크 성능을 제공합니다. Azure Traffic Manager를 사용하면 서비스 엔드포인트로 전송되는 사용자 트래픽 분산을 제어할 수 있습니다. Azure Application Gateway는 웹 애플리케이션으로 전송되는 트래픽을 관리하는 데 사용할 수 있는 웹 트래픽 부하 분산 장치입니다. 
-
-**이 모듈에 포함된 단원은 다음과 같습니다.**
+**Lessons include:**
 
 - Azure Load Balancer
 - Azure Traffic Manager 
 - Azure Application Gateway
 
 
-## 연습 1: 표준 Load Balancer를 사용하여 네트워크 트래픽 분산
+## Exercise 1: Distributing Network Traffic using a Standard Load Balancer
 
 
-이 섹션에서는 가상 머신 부하를 분산할 수 있는 공용 부하 분산 장치를 만듭니다. 표준 Load Balancer는 표준 공용 IP 주소만 지원합니다. 그러므로 표준 Load Balancer를 만들 때는 표준 Load Balancer용 프런트 엔드(기본 이름: *LoadBalancerFrontend*)로 구성되는 새 표준 공용 IP 주소도 만들어야 합니다. 
+In this section, you create a public load balancer that helps load balance virtual machines. Standard Load Balancer only supports a Standard Public IP address. When you create a Standard Load Balancer, and you must also create a new Standard Public IP address that is configured as the frontend (named as *LoadBalancerFrontend* by default) for the Standard Load Balancer. 
 
 
-### 태스크 1: 공용 부하 분산 장치 만들기
+### Task 1: Create a public load balancer
 
-1.  화면 왼쪽 위에서 **리소스 만들기** > **네트워킹** > **부하 분산 장치**를 클릭합니다.  
+1.  On the top left-hand side of the screen, click **Create a resource** > **Networking** > **Load Balancer**.  
 
-2.  **부하 분산 장치 만들기** 페이지에서 다음 정보를 입력하거나 선택하고 나머지 설정은 기본값을 적용한 후에 **검토 + 만들기**를 선택합니다.
+2.  In the **Create load balancer** page, enter or select the following information, accept the defaults for the remaining settings, and then select **Review + create**:
 
-    | 설정                 | 값                                              |
+    | Setting                 | Value                                              |
     | ---                     | ---                                                |
-    | 구독               | 사용자의 구독을 선택합니다.    |
-    |리소스 그룹 | **새로 만들기**를 선택하고 myResourceGroupLB를 입력합니다.    |
-    | 이름                   | *myLoadBalancer*                                   |
-    | 지역           | **미국 동부**를 입력합니다.                          |
-    | 유형          | 공용                                        |
-    | SKU           | 표준                          |
-    | 공용 IP 주소 | **새로 만들기**를 선택하고 이름 상자에 *myPublicIP*를 입력합니다.  |
-    | 가용성 영역               | **영역 중복**    |
+    | Subscription               | Select your subscription.    |
+    |Resource group | Select **Create new**, and then type myResourceGroupLB    |
+    | Name                   | *myLoadBalancer*                                   |
+    | Region           | Select **East US**.                          |
+    | Type          | Public                                        |
+    | SKU           | Standard                          |
+    | Public IP address | Select **Create new** and type *myPublicIP* in the name box.  |
+    | Availability zone               | **Zone-redundant**    |
     
-      ![스크린샷](../Media/Module-2/23a57ee6-db41-4259-a6a8-6a0ae782487e.png)
+      ![Screenshot](../Media/Module-2/23a57ee6-db41-4259-a6a8-6a0ae782487e.png)
 
-1.  유효성 검사 화면에서 **만들기**를 클릭합니다.
+1.  On the Validation screen click **Create**.
 
-### 태스크 2: 가상 네트워크 만들기
+### Task 2: Create a virtual network
 
-1.  화면 왼쪽 위에서 **+ 리소스 만들기** > **네트워킹** > **가상 네트워크**를 클릭하고 가상 네트워크에 다음 값을 입력합니다.
-    - **myVnet** - 가상 네트워크의 이름
-    - **10.0.0.0/16** - 주소 공간
-    - **myResourceGroupLB** - 기존 리소스 그룹의 이름
-    - **myBackendSubnet** - 서브넷 이름
-    - **10.0.0.0/24** - 서브넷 주소 범위
+1.  On the top left-hand side of the screen click **+ Create a resource** > **Networking** > **Virtual network** and enter these values for the virtual network:
+    - **myVnet** - for the name of the virtual network.
+    - **10.0.0.0/16** - for the Address space
+    - **myResourceGroupLB** - for the name of the existing resource group
+    - **myBackendSubnet** - for the subnet name.
+    - **10.0.0.0/24** - for the Subnet Address range
     </br>
 
-2.  **만들기**를 클릭하여 가상 네트워크를 만듭니다.
+2.  Click **Create** to create the virtual network.
 
-     ![스크린샷](../Media/Module-2/19c5f372-c2c5-453b-8b64-f936162531e8.png)
+     ![Screenshot](../Media/Module-2/19c5f372-c2c5-453b-8b64-f936162531e8.png)
 
-### 태스크 3: 가상 머신 만들기
+### Task 3: Create virtual machines
 
-1.  화면 왼쪽 위에서 **리소스 만들기** > **컴퓨팅** > **가상 머신**을 클릭하고 가상 머신에 다음 값을 입력합니다.
+1.  On the top left-hand side of the screen, click **Create a resource** > **Compute** > **Virtual Machine** and enter these values for the virtual machine:
           
-    - **myResourceGroupLB** - **리소스 그룹**의 드롭다운 메뉴에서 *myResourceGroupLB*를 선택합니다.
-    - **myVM1** - 가상 머신의 이름  
-    - **이미지** - Windows Server 2019 Datacenter
-    - **localadmin** - **사용자 이름**
-    - **Pa55w.rd1234** - **암호**
-    - **HTTP(80) 및 RDP(3389)** - 인바운드 포트 규칙
-</br>
+    - **myResourceGroupLB** - for **Resource group**, select *myResourceGroupLB* from the drop down menu.
+    - **myVM1** - for the name of the virtual machine.  
+    - **Image** - Windows Server 2019 Datacenter.
+    - **localadmin** - for the **Username**
+    - **Pa55w.rd1234** - for the **Password**
+    - **HTTP (80) & RDP (3389)** - for the inbound port rules.
+    </br>
 
-     ![스크린샷](../Media/Module-2/72f0ebb7-0fa5-4425-a137-a7c6773bc2e0.png)
+     ![Screenshot](../Media/Module-2/72f0ebb7-0fa5-4425-a137-a7c6773bc2e0.png)
 
-1.  네트워킹 탭을 클릭하고 공용 IP에서 **새로 만들기**를 클릭합니다.  IP 주소 이름을 **myPIP1**로 지정하고 **표준 SKU**, **확인**을 차례로 클릭합니다.
+1.  Click the Networking Tab and under Public IP click **Create new**.  Name the IP Address **myPIP1** and click the **Standard SKU** then click **OK**.
 
-    **참고**: 여기서 표준 SKU를 선택하지 않으면 랩 뒷부분에서 문제가 발생합니다.
+    **Note**: If you do not select the Standard SKU here you will have problems later in the lab.
 
 
-     ![스크린샷](../Media/Module-2/3ffe8457-67c1-4da1-98dc-e4f864889e74.png)
+     ![Screenshot](../Media/Module-2/3ffe8457-67c1-4da1-98dc-e4f864889e74.png)
 
-2.  **관리** 탭을 선택하고 모든 라디오 단추가 **아니요** 또는 **끄기**로 설정되어 있는지 확인합니다.
+2.  Select the **Management** Tab and ensure all radio buttons are **No** or **Off**.
 
-1.  **검토 + 만들기**, **만들기**를 차례로 클릭합니다.
+1.  Click **Review + create** then click **Create**.
 
-7.  위 단계를 반복하여 두 번째 VM ***myVM2***를 만듭니다. 이때 새 공용 IP 주소로 _**myPIP2**_를 사용합니다. 
+7.  Repeat the steps above to create a second VM, called ***myVM2*** using _**myPIP2**_ for the new Public IP address. 
  
-### 태스크 4: IIS 설치
+### Task 4: Install IIS
 
-1.  왼쪽 메뉴에서 **모든 리소스**를 클릭하고 리소스 목록에서 *myResourceGroupLB* 리소스 그룹에 있는 **myVM1**을 클릭합니다.
+1.  Click **All resources** in the left-hand menu, and then from the resources list click **myVM1** that is located in the *myResourceGroupLB* resource group.
 
-2.  **개요** 페이지에서 **연결**을 클릭하여 VM에 RDP로 연결합니다.
-3.  사용자 이름 *localadmin*으로 VM에 로그인합니다.
-4.  PowerShell을 열고 다음 명령을 실행하여 IIS를 설치합니다.
+2.  On the **Overview** page, click **Connect** to RDP into the VM.
+3.  Log into the VM with username *localadmin*.
+4.  Open PowerShell and run the following command to install IIS.
 
      ```powershell
     Install-WindowsFeature Web-Server
      ```
 
-7.  가상 머신 *myVM2*에 대해 1~4단계를 반복합니다.
+7.  Repeat steps 1 to 4 for the virtual machine *myVM2*.
 
-### 태스크 5: 부하 분산 장치 리소스 만들기
-
-
-이 섹션에서는 백 엔드 주소 풀과 상태 프로브의 부하 분산 장치 설정을 구성하고 부하 분산 장치 규칙을 지정합니다.
-
-VM에 트래픽을 분산하기 위해 백 엔드 주소 풀에는 부하 분산 장치에 연결된 가상 NIC의 IP 주소가 포함됩니다. *VM1*과 *VM2*를 포함할 백 엔드 주소 풀 *myBackendPool*을 만듭니다.
+### Task 5: Create load balancer resources
 
 
-1.  왼쪽 메뉴에서 **모든 리소스**를 클릭하고 리소스 목록에서 **myLoadBalancer**를 클릭합니다.
+In this section, you  configure load balancer settings for a backend address pool and a health probe, and specify a load balancer rule.
 
-2.  **설정**에서 **백 엔드 풀**, **추가**를 차례로 클릭합니다.
+To distribute traffic to the VMs, a backend address pool contains the IP addresses of the virtual (NICs) connected to the load balancer. Create the backend address pool *myBackendPool* to inlcude *VM1* and *VM2*.
 
-     ![스크린샷](../Media/Module-2/136599df-622d-4ed4-8f53-616a18ff6dde.png)
 
-3.  **백 엔드 풀 추가** 페이지에서 다음 작업을 수행합니다.
-   - 백 엔드 풀의 이름으로 *myBackendPool*을 입력합니다.
-   - **가상 네트워크**로 *myVNet*을 선택합니다.
-   - **가상 머신**에서 *myVM1* 및 *myVM2*를 해당 IP 주소와 함께 추가하고 **추가**를 선택합니다.
- </br>
+1.  Click **All resources** in the left-hand menu, and then click **myLoadBalancer** from the resources list.
+
+2.  Under **Settings**, click **Backend pools**, then click **Add**.
+
+     ![Screenshot](../Media/Module-2/136599df-622d-4ed4-8f53-616a18ff6dde.png)
+
+3.  On the **Add a backend pool** page, do the following:
+   - For name, type *myBackendPool*, as the name for your backend pool.
+   - For **Virtual network**, select *myVNet*.
+   - Add *myVM1* and *my VM2* under **Virtual Machine** along with their corresponding IP addresses, and then select **Add**.
+     </br>
  
-     ![스크린샷](../Media/Module-2/5133a39e-32e7-4ea4-9067-042086c75ab9.png)
+     ![Screenshot](../Media/Module-2/5133a39e-32e7-4ea4-9067-042086c75ab9.png)
 
-3.  부하 분산 장치 백 엔드 풀 설정에 **VM1** 및 **VM2** VM이 모두 표시되는지 확인합니다.
+3.  Check to make sure your load balancer backend pool setting displays both the VMs **VM1** and **VM2**.
 
-     ![스크린샷](../Media/Module-2/2d31782e-a552-4b32-919a-1ac2d8a5d2ef.png)
+     ![Screenshot](../Media/Module-2/2d31782e-a552-4b32-919a-1ac2d8a5d2ef.png)
 
-### 태스크 6: 상태 프로브 만들기
-
-
-부하 분산 장치가 앱의 상태를 모니터링할 수 있도록 하려면 상태 프로브를 사용합니다. 상태 프로브는 상태 검사에 대한 응답에 따라 부하 분산 장치 회전에서 VM을 동적으로 추가하거나 제거합니다. VM의 상태를 모니터링할 상태 프로브 *myHealthProbe*를 만듭니다.
+### Task 6: Create a health probe
 
 
-1.  부하 분산 장치 블레이드의 **설정**에서 **상태 프로브**, **추가**를 차례로 클릭합니다.
+To allow the load balancer to monitor the status of your app, you use a health probe. The health probe dynamically adds or removes VMs from the load balancer rotation based on their response to health checks. Create a health probe *myHealthProbe* to monitor the health of the VMs.
 
-     ![스크린샷](../Media/Module-2/ed2916af-c8d1-4dbf-89b0-4ec1882d8895.png)
 
-3.  다음 값을 사용해 상태 프로브를 만듭니다.
-    - *myHealthProbe* - 상태 프로브 이름
-    - **HTTP** - 프로토콜 유형
-    - *80* - 포트 번호
-    - */* - URI 경로 
-    - *15* - 프로브 시도 간의 **간격**(초)
-    - *2* - VM을 비정상 상태로 간주하려면 발생해야 하는 **비정상 임계값**(연속 프로브 오류 횟수)
-</br>
+1.  On the Load Balancer blade, under **Settings**, click **Health probes**, then click **Add**.
+
+     ![Screenshot](../Media/Module-2/ed2916af-c8d1-4dbf-89b0-4ec1882d8895.png)
+
+3.  Use these values to create the health probe:
+    - *myHealthProbe* - for the name of the health probe.
+    - **HTTP** - for the protocol type.
+    - *80* - for the port number.
+    - */* - for the URI path. 
+    - *15* - for number of **Interval** in seconds between probe attempts.
+    - *2* - for number of **Unhealthy threshold** or consecutive probe failures that must occur before a VM is considered unhealthy.
+    </br>
  
-     ![스크린샷](../Media/Module-2/1a1ff476-8400-4e05-89bc-228531f41c80.png)
+     ![Screenshot](../Media/Module-2/1a1ff476-8400-4e05-89bc-228531f41c80.png)
 
 
-4.  **확인**을 클릭합니다.
+4.  Click **OK**.
 
 
-### 태스크 7: 부하 분산 장치 규칙 만들기
+### Task 7: Create a load balancer rule
 
 
-부하 분산 장치 규칙은 트래픽이 VM에 분산되는 방식을 정의하는 데 사용됩니다. 들어오는 트래픽용 프런트 엔드 IP 구성과 트래픽을 수신할 백 엔드 IP 풀, 그리고 필요한 원본 및 대상 포트를 정의합니다. 프런트 엔드 *FrontendLoadBalancer*의 포트 80을 수신 대기하고, 역시 포트 80을 사용해 부하 분산된 네트워크 트래픽을 백 엔드 주소 풀 *myBackEndPool*로 전송하는 데 사용할 부하 분산 장치 규칙 *myLoadBalancerRuleWeb*을 만듭니다. 
+A load balancer rule is used to define how traffic is distributed to the VMs. You define the frontend IP configuration for the incoming traffic and the backend IP pool to receive the traffic, along with the required source and destination port. Create a load balancer rule *myLoadBalancerRuleWeb* for listening to port 80 in the frontend *FrontendLoadBalancer* and sending load-balanced network traffic to the backend address pool *myBackEndPool* also using port 80. 
 
 
-1.  부하 분산 장치 블레이드의 **설정**에서 **부하 분산 규칙**, **추가**를 차례로 클릭합니다.
+1.  On the Load Balancer blade, under **Settings**, click **Load balancing rules**, then click **Add**.
 
-     ![스크린샷](../Media/Module-2/00905851-76d6-428e-81aa-967797246767.png)
+     ![Screenshot](../Media/Module-2/00905851-76d6-428e-81aa-967797246767.png)
 
 
-3.  다음 값을 사용하여 부하 분산 규칙을 구성합니다.
-    - *myHTTPRule* - 부하 분산 규칙의 이름
-    - **TCP** - 프로토콜 유형
-    - *80* - 포트 번호
-    - *80* - 백 엔드 포트
-    - *myBackendPool* - 백 엔드 풀의 이름
-    - *myHealthProbe* - 상태 프로브 이름
+3.  Use these values to configure the load balancing rule:
+    - *myHTTPRule* - for the name of the load balancing rule.
+    - **TCP** - for the protocol type.
+    - *80* - for the port number.
+    - *80* - for the backend port.
+    - *myBackendPool* - for the name of the backend pool.
+    - *myHealthProbe* - for the name of the health probe.
     </br>
     
-      ![스크린샷](../Media/Module-2/61e544c5-931d-4b5c-90f1-6e9cfbe003ec.png)
+      ![Screenshot](../Media/Module-2/61e544c5-931d-4b5c-90f1-6e9cfbe003ec.png)
     
-4.  **확인**을 클릭합니다.
+4.  Click **OK**.
     
-### 태스크 8: 부하 분산 장치 테스트
+### Task 8: Test the load balancer
 
-1.  **개요** 화면에서 부하 분산 장치의 공용 IP 주소를 찾습니다.
+1.  Find the public IP address for the Load Balancer on the **Overview** screen.
 
-     ![스크린샷](../Media/Module-2/f6453cb7-3514-4f7d-97ca-1a480c6791c9.png)
+     ![Screenshot](../Media/Module-2/f6453cb7-3514-4f7d-97ca-1a480c6791c9.png)
   
-2.  공용 IP 주소를 복사한 다음 브라우저의 주소 표시줄에 붙여넣습니다. IIS 웹 서버의 기본 페이지가 브라우저에 표시됩니다.
+2.  Copy the public IP address, and then paste it into the address bar of your browser. The default page of IIS Web server is displayed on the browser.
 
-     ![스크린샷](https://godeployblob.blob.core.windows.net//labguideimages/AZ-300T02/Module-3/1b9f9311-3c0a-4948-be50-2753793daafc.png)
+     ![Screenshot](https://godeployblob.blob.core.windows.net//labguideimages/AZ-300T02/Module-3/1b9f9311-3c0a-4948-be50-2753793daafc.png)
 
-1.  IIS 기본 페이지가 로드됩니다.
+1.  Notice the IIS default page loads.
 
-1.  Azure Portal의 허브 메뉴에서 **가상 머신**을 클릭합니다.  myVM1을 선택하고 **개요** 블레이드에서 **중지**를 클릭한 다음 **예**를 클릭하여 중지를 확인합니다.
+1.  In the Azure Portal click on **Virtual Machines** in the hub menu.  Select myVM1 and in the **Overview** blade click **Stop** and confirm **Yes**.
 
-     ![스크린샷](../Media/Module-2/31aadf1a-90a8-4c4a-8a78-522d8b506832.png)
+     ![Screenshot](../Media/Module-2/31aadf1a-90a8-4c4a-8a78-522d8b506832.png)
  
-1.  myVM1 가상 머신이 중지될 때까지 기다렸다가 부하 분산 장치 공용 IP가 표시된 브라우저 탭으로 돌아옵니다. 그런 다음 새로 고침을 클릭하여 myVM2가 요청을 계속 처리하고 있으며 부하 분산 장치가 정상 작동하고 있음을 확인합니다.
+1.  Wait until the myVM1 Virtual Machine has stopped then go back to the browser tab with the load lanancer public IP and click refresh to confirm myVM2 is continuing to service the requests and the load balancer is functioning as expected.
 
-## 연습 2:  부하 분산 장치 ARM 배포
+## Exercise 2:  Load Balancer ARM Deployments
 
-### 태스크 1: ARM 템플릿 배포 
-
-
-이 템플릿을 사용하면 부하 분산 장치 아래에 가상 머신 2개를 만들고 포트 80에서 부하 분산 규칙을 구성할 수 있습니다. 이 템플릿은 스토리지 계정, 가상 네트워크, 공용 IP 주소, 가용성 집합 및 네트워크 인터페이스도 배포합니다. 이 템플릿에서는 리소스 루프 기능을 사용하여 네트워크 인터페이스와 가상 머신을 만듭니다.
+### Task 1: Deploy an ARM template 
 
 
-1.  브라우저의 새 탭에서 **`https://aka.gd/2E2MAjh`** URL로 이동합니다.
-
-1.  **Azure에 배포**를 클릭합니다.
-
-     ![스크린샷](../Media/Module-2/2c12a035-65aa-41e9-ad41-59a955a5432f.png)
-
-1.  템플릿 블레이드가 열리면 다음 세부 정보를 입력합니다.
-
-      - 리소스 그룹:  **myResourceGroupLB**
-      - 관리 사용자 이름:  **localadmin**
-      - 관리자 암호:  **Pa55w.rd1234**
-
-1.  **동의...**, **구매**를 차례로 클릭합니다.
-# 연습 3: 애플리케이션 게이트웨이 배포
-
-### 태스크 1: 애플리케이션 게이트웨이 만들기
+This template allows you to create 2 Virtual Machines under a Load balancer and configure a load balancing rule on Port 80. This template also deploys a Storage Account, Virtual Network, Public IP address, Availability Set and Network Interfaces. In this template, we use the resource loops capability to create the network interfaces and virtual machines
 
 
-작성한 리소스가 서로 통신하려면 가상 네트워크가 필요합니다. 이 예제에서는 서브넷 두 개를 만듭니다. 그 중 하나는 애플리케이션 게이트웨이용이고 다른 하나는 백 엔드 서버용입니다. 애플리케이션 게이트웨이와 가상 네트워크를 동시에 만들 수 있습니다.
+1.  In a new tab in your browser, navigate to the following URL **`https://aka.gd/2E2MAjh`**
+
+1.  Click **Deploy to Azure**
+
+     ![Screenshot](../Media/Module-2/2c12a035-65aa-41e9-ad41-59a955a5432f.png)
+
+1.  On the template blade that opens, enter the following details:
+
+      - Resource group:  **myResourceGroupLB**
+      - Admin Username:  **localadmin**
+      - Admin Password:  **Pa55w.rd1234**
+
+1.  Click **I agree....** and click **Purchase**.
+# Exercise 3: Deploying Application Gateways
+
+### Task 1: Create an application gateway
 
 
-1.  먼저 애플리케이션 게이트웨이를 포함할 서브넷을 만들어야 합니다. 허브 메뉴에서 **가상 네트워크**를 클릭하고 **myVNet**을 선택합니다.
+A virtual network is needed for communication between the resources that you create. Two subnets are created in this example: one for the application gateway, and the other for the backend servers. You can create a virtual network at the same time that you create the application gateway.
 
-     ![스크린샷](../Media/Module-2/0c72b829-810a-464d-838f-8b400441a789.png)
+
+1.  First you need to create a subnet for the Application Gateway to reside in.  Click **Virtual networks** on hub menu and select **myVNet**.
+
+     ![Screenshot](../Media/Module-2/0c72b829-810a-464d-838f-8b400441a789.png)
  
-1.  **서브넷**, **+ 서브넷**을 차례로 클릭합니다.
+1.  Click **Subnets** and click **+ Subnet**.
 
-     ![스크린샷](../Media/Module-2/598ede38-6ffb-4a65-ac2e-dced9f3b8659.png)
+     ![Screenshot](../Media/Module-2/598ede38-6ffb-4a65-ac2e-dced9f3b8659.png)
  
-1.  이름으로 **myAppGWSubnet**을 입력하고 **확인**을 클릭합니다.
+1.  Enter **myAppGWSubnet** as the name and click **OK**.
 
-     ![스크린샷](../Media/Module-2/b190cb3f-c689-4051-b70b-a48c5ff11b5e.png)
+     ![Screenshot](../Media/Module-2/b190cb3f-c689-4051-b70b-a48c5ff11b5e.png)
 
-1.  Azure Portal 왼쪽 위의 **리소스 만들기**를 클릭합니다.
+1.  Click **Create a resource** found on the upper left-hand corner of the Azure portal.
 
-2.  **네트워킹**을 클릭하고 추천 목록에서 **Application Gateway**를 클릭합니다.
+2.  Click **Networking** and then click **Application Gateway** in the Featured list.
 
-     ![스크린샷](../Media/Module-2/cb137e4f-fdd6-49bb-afe0-618e01521969.png)
+     ![Screenshot](../Media/Module-2/cb137e4f-fdd6-49bb-afe0-618e01521969.png)
 
-1.  애플리케이션 게이트웨이 기본 사항 블레이드에 아래 값을 입력하고 **다음**을 클릭합니다.
+1.  Enter these values for the application gateway basics blade then click **Next**:
 
-    - *myAppGateway* - 애플리케이션 게이트웨이의 이름
-    - *myResourceGroupLB* - 기존 리소스 그룹 선택
-    - *myVnet* - 기존 가상 네트워크 선택
-</br>
+    - *myAppGateway* - for the name of the application gateway.
+    - *myResourceGroupLB* - select the already existing Resource Group.
+    - *myVnet* - select the already existing Virtual network.
+      </br>
     
-        ![스크린샷](../Media/Module-2/a2dc825b-ddfe-4ff5-aa0a-fdd832ba9b81.png)
+      ![Screenshot](../Media/Module-2/a2dc825b-ddfe-4ff5-aa0a-fdd832ba9b81.png)
 
-7.  **프런트 엔드 구성** 블레이드에서 **IP 주소 유형**이 **공용**으로 설정되어 있는지 확인하고 **공용 IP 주소**에서 **새로 만들기**를 클릭합니다. 공용 IP 주소 이름으로 ***myAGPublicIPAddress***를 입력하고 **확인**을 클릭합니다.
+7.  Under **Frontend configuration** blade, ensure **IP address type** is set to **public**, and under **Public IP address**, click **Create new**. Type ***myAGPublicIPAddress*** for the public IP address name and then click **OK**.
 
-     ![스크린샷](../Media/Module-2/6c25478d-d4a2-477a-8b6b-bc07ca78fd3c.png)
+     ![Screenshot](../Media/Module-2/6c25478d-d4a2-477a-8b6b-bc07ca78fd3c.png)
  
-1. **다음**을 클릭합니다.
+1. Click **Next**.
 
-1. **+ 백 엔드 풀 추가**를 선택합니다.
+1. Select **+Add a backend pool**.
 
-1. 이름으로 **appGatewayBackendPool**을 입력합니다.  백 엔드 대상에서 **가상 머신**을 선택하고 myVM1 및 myVM2 가상 머신과 관련 네트워크 인터페이스를 추가한 후에 **추가**를 클릭합니다.
+1. Enter the name **appGatewayBackendPool**.  Under backend targets select **Virtual Machine** and add myVM1 and myVM2 virtual machines and their associated network interfaces then click **Add**.
 
-     ![스크린샷](../Media/Module-2/24a1e6f0-fad1-4bee-8372-dceed434b220.png)
+     ![Screenshot](../Media/Module-2/24a1e6f0-fad1-4bee-8372-dceed434b220.png)
 
-1. **다음**을 클릭합니다.
+1. Click **Next**.
 
-1. **구성** 탭에서 라우팅 규칙을 사용하여 생성한 프런트 엔드 및 백 엔드 풀을 연결합니다.
+1. On the **Configuration** tab, you'll connect the frontend and backend pool you created using a routing rule.
 
-1. **라우팅 규칙** 열에서 **규칙 추가**를 선택합니다.
+1. Select **Add a rule** in the **Routing rules** column.
 
-2. **라우팅 규칙 추가** 창이 열리면 **규칙 이름**으로 *myRoutingRule*을 입력합니다.
+2. In the **Add a routing rule** window that opens, enter *myRoutingRule* for the **Rule name**.
 
-3. 라우팅 규칙에는 수신기가 필요합니다. **라우팅 규칙 추가** 창 내의 **수신기** 탭에서 수신기에 다음 값을 입력합니다.
+3. A routing rule requires a listener. On the **Listener** tab within the **Add a routing rule** window, enter the following values for the listener:
 
-    - **수신기 이름**: 수신기 이름으로 *myListener*를 입력합니다.
-    - **프런트 엔드 IP**: **공용**을 선택하고 프런트 엔드용으로 만든 공용 IP를 선택합니다.
+    - **Listener name**: Enter *myListener* for the name of the listener.
+    - **Frontend IP**: Select **Public** to choose the public IP you created for the frontend.
   
-      **수신기** 탭의 기타 설정에는 기본값을 적용하고 **백 엔드 대상** 탭을 선택하여 나머지 라우팅 규칙을 구성합니다.
+      Accept the default values for the other settings on the **Listener** tab, then select the **Backend targets** tab to configure the rest of the routing rule.
 
-       ![스크린샷](../Media/Module-2/a15140d0-01c1-4b57-afdf-58a1b32467b0.png)
+       ![Screenshot](../Media/Module-2/a15140d0-01c1-4b57-afdf-58a1b32467b0.png)
 
-4. **백 엔드 대상** 탭에서 **백 엔드 대상**으로 **myBackendPool**을 선택합니다.
+4. On the **Backend targets** tab, select **appGatewayBackendPool** for the **Backend target**.
 
-5. **HTTP 설정**에서 **새로 만들기**를 선택하여 새 HTTP 설정을 만듭니다. HTTP 설정에 따라 라우팅 규칙의 동작이 결정됩니다. **HTTP 설정 추가** 창이 열리면 **HTTP 설정 이름**으로 *myHTTPSetting*을 입력합니다. **HTTP 설정 추가** 창의 기타 설정에는 기본값을 적용하고 **추가**를 선택하여 **라우팅 규칙 추가** 창으로 돌아옵니다. 
-
-
-
-    ![스크린샷](../Media/Module-2/ca3f13f9-1610-45b7-ab4a-b666324c965f.png)
-
-6. **라우팅 규칙 추가** 창에서 **추가**를 선택하여 라우팅 규칙을 저장하고 **구성** 탭으로 돌아옵니다.
-
-      ![스크린샷](../Media/Module-2/08f1c080-a8fd-4fec-be0f-96bfe0535cbd.png)
-
-7. **다음: 태그**, **다음: 검토 + 만들기**를 차례로 선택합니다.
+5. For the **HTTP setting**, select **Create new** to create a new HTTP setting. The HTTP setting will determine the behavior of the routing rule. In the **Add an HTTP setting** window that opens, enter *myHTTPSetting* for the **HTTP setting name**. Accept the default values for the other settings in the **Add an HTTP setting** window, then select **Add** to return to the **Add a routing rule** window. 
 
 
-### 태스크 2: 애플리케이션 게이트웨이 테스트
 
-1.  개요 화면에서 애플리케이션 게이트웨이의 공용 IP 주소를 찾습니다. **모든 리소스**를 클릭하고 **myAGPublicIPAddress**를 클릭합니다.
+    ![Screenshot](../Media/Module-2/ca3f13f9-1610-45b7-ab4a-b666324c965f.png)
 
-     ![스크린샷](../Media/Module-2/f2549f46-1b7f-40bf-9aed-235265eaa9d8.png)
+6. On the **Add a routing rule** window, select **Add** to save the routing rule and return to the **Configuration** tab.
+
+      ![Screenshot](../Media/Module-2/08f1c080-a8fd-4fec-be0f-96bfe0535cbd.png)
+
+7. Select **Add**
+
+7. Select **Next: Tags** and then **Next: Review + create**.
+
+
+### Task 2: Test the application gateway
+
+1.  Find the public IP address for the application gateway on the Overview screen. Click **All resources** and then click **myAGPublicIPAddress**.
+
+     ![Screenshot](../Media/Module-2/f2549f46-1b7f-40bf-9aed-235265eaa9d8.png)
  
-2.  공용 IP 주소를 복사한 다음 브라우저의 주소 표시줄에 붙여넣습니다.
+2.  Copy the public IP address, and then paste it into the address bar of your browser.
 
-     ![스크린샷](../Media/Module-2/ea959c21-0774-413a-81aa-824547088c3d.png)
+     ![Screenshot](../Media/Module-2/ea959c21-0774-413a-81aa-824547088c3d.png)
 
 
-| 경고: 계속하기 전에 이 랩에서 사용한 모든 리소스를 제거해야 합니다.  **Azure Portal**에서 리소스를 제거하려면 **리소스 그룹**을 클릭합니다.  랩에서 만든 리소스 그룹을 모두 선택합니다.  리소스 그룹 블레이드에서 **리소스 그룹 삭제**를 클릭하고 리소스 그룹 이름을 입력한 다음 **삭제**를 클릭합니다.  추가로 만든 리소스 그룹이 있으면 이 프로세스를 반복합니다. **리소스 그룹을 삭제하지 않으면 다른 랩에서 문제가 발생할 수 있습니다.** |
+| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
 | --- |
-**결과**: 이 랩이 완료되었습니다.
+**Results**: You have now completed this lab.

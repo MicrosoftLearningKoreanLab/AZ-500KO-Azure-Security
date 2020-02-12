@@ -1,36 +1,36 @@
-﻿# AZ-500 애플리케이션 보안
+# AZ-500 Azure Security
 
-- **MCT이신가요?** - Microsoft의 [MCT용 GitHub 사용자 가이드](https://microsoftlearning.github.io/MCT-User-Guide-KO/)를 살펴보세요.
-- **랩 지침을 수동으로 작성해야 하나요?** - [MicrosoftLearning/Docker-Build](https://github.com/MicrosoftLearning/Docker-Build) 리포지토리에서 지침이 제공됩니다.
+- **Are you a MCT?** - Have a look at our [GitHub User Guide for MCTs](https://microsoftlearning.github.io/MCT-User-Guide/)
+- **Need to manually build the lab instructions?** - Instructions are available in the [MicrosoftLearning/Docker-Build](https://github.com/MicrosoftLearning/Docker-Build) repository
 
-> [MCT 교육 과정 자료 포럼](https://www.microsoft.com/ko-kr/learning/mct-central.aspx)에서 과정 콘텐츠 관련 제안 사항이나 일반 설명을 확인하세요. [교육 과정 자료 지원 포럼](https://trainingsupport.microsoft.com/ko-kr)에서 버그 및 과정 오류를 보고할 수도 있습니다.
+> Be sure to use the [MCT Courseware Forum](https://www.microsoft.com/en-us/learning/mct-central.aspx) for suggestions or general comments on the course content. Also, bugs and course errors can be reported on the [Courseware Support Forum](https://trainingsupport.microsoft.com/en-us).
  
-신규 변경 내용을 지원하기 위해 2019년 11월 1일부터 신규 AZ-500 GitHub 리포지토리가 도입되었습니다. 이 시점부터 모든 AZ-500 랩 대신 이 리포지토리가 제공됩니다.
+To support the new changes, we introduced a new AZ-500 GitHub repository, starting on November 1 2019. At that time, all the AZ-500 labs have been replaced with this repository.
 
-**GitHub 소개**
+**What are we doing?**
 
-*	코스 작성자와 MCT가 상호 작용을 할 수 있도록 GitHub에 랩 지침과 랩 파일을 게시하고 있습니다. 이를 통해 Azure 플랫폼이 변경되어도 콘텐츠를 최신 상태로 유지하기 위해 노력하고 있습니다.
+*	We are publishing the lab instructions and lab files on GitHub to allow for interaction between the course authors and MCTs. We hope this will help  keep the content current as the Azure platform changes.
 
-*	이 리포지토리는 AZ-500 Microsoft Azure 보안 과정용 GitHub 리포지토리입니다. 
+*	This is a GitHub repository for the AZ-500, Microsoft Azure Security course. 
 
-*	각 리포지토리 내의 Instructions 폴더에는 Markdown 형식의 랩 가이드가 있습니다. 해당하는 경우 Allfiles\Labfiles 내에 랩을 완료하는 데 필요한 추가 파일도 포함되어 있습니다. 모든 과정에 해당하는 랩 파일이 있는 것은 아닙니다. 
+*	Within each repository there are lab guides in the Markdown format in the Instructions folder. If appropriate, there are also additional files that are needed to complete the lab within the Allfiles\Labfiles folder. Not every course has corresponding lab files. 
 
-*	교육 담당자는 제공되는 각 콘텐츠와 관련하여 GitHub에서 최신 파일을 다운로드해야 합니다. 또한 문제 탭에서 다른 MCT가 오류를 보고했는지도 확인해야 합니다.  
+*	For each delivery, trainers should download the latest files from GitHub. Trainers should also check the Issues tab to see if other MCTs have reported any errors.  
 
-*	예상 랩 소요 시간이 제공되기는 하지만, 교육 담당자는 대상 그룹을 기준으로 해당 시간이 정확한지를 확인해야 합니다.
+*	Lab timing estimates are provided but trainers should check to ensure this is accurate based on the audience.
 
-*	랩을 진행하려면 인터넷에 연결할 수 있어야 하며 Azure 구독을 보유하고 있어야 합니다. Cloud Shell 사용법과 관련된 자세한 내용은 강사 준비 가이드를 참조하세요. 
+*	To do the labs you will need an internet connection and an Azure subscription. Please read the Instructor Prep Guide for more information on using the Cloud Shell. 
 
-**GitHub 운영 방식**
+**How are we doing?**
 
-*	이러한 과정의 교육을 진행하면서 개선이 필요한 부분이 확인되면 문제 탭을 통해 피드백을 제공해 주시기 바랍니다. Microsoft에서는 정기적으로 새 파일을 만들어 변경 내용을 통합합니다. 
+*	If as you are teaching these courses, you identify areas for improvement, please use the Issues tab to provide feedback. We will periodically create new files to incorporate the changes. 
 
 
-* Azure Cloud Shell을 처음 시작하면 Cloud Shell 파일을 저장할 Azure 파일 공유를 만들라는 메시지가 표시될 수 있습니다. 이 경우에는 대개 기본값을 적용하면 됩니다. 그러면 자동으로 생성된 리소스 그룹에 스토리지 계정이 만들어집니다. 해당 스토리지 계정을 삭제하면 이 메시지가 다시 표시될 수 있습니다.
+* When launching Azure Cloud Shell for the first time, you will likely be prompted to create an Azure file share to persist Cloud Shell files. If so, you can typically accept the defaults, which will result in creation of a storage account in an automatically generated resource group. Note that this might happen again if you delete that storage account.
 
-* 템플릿 기반 배포를 수행하기 전에는 템플릿에서 참조하는 리소스 종류의 프로비전을 처리하는 공급자를 등록해야 할 수 있습니다. 이러한 리소스 공급자를 아직 등록하지 않은 경우 Azure Resource Manager 템플릿을 사용하여 해당 공급자가 관리하는 리소스를 배포할 때 등록 작업을 구독당 한 번만 수행하면 됩니다. Azure Portal의 구독 리소스 공급자 블레이드에서 등록을 수행할 수도 있고, Cloud Shell을 사용해 Register-AzResourceProvider PowerShell cmdlet 또는 az provider Azure CLI 명령을 사용할 수도 있습니다.
+* Before you perform a template based deployments, you might need to register providers that handle provisioning of resource types referenced in the template. This is a one-time operation (per subscription) required when using Azure Resource Manager templates to deploy resources managed by these resource providers (if these resource providers have not been yet registered). You can perform registration from the subscription's Resource Providers blade in the Azure portal or by using Cloud Shell to run Register-AzResourceProvider PowerShell cmdlet or az provider Azure CLI command.
 
-이 GitHub 리포지토리를 활용하여 랩에서 공동 작업을 원활하게 진행하고 전반적인 랩 환경 품질을 개선하시기 바랍니다. 
+We hope using this GitHub repository brings a sense of collaboration to the labs and improves the overall quality of the lab experience. 
 
-감사합니다.
-*Azure 보안 교육 과정 자료 팀*
+Regards,
+*Azure Security Courseware Team*
