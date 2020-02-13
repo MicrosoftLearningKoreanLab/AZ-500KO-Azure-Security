@@ -34,13 +34,13 @@ By default, these actions are only available on the Owner and User Access Admini
 Locks can be created both at the time of creation of a resource inside an ARM template, or later using the portal or PowerShell.
 
 
-## Exercise 1: Creating Locks
+### Exercise 1: Creating Locks
 
 
 The best way to ensure that locks are in place and protecting your resources is to create them at run time and configure them in your ARM templates. Locks are top level ARM resources; they do not sit underneath the resource being locked. They refer to the resource being locked, so this must exist first. 
 
 
-### Task 1: Adding a Lock (Portal)
+#### Task 1: Adding a Lock (Portal)
 
 1.  Open the Cloud Shell (PowerShell) and run the following commands to create a Resource Group and Storage Account.  _(Change XXXXXX in the command to something unique)_
 
@@ -68,7 +68,7 @@ The best way to ensure that locks are in place and protecting your resources is 
 
 1.  Remove the lock by simply going back into **Locks**, select the lock and then go to delete.
 
-### Task 2: Adding a Lock (PowerShell)
+#### Task 2: Adding a Lock (PowerShell)
 
 1.  Open the Cloud Shell (PowerShell) and run the following commands to create a Lock on the Storage Account. _(Change XXXXXX in the command to the name of your Storage Account)_
 

@@ -6,9 +6,9 @@ lab:
 
 # 랩: SQL Database 분류
 
-## Exercise 1: Classify your SQL Database
+### Exercise 1: Classify your SQL Database
 
-### Task 1: Lab Setup
+#### Task 1: Lab Setup
 
 1.  Open **PowerShell** and run the following command:
 
@@ -64,7 +64,7 @@ warning
 
 1.  **Select** the **Data discovery** and **classification** card.
 
-## Exercise 2: Begin Classification
+### Exercise 2: Begin Classification
 
 1.  To begin classifying your data, select the **Classification tab** at the top of the window.
 

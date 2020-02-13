@@ -9,9 +9,9 @@ lab:
 
 In this lab you will learn how to enable and disable distributed denial of service (DDoS) protection, and use telemetry to mitigate a DDoS attack with Azure DDoS Protection Standard. DDoS Protection Standard protects Azure resources such as virtual machines, load balancers, and application gateways that have an Azure public IP address assigned to it. 
 
-## Exercise 1: Implement DDoS protection in Azure.
+### Exercise 1: Implement DDoS protection in Azure.
 
-### Task 1: Create a DDoS protection plan
+#### Task 1: Create a DDoS protection plan
 
 
 A DDoS protection plan defines a set of virtual networks that have DDoS protection standard enabled, across subscriptions. You can configure one DDoS protection plan for your organization and link virtual networks from multiple subscriptions to the same plan. The DDoS Protection Plan itself is also associated with a subscription, that you select during the creation of the plan. The DDoS Protection Plan works across regions and subscriptions. Example -you can create the plan in Region East-US and link to subscription #1 in your tenant. The same plan can be linked to virtual networks from other subscriptions in different regions, across your tenant. The subscription the plan is associated to incurs the monthly recurring bill for the plan, as well as overage charges, in case the number of protected public IP addresses exceed 100. 
@@ -31,7 +31,7 @@ Creation of more than one plan is not required for most organizations. A plan ca
     |Resource group | Select **Create new** and enter *myResourceGroup* |
     |Location       | East US                                           |
 
-### Task 2: Enable DDoS for a new virtual network
+#### Task 2: Enable DDoS for a new virtual network
 
 1.  Select **Create a resource** in the upper left corner of the Azure portal.
 2.  Select **Networking**, and then select **Virtual network**.
@@ -47,14 +47,14 @@ Creation of more than one plan is not required for most organizations. A plan ca
 
  You cannot move a virtual network to another resource group or subscription when DDoS Standard is enabled for the virtual network. If you need to move a virtual network with DDoS Standard enabled, disable DDoS Standard first, move the virtual network, and then enable DDoS standard. After the move, the auto-tuned policy thresholds for all the protected public IP addresses in the virtual network are reset.
 
-### Task 3: Disable DDoS for a virtual network
+#### Task 3: Disable DDoS for a virtual network
 
 1.  Enter the name of the virtual network you want to disable DDoS protection standard for in the **Search resources, services, and docs box** at the top of the portal. When the name of the virtual network appears in the search results, select it.
 
 2.  Select **DDoS protection**, under **SETTINGS**.
 3.  Select **Basic** under **DDoS protection plan** and then select **Save**.
 
-### Task 4: Work with DDoS protection plans
+#### Task 4: Work with DDoS protection plans
 
 1.  Select **All services** on the top, left of the portal.
 
@@ -63,7 +63,7 @@ Creation of more than one plan is not required for most organizations. A plan ca
 4.  All virtual networks associated to the plan are listed.
 5.  If you want to delete a plan, you must first dissociate all virtual networks from it. 
 
-### Task 5: Configure alerts for DDoS protection metrics
+#### Task 5: Configure alerts for DDoS protection metrics
 
 
 You can select any of the available DDoS protection metrics to alert you when there's an active mitigation during an attack, using the Azure Monitor alert configuration. When the conditions are met, the address specified receives an alert email:
@@ -91,7 +91,7 @@ You can select any of the available DDoS protection metrics to alert you when th
        ![Screenshot](../Media/Module-2/9c9dec1d-9a24-4948-b845-c265293eb5ac.png)
 
 
-### Task 6: Use DDoS protection telemetry
+#### Task 6: Use DDoS protection telemetry
 
 
 Telemetry for an attack is provided through Azure Monitor in real time. The telemetry is available only for the duration that a public IP address is under mitigation. You don't see telemetry before or after an attack is mitigated.
@@ -112,7 +112,7 @@ Telemetry for an attack is provided through Azure Monitor in real time. The tele
   - **Forwarded tag name** (for example **Inbound Packets Forwarded DDoS**): The number of packets forwarded by the DDoS system to the destination VIP - traffic that was not filtered.
   - **No tag name** (for example **Inbound Packets DDoS**): The total number of packets that came into the scrubbing system - representing the sum of the packets dropped and forwarded.
 
-### Task 7: View DDoS mitigation policies
+#### Task 7: View DDoS mitigation policies
 
 
 DDoS Protection Standard applies three auto-tuned mitigation policies (TCP SYN, TCP & UDP) for each public IP address of the protected resource, in the virtual network that has DDoS enabled. You can view the policy thresholds by selecting the  **Inbound TCP packets to trigger DDoS mitigation** and **Inbound UDP packets to trigger DDoS mitigation** metrics with **aggregation** type as 'Max', as shown in the following picture:
@@ -122,7 +122,7 @@ DDoS Protection Standard applies three auto-tuned mitigation policies (TCP SYN, 
 Policy thresholds are auto-configured via Azure machine learning-based network traffic profiling. Only when the policy threshold is breached does DDoS mitigation occur for the IP address under attack.
 
 
-### Task 8: Configure DDoS attack mitigation reports
+#### Task 8: Configure DDoS attack mitigation reports
 
 
 Attack mitigation reports uses the Netflow protocol data which is aggregated to provide detailed information about the attack on your resource. Anytime a public IP resource is under attack, the report generation will start as soon as the mitigation starts. There will be an incremental report generated every 5 mins and a post-mitigation report for the whole mitigation period. This is to ensure that in an event the DDoS attack continues for a longer duration of time, you will be able to view the most current snapshot of mitigation report every 5 minutes and a complete summary once the attack mitigation is over. 
@@ -150,7 +150,7 @@ Attack mitigation reports uses the Netflow protocol data which is aggregated to 
   - Top 10 source countries or regions
   - Top 10 source ASNs
 
-### Task 9: Configure DDoS attack mitigation flow logs
+#### Task 9: Configure DDoS attack mitigation flow logs
 
 
 Attack Mitigation Flow Logs allow you to review the dropped traffic, forwarded traffic and other interesting datapoints during an active DDoS attack in near-real time. You can ingest the constant stream of this data into your SIEM systems via event hub for near-real time monitoring, take potential actions and address the need of your defense operations. 
@@ -178,7 +178,7 @@ Attack Mitigation Flow Logs allow you to review the dropped traffic, forwarded t
   - Protocol type 
   - Action taken during mitigation
 
-### Task 10: Validate DDoS detection (Optional and not part of the AZ-500 course)
+#### Task 10: Validate DDoS detection (Optional and not part of the AZ-500 course)
 
 
 **Note**: Only carry out this task if you feel comfortable to do so.  This task does not form part of the course and is a stretch exercise for those students who wish to do so.

@@ -14,9 +14,9 @@ You can filter network traffic inbound to and outbound from a virtual network su
 - Test traffic filters
 
 
-## Exercise 1: Filter network traffic with a network security group using the Azure portal
+### Exercise 1: Filter network traffic with a network security group using the Azure portal
 
-### Task 1:  Create a virtual network
+#### Task 1:  Create a virtual network
 
 1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
 2.  Select **Networking**, and then select **Virtual network**.
@@ -32,7 +32,7 @@ You can filter network traffic inbound to and outbound from a virtual network su
     | Subnet- Name            | mySubnet                                           |
     | Subnet - Address range  | 10.0.0.0/24                                        |
 
-### Task 2:  Create application security groups
+#### Task 2:  Create application security groups
 
 
 An application security group enables you to group together servers with similar functions, such as web servers.
@@ -58,7 +58,7 @@ An application security group enables you to group together servers with similar
     | Resource group | Select **Use existing** and then select  **myResourceGroup**. |
     | Location       | East US                                                       |
 
-### Task 3:  Create a network security group
+#### Task 3:  Create a network security group
 
 1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
 2.  Select **Networking**, and then select **Network security group**.
@@ -71,14 +71,14 @@ An application security group enables you to group together servers with similar
     |Resource group | Select **Use existing** and then select *myResourceGroup*.|
     |Location|East US|
 
-### Task 4:  Associate network security group to subnet
+#### Task 4:  Associate network security group to subnet
 
 1.  In the *Search resources, services, and docs* box at the top of the portal, begin typing *myNsg*. When **myNsg** appears in the search results, select it.
 2.  Under **SETTINGS**, select **Subnets** and then select **+ Associate**. 
 
 3.  Under **Associate subnet**, select **Virtual network** and then select **myVirtualNetwork**. Select **Subnet**, select **mySubnet**, and then select **OK**.
 
-### Task 5:  Create security rules
+#### Task 5:  Create security rules
 
 1.  Under **SETTINGS**, select **Inbound security rules** and then select **+ Add**.
 
@@ -104,7 +104,7 @@ An application security group enables you to group together servers with similar
     In this tutorial, RDP (port 3389) is exposed to the internet for the VM that is assigned to the *myAsgMgmtServers* application security group. For production environments, instead of exposing port 3389 to the internet, it's recommended that you connect to Azure resources that you want to manage using a VPN or private network connection.
 
 
-### Task 6:  Create virtual machines
+#### Task 6:  Create virtual machines
 
 1.  Select **+ Create a resource** found on the upper, left corner of the Azure portal.
 2.  Select **Compute**, and then select **Windows Server 2016 Datacenter**.
@@ -132,11 +132,11 @@ An application security group enables you to group together servers with similar
 
 6.  Select **Review + Create** at the bottom, left corner, select **Create** to start VM deployment.
 
-### Task 7:  Create the second VM
+#### Task 7:  Create the second VM
 
 Complete above steps 1-6 again, but in step 3, name the VM *myVmMgmt*. The VM takes a few minutes to deploy. Do not continue to the next step until the VM is deployed.
 
-### Task 8:  Associate network interfaces to an ASG
+#### Task 8:  Associate network interfaces to an ASG
 
 
 When the portal created the VMs, it created a network interface for each VM, and attached the network interface to the VM. Add the network interface for each VM to one of the application security groups you created previously:
@@ -147,7 +147,7 @@ When the portal created the VMs, it created a network interface for each VM, and
 
 3.  Complete steps 1 and 2 again, searching for the **myVmMgmt** VM and selecting the  **myAsgMgmtServers** ASG.
 
-### Task 9:  Test traffic filters
+#### Task 9:  Test traffic filters
 
 1.  Connect to the *myVmMgmt* VM. Enter *myVmMgmt* in the search box at the top of the portal. When **myVmMgmt** appears in the search results, select it. Select the **Connect** button.
 2.  Select **Download RDP file**.

@@ -10,9 +10,9 @@ lab:
 
 You can use the Update Management solution to manage updates and patches for your virtual machines. In this tutorial, you learn how to quickly assess the status of available updates, schedule installation of required updates, review deployment results, and create an alert to verify that updates apply successfully.
 
-## Exercise 1: Use Azure Automation to manage Windows Updates.
+### Exercise 1: Use Azure Automation to manage Windows Updates.
 
-### Task 1: Create a Resource Group
+#### Task 1: Create a Resource Group
 
 1.  Click **Resource Groups** on the Azure hub menu.
 
@@ -20,7 +20,7 @@ You can use the Update Management solution to manage updates and patches for you
 1.  Name the resource group **RunBooks**
 1.  Change the region to **East US**
 
-### Task 2: Create Automation account
+#### Task 2: Create Automation account
 
 1.  Click the **Create a resource** button found on the upper left-hand corner of Azure.
 
@@ -36,7 +36,7 @@ You can use the Update Management solution to manage updates and patches for you
 
 1.  When the deployment has completed, click **All Services**, select **Automation Accounts** and select the Automation Account you created.
 
-### Task 3: Create a VM for use
+#### Task 3: Create a VM for use
 
 1.  Click **Virtual Machines**
 
@@ -57,7 +57,7 @@ You can use the Update Management solution to manage updates and patches for you
 **Note:** Wait for the VM to deploy before moving on
 
 
-### Task 4: Enable Update Mangement
+#### Task 4: Enable Update Mangement
 
 1.  In the portal click Virtual machines
 
@@ -83,7 +83,7 @@ You can use the Update Management solution to manage updates and patches for you
 **Note**: Enabling the solution can take up to a few minutes. During this time, don't close the browser window. After the solution is enabled, information about missing updates on the VM flows to Azure Monitor logs. It can take between 30 minutes and 6 hours for the data to be available for analysis.
 
 
-### Task 5: View Update assesment
+#### Task 5: View Update assesment
 
 1.  After the update management is enabled the **Update Management** pane will open
 
@@ -94,7 +94,7 @@ You can use the Update Management solution to manage updates and patches for you
 
 1.  If there are updates available they will be listed with a link under the Inforamtion Link column that will allow you to view the details of that update and link to the Kb article of the update from Microsoft.
 
-### Task 6: Configure Alerts
+#### Task 6: Configure Alerts
 
 1.  Return to the resource group you created erlier
 
@@ -137,7 +137,7 @@ You can use the Update Management solution to manage updates and patches for you
 
 1.  Click **Create alert rule** 
 
-### Task 7: Schedule an Update Deployment
+#### Task 7: Schedule an Update Deployment
 
 1.  Return to your list of VMs
 
@@ -156,7 +156,7 @@ You can use the Update Management solution to manage updates and patches for you
 
 1.  Click **deployment schedules** to view the list of active **deployment schedules**
 
-### Task 8: View results of an update deployment
+#### Task 8: View results of an update deployment
 
 
 **Note**: After the scheduled deployment starts, you can see the status for that deployment on the Update deployments tab under Update management. The status is In progress when the deployment is currently running. When the deployment finishes, if it's successful, the status changes to Succeeded. When there are failures with one or more updates in the deployment, the status is partially failed.

@@ -15,20 +15,20 @@ This module includes the following tasks:
  - Azure Azure Key Vault
 
 
-## Exercise 1: Introduction to Azure Key Vault
+### Exercise 1: Introduction to Azure Key Vault
 
 
 **Scenario**
 
 In this lab, you will get started with Azure Key Vault to create a hardened container (a vault) in Azure, to store and manage cryptographic keys and secrets in Azure. First you will use Azure PowerShell. Then you will store a password as a secret that could then be used with an Azure application.
 
-### Task 1: Download SQL Server Management Studio
+#### Task 1: Download SQL Server Management Studio
 
 1.  To download the latest version of SQL Management Studio required for this lab visit the following link and select download SQL Management Studio **`https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017`**
 
      **Note:** You do not need to wait for the SQL Management Studio to install   before continuing.
 
-### Task 2: Use PowerShell to create a Key Vault
+#### Task 2: Use PowerShell to create a Key Vault
 
 
 In this exercise, you will use PowerShell to create an Azure Key Vault.
@@ -71,7 +71,7 @@ In this exercise, you will use PowerShell to create an Azure Key Vault.
 
 11. Click **Add** and then **Save**
 
-### Task 3: Add a key and secret to Key Vault
+#### Task 3: Add a key and secret to Key Vault
 
 1.  Return to the PowerShell window.
 
@@ -106,7 +106,7 @@ In this exercise, you will use PowerShell to create an Azure Key Vault.
      ```
 
 
-### Task 4: Add a Secret to Key Vault
+#### Task 4: Add a Secret to Key Vault
 
 1.  Next, you will add a secret to the **KeyVaultPS**. To do this, add a variable named **$secretvalue** using the following code.
 
@@ -140,7 +140,7 @@ In this exercise, you will use PowerShell to create an Azure Key Vault.
     Get-AZKeyVaultSecret -VaultName 'YourVaultName'
      ```
 
-### Task 5: Enable a Client Application
+#### Task 5: Enable a Client Application
 
 
 You will enable your client application to access the Azure SQL Database service. This will be done by setting up the required authentication and acquiring the Application ID and Secret that you will need to authenticate your application. These steps will be accomplished in the Azure portal.
@@ -169,7 +169,7 @@ You will enable your client application to access the Azure SQL Database service
 
 1.  Copy the Key1 value as you will need it later. If you close and reopen the blade, the value will show as hidden.
 
-### Task 6: Add a Key Vault Policy allowing the application access to the Key Vault.
+#### Task 6: Add a Key Vault Policy allowing the application access to the Key Vault.
 
 1.  In the **Azure portal** open your **Resource Group** created at the beginning of the lab
 
@@ -207,7 +207,7 @@ You will enable your client application to access the Azure SQL Database service
 
 
  
-### Task 7: Use Key Vault to Encrypt Data with Azure SQL Database
+#### Task 7: Use Key Vault to Encrypt Data with Azure SQL Database
 
 
 **Scenario**
@@ -246,7 +246,7 @@ In this task, you will create a blank Azure SQL Database, connect to it with SQL
 **Note**: When you save the connection string for future use, be sure to replace {your_username} with **demouser** and {your_password} with **Pa55w.rd1234**.
 
 
-### Task 8: Create a Table in the SQL Database
+#### Task 8: Create a Table in the SQL Database
 
 1.  Use the Azure portal to locate the Server name where the Medical Database is located and copy the name.
 
@@ -273,7 +273,7 @@ In this task, you will create a blank Azure SQL Database, connect to it with SQL
     - Password: **Pa55w.rd1234**
 
 
-### Task 9: Create and Encrypt a Table
+#### Task 9: Create and Encrypt a Table
 
 1.  In SQL Server Management Studio expand **Databases > Right-click medical > New Query**.
 
@@ -330,7 +330,7 @@ In this task, you will create a blank Azure SQL Database, connect to it with SQL
 
 
 
-### Task 10: Build a Console Application to work with Encrypted Columns
+#### Task 10: Build a Console Application to work with Encrypted Columns
 
 1.  Open Visual Studio 2019 and Sign in using your Azure account.
 

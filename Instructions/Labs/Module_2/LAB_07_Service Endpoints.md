@@ -18,9 +18,9 @@ Virtual network service endpoints enable you to limit network access to some Azu
 
 
 
-## Exercise 1: Restrict network access to PaaS resources with virtual network service endpoints using the Azure portal
+### Exercise 1: Restrict network access to PaaS resources with virtual network service endpoints using the Azure portal
 
-### Task 1: Create a virtual network
+#### Task 1: Create a virtual network
 
 1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
 2.  Select **Networking**, and then select **Virtual network**.
@@ -41,7 +41,7 @@ Virtual network service endpoints enable you to limit network access to some Azu
 
 
 
-### Task 2: Enable a service endpoint
+#### Task 2: Enable a service endpoint
 
 
 Service endpoints are enabled per service, per subnet. Create a subnet and enable a service endpoint for the subnet.
@@ -60,7 +60,7 @@ Service endpoints are enabled per service, per subnet. Create a subnet and enabl
     |Address range| 10.0.1.0/24|
     |Service endpoints| Select **Microsoft.Storage** under **Services**|
 
-### Task 3: Restrict network access for a subnet
+#### Task 3: Restrict network access for a subnet
 
 
 By default, all VMs in a subnet can communicate with all resources. You can limit communication to and from all resources in a subnet by creating a network security group, and associating it to the subnet.
@@ -128,7 +128,7 @@ By default, all VMs in a subnet can communicate with all resources. You can limi
 14.  Under **Associate subnet**, select **Virtual network** and then select **myVirtualNetwork** under **Choose a virtual network**.
 15.  Under **Choose subnet**, select **Private**, and then select **OK**.
 
-### Task 4: Restrict network access to a resource
+#### Task 4: Restrict network access to a resource
 
 
 The steps necessary to restrict network access to resources created through Azure services enabled for service endpoints varies across services. See the documentation for individual services for specific steps for each service. The remainder of this tutorial includes steps to restrict network access for an Azure Storage account, as an example.
@@ -148,7 +148,7 @@ The steps necessary to restrict network access to resources created through Azur
     |Subscription| Select your subscription|
     |Resource group | Select **Use existing** and select *myResourceGroup*.|
 
-### Task 5: Create a file share in the storage account
+#### Task 5: Create a file share in the storage account
 
 1.  After the storage account is created, enter the name of the storage account in the **Search resources, services, and docs** box, at the top of the portal. When the name of your storage account appears in the search results, select it.
 2.  Select **File shares**, as shown in the following picture:
@@ -159,7 +159,7 @@ The steps necessary to restrict network access to resources created through Azur
 4.  Enter *my-file-share* under **Name**, and then select **OK**.
 5.  Close the **File service** box.
 
-### Task 6: Restrict network access to a subnet
+#### Task 6: Restrict network access to a subnet
 
 
 By default, storage accounts accept network connections from clients in any network, including the internet. Deny network access from the internet, and all other subnets in all virtual networks, except for the *Private* subnet in the *myVirtualNetwork* virtual network.
@@ -183,7 +183,7 @@ By default, storage accounts accept network connections from clients in any netw
 
 8.  Note the **Key** value, as you'll have to manually enter it in a later step when mapping the file share to a drive letter in a VM.
 
-### Task 7: Create virtual machines
+#### Task 7: Create virtual machines
 
 
 To test network access to a storage account, deploy a VM to each subnet.
@@ -218,7 +218,7 @@ To test network access to a storage account, deploy a VM to each subnet.
 
 The VM takes a few minutes to deploy. Do not continue to the next step until it finishes creating and its settings open in the portal.
 
-### Task 8: Confirm access to storage account
+#### Task 8: Confirm access to storage account
 
 1.  Once the *myVmPrivate* VM finishes creating, Azure opens the settings for it. Connect to the VM by selecting the **Connect** button, as shown in the following screenshot:
 
@@ -248,7 +248,7 @@ The VM takes a few minutes to deploy. Do not continue to the next step until it 
 
 8.  Close the remote desktop session to the *myVmPrivate* VM.
 
-### Task 9: Confirm access is denied to storage account
+#### Task 9: Confirm access is denied to storage account
 
 1.  Enter *myVmPublic* In the **Search resources, services, and docs** box at the top of the portal.
 2.  When **myVmPublic** appears in the search results, select it.

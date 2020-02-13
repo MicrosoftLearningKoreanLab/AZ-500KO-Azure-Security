@@ -11,13 +11,13 @@ lab:
 This lab shows you how to create a new Azure Active Directory (Azure AD) application and service principal that can be used with role-based access control. When you have code that needs to access or modify resources, you can create an identity for the app. This identity is known as a service principal. You can then assign the required permissions to the service principal. This lab shows you how to use the portal to create the service principal. It focuses on a single-tenant application where the application is intended to run within only one organization. You typically use single-tenant applications for line-of-business applications that run within your organization.
 
 
-## Exercise 1: Use the portal to create a service principal that can access resources
+### Exercise 1: Use the portal to create a service principal that can access resources
 
 
 You can set the scope at the level of the subscription, resource group, or resource. Permissions are inherited to lower levels of scope. For example, adding an application to the Reader role for a resource group means it can read the resource group and any resources it contains.
 
 
-### Task 1: Assign the application to a role
+#### Task 1: Assign the application to a role
 
 1.  Navigate to the level of scope you wish to assign the application to. For example, to assign a role at the subscription scope, select **All services** and **Subscriptions**.
 
@@ -39,7 +39,7 @@ You can set the scope at the level of the subscription, resource group, or resou
 Your service principal is set up. You can start using it to run your scripts or apps. The next section shows how to get values that are needed when signing in programmatically.
 
 
-### Task 2: Get values for signing in
+#### Task 2: Get values for signing in
 
 
 When programmatically signing in, you need to pass the tenant ID with your authentication request. You also need the ID for your application and an authentication key. To get those values, use the following steps:
@@ -55,7 +55,7 @@ When programmatically signing in, you need to pass the tenant ID with your authe
 
        ![Screenshot](../Media/Module-1/fecb544c-32c9-4576-9bec-f71a6b1cc775.png)
 
-### Task 3: Create a new application secret
+#### Task 3: Create a new application secret
 
 
 You can choose a certificate or an application secret.  In this task you will create an application secret.
@@ -72,7 +72,7 @@ After saving the client secret, the value of the client secret is displayed. Cop
 
 
   
-### Task 4: Check Azure AD permissions
+#### Task 4: Check Azure AD permissions
 
 1.  Select **Azure Active Directory**.
 
@@ -81,7 +81,7 @@ After saving the client secret, the value of the client secret is displayed. Cop
 
  If the app registrations setting is set to **No**, only users with an administrator role may register these types of applications.
 
-### Task 5: Check Azure subscription permissions
+#### Task 5: Check Azure subscription permissions
 
 
 In your Azure subscription, your account must have `Microsoft.Authorization/*/Write` access to assign an AD app to a role. This action is granted through the Owner role or User Access Administrator.

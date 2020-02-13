@@ -17,13 +17,13 @@ In this module, you will learn about three ways to distribute network traffic: A
 - Azure Application Gateway
 
 
-## Exercise 1: Distributing Network Traffic using a Standard Load Balancer
+#### Exercise 1: Distributing Network Traffic using a Standard Load Balancer
 
 
 In this section, you create a public load balancer that helps load balance virtual machines. Standard Load Balancer only supports a Standard Public IP address. When you create a Standard Load Balancer, and you must also create a new Standard Public IP address that is configured as the frontend (named as *LoadBalancerFrontend* by default) for the Standard Load Balancer. 
 
 
-### Task 1: Create a public load balancer
+#### Task 1: Create a public load balancer
 
 1.  On the top left-hand side of the screen, click **Create a resource** > **Networking** > **Load Balancer**.  
 
@@ -44,7 +44,7 @@ In this section, you create a public load balancer that helps load balance virtu
 
 1.  On the Validation screen click **Create**.
 
-### Task 2: Create a virtual network
+#### Task 2: Create a virtual network
 
 1.  On the top left-hand side of the screen click **+ Create a resource** > **Networking** > **Virtual network** and enter these values for the virtual network:
     - **myVnet** - for the name of the virtual network.
@@ -58,7 +58,7 @@ In this section, you create a public load balancer that helps load balance virtu
 
      ![Screenshot](../Media/Module-2/19c5f372-c2c5-453b-8b64-f936162531e8.png)
 
-### Task 3: Create virtual machines
+#### Task 3: Create virtual machines
 
 1.  On the top left-hand side of the screen, click **Create a resource** > **Compute** > **Virtual Machine** and enter these values for the virtual machine:
           
@@ -85,7 +85,7 @@ In this section, you create a public load balancer that helps load balance virtu
 
 7.  Repeat the steps above to create a second VM, called ***myVM2*** using _**myPIP2**_ for the new Public IP address. 
  
-### Task 4: Install IIS
+#### Task 4: Install IIS
 
 1.  Click **All resources** in the left-hand menu, and then from the resources list click **myVM1** that is located in the *myResourceGroupLB* resource group.
 
@@ -99,7 +99,7 @@ In this section, you create a public load balancer that helps load balance virtu
 
 7.  Repeat steps 1 to 4 for the virtual machine *myVM2*.
 
-### Task 5: Create load balancer resources
+#### Task 5: Create load balancer resources
 
 
 In this section, you  configure load balancer settings for a backend address pool and a health probe, and specify a load balancer rule.
@@ -125,7 +125,7 @@ To distribute traffic to the VMs, a backend address pool contains the IP address
 
      ![Screenshot](../Media/Module-2/2d31782e-a552-4b32-919a-1ac2d8a5d2ef.png)
 
-### Task 6: Create a health probe
+#### Task 6: Create a health probe
 
 
 To allow the load balancer to monitor the status of your app, you use a health probe. The health probe dynamically adds or removes VMs from the load balancer rotation based on their response to health checks. Create a health probe *myHealthProbe* to monitor the health of the VMs.
@@ -150,7 +150,7 @@ To allow the load balancer to monitor the status of your app, you use a health p
 4.  Click **OK**.
 
 
-### Task 7: Create a load balancer rule
+#### Task 7: Create a load balancer rule
 
 
 A load balancer rule is used to define how traffic is distributed to the VMs. You define the frontend IP configuration for the incoming traffic and the backend IP pool to receive the traffic, along with the required source and destination port. Create a load balancer rule *myLoadBalancerRuleWeb* for listening to port 80 in the frontend *FrontendLoadBalancer* and sending load-balanced network traffic to the backend address pool *myBackEndPool* also using port 80. 
@@ -174,7 +174,7 @@ A load balancer rule is used to define how traffic is distributed to the VMs. Yo
     
 4.  Click **OK**.
     
-### Task 8: Test the load balancer
+#### Task 8: Test the load balancer
 
 1.  Find the public IP address for the Load Balancer on the **Overview** screen.
 
@@ -192,9 +192,9 @@ A load balancer rule is used to define how traffic is distributed to the VMs. Yo
  
 1.  Wait until the myVM1 Virtual Machine has stopped then go back to the browser tab with the load lanancer public IP and click refresh to confirm myVM2 is continuing to service the requests and the load balancer is functioning as expected.
 
-## Exercise 2:  Load Balancer ARM Deployments
+#### Exercise 2:  Load Balancer ARM Deployments
 
-### Task 1: Deploy an ARM template 
+#### Task 1: Deploy an ARM template 
 
 
 This template allows you to create 2 Virtual Machines under a Load balancer and configure a load balancing rule on Port 80. This template also deploys a Storage Account, Virtual Network, Public IP address, Availability Set and Network Interfaces. In this template, we use the resource loops capability to create the network interfaces and virtual machines
@@ -215,7 +215,7 @@ This template allows you to create 2 Virtual Machines under a Load balancer and 
 1.  Click **I agree....** and click **Purchase**.
 # Exercise 3: Deploying Application Gateways
 
-### Task 1: Create an application gateway
+#### Task 1: Create an application gateway
 
 
 A virtual network is needed for communication between the resources that you create. Two subnets are created in this example: one for the application gateway, and the other for the backend servers. You can create a virtual network at the same time that you create the application gateway.
@@ -294,7 +294,7 @@ A virtual network is needed for communication between the resources that you cre
 7. Select **Next: Tags** and then **Next: Review + create**.
 
 
-### Task 2: Test the application gateway
+#### Task 2: Test the application gateway
 
 1.  Find the public IP address for the application gateway on the Overview screen. Click **All resources** and then click **myAGPublicIPAddress**.
 

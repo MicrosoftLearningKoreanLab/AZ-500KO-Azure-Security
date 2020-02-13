@@ -48,7 +48,7 @@ This lab requires creating a user that will be used for PIM.
      New-AzureADUser -DisplayName "Isabella Simonsen" -PasswordProfile $PasswordProfile -UserPrincipalName "Isabella@$domain" -AccountEnabled $true -MailNickName "Isabella" -UsageLocation "US"
     ```
 
-### Task 2:  Enable Azure AD Premium P2 trial and create a test user.
+#### Task 2:  Enable Azure AD Premium P2 trial and create a test user.
 
 1.  In the Azure Portal, on the Hub menu click **Azure Active Directory**.
 

@@ -18,7 +18,7 @@ In this lab, you will:
 
 
  
-## Exercise 1: Create an Identity & Access Management (IAM) baseline
+### Exercise 1: Create an Identity & Access Management (IAM) baseline
 
 
 Identity management is key to granting access and to the security enhancement of corporate assets. To secure and control your cloud-based assets you must manage identity and access for your Azure administrators, application developers, and application users.
@@ -28,7 +28,7 @@ Identity management is key to granting access and to the security enhancement of
 Here are the recommendations for identity and access management. Included with each recommendation are the basic steps to follow in the Azure portal. 
 
 
-### Task 1: Restrict access to the Azure AD administration portal
+#### Task 1: Restrict access to the Azure AD administration portal
 
 
 All non-Administrators should not have access due to the sensitive data and the rules of least privilege.
@@ -46,7 +46,7 @@ All non-Administrators should not have access due to the sensitive data and the 
 
 1.  Click **Save**.
 
-### Task 2: Enable Azure Multi-Factor Authentication (MFA)
+#### Task 2: Enable Azure Multi-Factor Authentication (MFA)
 
 
 Enable it for privileged and non-privileged users.
@@ -82,7 +82,7 @@ Enable it for privileged and non-privileged users.
  
 1.  Abbi is now enabled for MFA.
 
-### Task 3: Block remembering MFA on trusted devices 
+#### Task 3: Block remembering MFA on trusted devices 
 
 
 Remember Multi-Factor Authentication feature for devices and browsers that are trusted by the user is a free feature for all Multi-Factor Authentication users. Users can bypass subsequent verifications for a specified number of days, after they've successfully signed-in to a device by using Multi-Factor Authentication. If an account or device is compromised, remembering Multi-Factor Authentication for trusted devices can negatively affect security.
@@ -100,7 +100,7 @@ Remember Multi-Factor Authentication feature for devices and browsers that are t
 
        ![Screenshot](../Media/Module-4/73dabcbb-b9ff-40b1-9760-9ee748e1a849.png)
 
-### Task 4: About guests 
+#### Task 4: About guests 
 
 
 In this task you will ensure that no guest users exist, or alternatively if the business requires guest users, ensure to limit their permissions.
@@ -116,7 +116,7 @@ In this task you will ensure that no guest users exist, or alternatively if the 
 
        ![Screenshot](../Media/Module-4/a33565de-a4d1-4df4-9f16-64259704b8ad.png)
 
-### Task 5: Password options
+#### Task 5: Password options
 
 
 With dual identification set, an attacker would require compromising both the identity forms before they could maliciously reset a user's password.
@@ -135,7 +135,7 @@ With dual identification set, an attacker would require compromising both the id
 1.  Select two methods and click **Save**.
     
 
-### Task 6: Establish an interval for reconfirming user authentication methods 
+#### Task 6: Establish an interval for reconfirming user authentication methods 
 
 
 If authentication reconfirmation is set to disabled, register users will never be prompted to re-confirm their authentication information.
@@ -153,7 +153,7 @@ If authentication reconfirmation is set to disabled, register users will never b
 
        ![Screenshot](../Media/Module-4/01d2e139-b18c-4dd0-bbb0-9516508e64ea.png)
 
-### Task 7: Disable Members invitations
+#### Task 7: Disable Members invitations
 
 Restricting invitations through administrators only ensures that only authorized accounts have access Azure resources.
 
@@ -170,7 +170,7 @@ Restricting invitations through administrators only ensures that only authorized
 
        ![Screenshot](../Media/Module-4/21790b1d-8a81-4286-a3e4-71a63230a292.png)
 
-### Task 8: Users to create and manage security groups 
+#### Task 8: Users to create and manage security groups 
 
 
 When this feature is enabled, all users in AAD are allowed to create new security groups. Security Group creation should be restricted to administrators.
@@ -186,7 +186,7 @@ When this feature is enabled, all users in AAD are allowed to create new securit
 
        ![Screenshot](../Media/Module-4/fb131ddf-d8ed-4973-9dcc-0760e228e999.png)
 
-### Task 9: Self-service group management enabled 
+#### Task 9: Self-service group management enabled 
 
 
 Until your business requires this delegation to various users, it is a best practice to disable this feature.
@@ -202,7 +202,7 @@ Until your business requires this delegation to various users, it is a best prac
 
        ![Screenshot](../Media/Module-4/a3840977-48d2-4535-a511-e472dd660506.png)
 
-### Task 10: Application options - Allow users to register apps
+#### Task 10: Application options - Allow users to register apps
 
 
 Require administrators to register custom applications.
@@ -218,7 +218,7 @@ Require administrators to register custom applications.
 
        ![Screenshot](../Media/Module-4/a6595d70-2ae5-426d-8be8-2e79be9564d2.png)
 
-## Exercise 2: Create an Azure Security Center baseline
+### Exercise 2: Create an Azure Security Center baseline
 
 
 Azure Security Center (ASC) provides unified security management and advanced threat protection for workloads running in Azure, on-premises, and in other clouds. The following are Security Center recommendations that, if followed, will set various security policies on an Azure subscription.
@@ -227,7 +227,7 @@ These policies define the set of controls that are recommended for your resource
 
 
 
-### Task 1: Enable System Updates 
+#### Task 1: Enable System Updates 
 
 
 Azure Security Center monitors daily Windows and Linux virtual machines (VMs) and computers for missing operating system updates. Security Center retrieves a list of available security and critical updates from Windows Update or Windows Server Update Services (WSUS), depending on which service is configured on a Windows computer. Security Center also checks for the latest updates in Linux systems. If your VM or computer is missing a system update, Security Center will recommend that you apply system updates.
@@ -257,7 +257,7 @@ Azure Security Center monitors daily Windows and Linux virtual machines (VMs) an
 
        ![Screenshot](../Media/Module-4/daa67e3d-2684-435a-969d-0e3b17e10fa9.png)
 
-### Task 2: Enable Security Configurations
+#### Task 2: Enable Security Configurations
 
 
 Azure Security Center monitors security configurations by applying a set of over 150 recommended rules for hardening the OS, including rules related to firewalls, auditing, password policies, and more. If a machine is found to have a vulnerable configuration, Security Center generates a security recommendation.
@@ -302,7 +302,7 @@ Azure Security Center monitors security configurations by applying a set of over
 
        ![Screenshot](../Media/Module-4/2215b8b6-f6ad-459f-bbf2-cf73d85b219d.png)
 
-### Task 3: Enable Send me emails about alerts 
+#### Task 3: Enable Send me emails about alerts 
 
 
 Azure Security Center will recommend that you provide security contact details for your Azure subscription if you haven't already.
@@ -316,7 +316,7 @@ Azure Security Center will recommend that you provide security contact details f
 
      ![Screenshot](../Media/Module-4/c7756e6d-8a5d-498e-99de-af2cfcfb0e41.png)
 
-### Task 4: Enable Send email also to subscription owners 
+#### Task 4: Enable Send email also to subscription owners 
 
 
 Azure Security Center will recommend that you provide security contact details for your Azure subscription if you haven't already.
@@ -326,13 +326,13 @@ Azure Security Center will recommend that you provide security contact details f
 
 1.  Click **Save**.
 
-## Exercise 3: Create an Azure storage accounts baseline 
+### Exercise 3: Create an Azure storage accounts baseline 
 
 
 An Azure storage account provides a unique namespace to store and access your Azure Storage data objects.  Storage Accounts also need to secured.
 
 
-### Task 1: Require security-enhanced transfers
+#### Task 1: Require security-enhanced transfers
 
 
 Another step you should take to ensure the security of your Azure Storage data is to encrypt the data between the client and Azure Storage. The first recommendation is to always use the HTTPS protocol, which ensures secure communication over the public Internet. You can enforce the use of HTTPS when calling the REST APIs to access objects in storage accounts by enabling Secure transfer required for the storage account. Connections using HTTP will be refused once this is enabled.
@@ -348,7 +348,7 @@ Another step you should take to ensure the security of your Azure Storage data i
 
        ![Screenshot](../Media/Module-4/7eb4819d-e045-4637-a4e1-f1a9b43a3687.png)
 
-### Task 2: Enable binary large object (blob) encryption
+#### Task 2: Enable binary large object (blob) encryption
 
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data. Unstructured data is data that does not adhere to a particular data model or definition, such as text or binary data. Storage service encryption protects your data at rest. Azure Storage encrypts your data as it's written in its datacenters, and automatically decrypts it for you as you access it.
@@ -361,7 +361,7 @@ Azure Blob storage is Microsoft's object storage solution for the cloud. Blob st
 
      ![Screenshot](../Media/Module-4/2020-01-31_08-39-18.png)
 
-### Task 3: Periodically regenerate access keys
+#### Task 3: Periodically regenerate access keys
 
 
 When you create a storage account, Azure generates two 512-bit storage access keys, which are used for authentication when the storage account is accessed. Rotating these keys periodically ensures that any inadvertent access or exposure to these keys could be undermined.
@@ -376,7 +376,7 @@ When you create a storage account, Azure generates two 512-bit storage access ke
  
      ![Screenshot](../Media/Module-4/92b87eb1-8583-4bf2-8290-267a63fdf6b9.png)
 
-### Task 4: Require Shared Access Signature (SAS) tokens to expire within an hour
+#### Task 4: Require Shared Access Signature (SAS) tokens to expire within an hour
 
 
 A shared access signature (SAS) is a URI that grants restricted access rights to Azure Storage resources. You can provide a shared access signature to clients who should not be trusted with your storage account key but to whom you wish to delegate access to certain storage account resources. By distributing a shared access signature URI to these clients, you can grant them access to a resource for a specified period of time, with a specified set of permissions.
@@ -396,7 +396,7 @@ Currently verification of a SAS token expiry times cannot be accomplished. Until
     ![Screenshot](../Media/Module-4/647fc008-dbe2-4ea5-833c-3cc9521f89e6.png)
  
 
-### Task 5: Require only private access to blob containers 
+#### Task 5: Require only private access to blob containers 
 
 
 You can enable anonymous, public read access to a container and its blobs in Azure Blob storage. By doing so, you can grant read-only access to these resources without sharing your account key, and without requiring a shared access signature (SAS). By default, a container and any blobs within it may be accessed only by a user that has been given appropriate permissions. To grant anonymous users read access to a container and its blobs, you can set the container public access level. When you grant public access to a container, then anonymous users can read blobs within a publicly accessible container without authorizing the request.
@@ -411,14 +411,14 @@ You can enable anonymous, public read access to a container and its blobs in Azu
 
      ![Screenshot](../Media/Module-4/a3a1aa51-a96e-46d2-992f-13c39027d085.png)
 
-## Exercise 4: Create an Azure SQL Database baseline
+### Exercise 4: Create an Azure SQL Database baseline
 
 
 Azure SQL Server is a cloud-based relational database server that supports many of the same features as Microsoft SQL Server. It provides an easy transition from an on-premises database into a cloud-based one with built-in diagnostics, redundancy, security and scalability.  This exercise looks at the security recommendations to set Azure SQL Server policies.
 
 
 
-### Task 1: Enable auditing
+#### Task 1: Enable auditing
 
 
 Auditing for Azure SQL Database and SQL Data Warehouse tracks database events and writes them to an audit log in your Azure storage account, OMS workspace or Event Hubs. Auditing also:
@@ -461,7 +461,7 @@ Auditing for Azure SQL Database and SQL Data Warehouse tracks database events an
 
      ![Screenshot](../Media/Module-4/203924a5-4825-453a-91dc-d0a24009ecf5.png)
 
-### Task 2: Enable a threat detection service
+#### Task 2: Enable a threat detection service
 
 
 Threat detection for single and pooled databases detects anomalous activities indicating unusual and potentially harmful attempts to access or exploit databases. Threat detection can identify Potential SQL injection, Access from unusual location or data center, Access from unfamiliar principal or potentially harmful application, and Brute force SQL credentials. Threat detection is part of the advanced data security (ADS) offering, which is a unified package for advanced SQL security capabilities. Threat detection can be accessed and managed via the central SQL ADS portal.
@@ -473,7 +473,7 @@ Threat detection for single and pooled databases detects anomalous activities in
 3.  Click **Settings**.
 4.  Select **Enable Advanced Data Security on the server** and click **Yes** then click **Save**.
 
-### Task 3: Enable all threat detection types 
+#### Task 3: Enable all threat detection types 
 
 
 Advanced data security (ADS) provides a set of advanced SQL security capabilities, including data discovery & classification, vulnerability assessment, and Advanced Threat Protection (ATP).
@@ -490,13 +490,13 @@ Advanced Threat Protection is part of the advanced data security (ADS) offering,
      ![Screenshot](../Media/Module-4/66d40502-268e-4b5b-91bc-8ead7b1478ff.png)
 
 
-## Exercise 5: Create a logging and monitoring baseline
+### Exercise 5: Create a logging and monitoring baseline
 
 
 Logging and monitoring are a critical requirement when trying to identify, detect, and mitigate security threats. Having a proper logging policy can ensure you can determine when a security violation has occurred, but also potentially identify the culprit responsible. Azure Activity logs provide data about both external access to a resources and diagnostic logs, which provide information about the operation of that specific resource.
 
 
-### Task 1: Ensure that a log profile exists
+#### Task 1: Ensure that a log profile exists
 
 
 The Azure Activity Log provides insight into subscription-level events that have occurred in Azure. This includes a range of data, from Azure Resource Manager operational data to updates on Service Health events. The Activity Log was previously known as Audit Logs or Operational Logs, since the Administrative category reports control-plane events for your subscriptions. There is a single Activity Log for each Azure subscription. It provides data about the operations on a resource from the outside. Diagnostic Logs are emitted by a resource and provide information about the operation of that resource. You must enable diagnostic settings for each resource.
@@ -524,7 +524,7 @@ The Azure Activity Log provides insight into subscription-level events that have
 
      ![Screenshot](../Media/Module-4/ef901d77-99a6-4ca1-9eff-76760c18c6a9.png)
 
-### Task 2: Change activity log retention is set to 365 days or more
+#### Task 2: Change activity log retention is set to 365 days or more
 
 
 Setting the Retention (days) to 0 retains the data forever.
@@ -532,7 +532,7 @@ Setting the Retention (days) to 0 retains the data forever.
 
 1.  Follow the steps listed above. Adjust the Retention days slider bar.
 
-### Task 3: Create an activity log alert for "Creating, updating, or deleting a Network Security Group" 
+#### Task 3: Create an activity log alert for "Creating, updating, or deleting a Network Security Group" 
 
 
 By default, no monitoring alerts are created when NSGs are created/updated/deleted. Changing or deleting a security group can allow internal resources to be accessed from improper sources, or for unexpected outbound network traffic.
@@ -581,13 +581,13 @@ By default, no monitoring alerts are created when NSGs are created/updated/delet
 
 6.  Click **Create alert rule**
 
-## Exercise 6: Create a Networking baseline
+### Exercise 6: Create a Networking baseline
 
 
 Azure networking services maximize flexibility, availability, resiliency, security, and integrity by design. Network connectivity is possible between resources located in Azure, between on-premises and Azure-hosted resources, and to and from the Internet and Azure.
 
 
-### Task 1: Restrict RDP and SSH access from the Internet 
+#### Task 1: Restrict RDP and SSH access from the Internet 
 
 
 It's possible to reach Azure virtual machines by using Remote Desktop Protocol (RDP) and the Secure Shell (SSH) protocol. These protocols enable the management VMs from remote locations and are standard in datacenter computing.
@@ -613,7 +613,7 @@ It's recommended that you disable direct RDP and SSH access to your Azure VMs fr
 
      ![Screenshot](../Media/Module-4/dc2ff6ef-373c-4fb2-ba5c-54bcfe46b8c0.png)
 
-### Task 2: Restrict SQL Server access from the Internet 
+#### Task 2: Restrict SQL Server access from the Internet 
 
 
 Firewall systems help prevent unauthorized access to computer resources. If a firewall is turned on but not correctly configured, attempts to connect to SQL Server might be blocked.
@@ -633,7 +633,7 @@ To access an instance of the SQL Server through a firewall, you must configure t
 
 
 
-### Task 3: Configure the NSG flow logs
+#### Task 3: Configure the NSG flow logs
 
 
 When you create or update a virtual network in your subscription, Network Watcher will be enabled automatically in your Virtual Network's region. There is no impact to your resources or associated charge for automatically enabling Network Watcher.
@@ -655,7 +655,7 @@ Network security group (NSG) flow logs are a feature of Network Watcher that all
 
  
 
-### Task 4: Enable Network Watcher 
+#### Task 4: Enable Network Watcher 
 
 
 Network security group (NSG) flow logs are a feature of Network Watcher that allows you to view information about ingress and egress IP traffic through an NSG.
@@ -669,7 +669,7 @@ Network security group (NSG) flow logs are a feature of Network Watcher that all
 
      ![Screenshot](../Media/Module-4/e9a41c49-0e49-43d9-bc46-0635301c98dd.png)
 
-## Exercise 7: Create an Azure VM baseline
+### Exercise 7: Create an Azure VM baseline
 
 
 Azure Policy is a service in Azure that you use to create, assign, and manage policies. These policies enforce different rules and effects over your resources, so those resources stay compliant with your corporate standards and service level agreements. Azure Policy meets this need by evaluating your resources for non-compliance with assigned policies. For example, you can have a policy to allow only a certain SKU size of virtual machines in your environment. Once this policy is implemented, new and existing resources are evaluated for compliance. With the right type of policy, existing resources can be brought into compliance.
@@ -679,7 +679,7 @@ Azure Policy is a service in Azure that you use to create, assign, and manage po
 Here are the security recommendations you should follow to set Virtual Machine (VM) policies on your Azure subscription. Included with each recommendation are the basic steps to follow in the Azure portal. You should perform these steps on your own subscription with your own resources to validate the security for each. Keep in mind that Level 2 options might restrict some features or activity, so carefully consider which security options you decide to enforce.
 
 
-### Task 1: Ensure that OS disk are encrypted
+#### Task 1: Ensure that OS disk are encrypted
 
 
 Azure Disk Encryption helps protect and safeguard your data to meet your organizational security and compliance commitments. It uses the BitLocker feature of Windows and the DM-Crypt feature of Linux to provide volume encryption for the OS and data disks of Azure virtual machines (VMs). It is also integrated with Azure Key Vault to help you control and manage the disk encryption keys and secrets, and ensures that all data on the VM disks are encrypted at rest while in Azure storage. Azure Disk Encryption for Windows and Linux VMs is in General Availability in all Azure public regions and Azure Government regions for Standard VMs and VMs with Azure Premium Storage.
@@ -727,7 +727,7 @@ If you use Azure Security Center (recommended), you're alerted if you have VMs t
 
 1.  Click **Save** and click **Yes** to confirm.
 
-### Task 2: Ensure only approved extensions are installed
+#### Task 2: Ensure only approved extensions are installed
 
 
 Azure virtual machine (VM) extensions are small applications that provide post-deployment configuration and automation tasks on Azure VMs. For example, if a virtual machine requires software installation, anti-virus protection, or to run a script inside of it, a VM extension can be used. Azure VM extensions can be run with the Azure CLI, PowerShell, Azure Resource Manager templates, and the Azure portal. Extensions can be bundled with a new VM deployment, or run against any existing system.

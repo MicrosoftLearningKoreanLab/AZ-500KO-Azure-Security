@@ -16,7 +16,7 @@ One way to reduce exposure to a brute force attack is to limit the amount of tim
 
 
 
-## Exercise 1: Manage virtual machine access using just-in-time
+### Exercise 1: Manage virtual machine access using just-in-time
 
 
 There are three ways to configure a JIT policy on a VM:
@@ -27,7 +27,7 @@ There are three ways to configure a JIT policy on a VM:
 
 
 
-### Task 1: Configure JIT access on a VM in Azure Security Center
+#### Task 1: Configure JIT access on a VM in Azure Security Center
 
 1.  In the Azure Portal open the **Security Center** and then click **Getting Started**.
 
@@ -84,7 +84,7 @@ There are three ways to configure a JIT policy on a VM:
 
 
 
-### Task 2: Request JIT access via ASC
+#### Task 2: Request JIT access via ASC
 
 
 To request access to a VM via ASC:
@@ -113,7 +113,7 @@ To request access to a VM via ASC:
 **Note**: If a user who is requesting access is behind a proxy, the option **My IP** may not work. You may need to define the full IP address range of the organization.
 
 
-### Task 3:  Edit a JIT access policy via ASC
+#### Task 3:  Edit a JIT access policy via ASC
 
 
 You can change a VM's existing just-in-time policy by adding and configuring a new port to protect for that VM, or by changing any other setting related to an already protected port.
@@ -128,7 +128,7 @@ To edit an existing just-in-time policy of a VM:
   
       ![Screenshot](../Media/Module-4/cc4d097f-31b1-495d-ba30-a955f692ee49.png)
 
-### Task 4:  Audit JIT access activity in ASC
+#### Task 4:  Audit JIT access activity in ASC
 
 
 You can gain insights into VM activities using log search. To view logs:
@@ -147,7 +147,7 @@ Modify the filters and click **Apply** to create a search and log.
 
 
 
-### Task 5: Configure JIT access on a VM via the Azure VM blade
+#### Task 5: Configure JIT access on a VM via the Azure VM blade
 
 
 To make it easy to roll out just-in-time access across your VMs, you can set a VM to allow only just-in-time access directly from within the VM.
@@ -175,7 +175,7 @@ To make it easy to roll out just-in-time access across your VMs, you can set a V
 
      ![Screenshot](../Media/Module-4/620cf312-47b6-45ee-8b4a-f1160dab4989.png)
 
-### Task 5:  Request JIT access to a VM via the Azure VM blade
+#### Task 5:  Request JIT access to a VM via the Azure VM blade
 
 In the Azure portal, when you try to connect to a VM, Azure checks to see if you have a just-in-time access policy configured on that VM.
 

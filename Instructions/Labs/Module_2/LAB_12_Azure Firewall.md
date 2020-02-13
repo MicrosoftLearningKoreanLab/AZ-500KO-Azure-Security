@@ -17,9 +17,9 @@ One way you can control outbound network access from an Azure subnet is with Azu
 
 Network traffic is subjected to the configured firewall rules when you route your network traffic to the firewall as the subnet default gateway.
 
-## Exercise 1: Deploy an Azure Firewall
+### Exercise 1: Deploy an Azure Firewall
 
-### Task 1: Lab Setup
+#### Task 1: Lab Setup
 
 1.  Open Powershell and run the following Powershell command to open a ARM Template which will deploy resources used throughout this lab.  _If prompted select Chrome as the browser of choice._
 
@@ -53,7 +53,7 @@ Srv-Work-nsg|	Network security group|	East US
 Test-FW-VN|	Virtual network|	East US
 
 
-### Task 2: Deploy the firewall
+#### Task 2: Deploy the firewall
 
 
 In this task you will deploy the Azure firewall into the VNet.
@@ -93,7 +93,7 @@ In this task you will deploy the Azure firewall into the VNet.
 
      ![Screenshot](../Media/Module-2/84676994-3813-4551-ba8c-640909b77228.png)
 
-### Task 3: Create a default route
+#### Task 3: Create a default route
 
 
 For the **Workload-SN** subnet, configure the outbound default route to go through the firewall.
@@ -123,7 +123,7 @@ For the **Workload-SN** subnet, configure the outbound default route to go throu
 18.  For **Next hop address**, type the private IP address for the firewall that you noted previously.
 19.  Click **OK**.
 
-### Task 4: Configure an application rule
+#### Task 4: Configure an application rule
 
 
 In this task you will create an application rule that allows outbound access to `msn.com`.
@@ -145,7 +145,7 @@ In this task you will create an application rule that allows outbound access to 
 
  Azure Firewall includes a built-in rule collection for infrastructure FQDNs that are allowed by default. These FQDNs are specific for the platform and can't be used for other purposes. 
 
-### Task 5: Configure a network rule
+#### Task 5: Configure a network rule
 
 
 In this task you will create a network rule that allows outbound access to two IP addresses on port 53 (DNS).
@@ -164,7 +164,7 @@ In this task you will create a network rule that allows outbound access to two I
 10.  For **Destination Ports**, type **53**.
 11.  Click **Add**.
 
-### Task 6: Change the primary and secondary DNS address for the **Srv-Work** network interface
+#### Task 6: Change the primary and secondary DNS address for the **Srv-Work** network interface
 
 
 For testing purposes in this tutorial, you configure the primary and secondary DNS addresses. This isn't a general Azure Firewall requirement.
@@ -186,7 +186,7 @@ For testing purposes in this tutorial, you configure the primary and secondary D
 
 8.  Restart the **Srv-Work** virtual machine.
 
-### Task 7: Test the firewall
+#### Task 7: Test the firewall
 
 
 In this task you will test the firewall to confirm that it works as expected.

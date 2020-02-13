@@ -18,9 +18,9 @@ When you learn how to create and assign blueprints, you can define common patter
 - Remove a blueprint that has been assigned to a subscription
 
 
-## Exercise 1: Create a blueprint in the portal
+### Exercise 1: Create a blueprint in the portal
 
-### Task 1: Create a blueprint
+#### Task 1: Create a blueprint
 
 
 The first step in defining a standard pattern for compliance is to compose a blueprint from the available resources. In this example, create a new blueprint named **MyBlueprint** to configure role and policy assignments for the subscription. Then add a new resource group, and create a Resource Manager template and role assignment on the new resource group.
@@ -156,7 +156,7 @@ The first step in defining a standard pattern for compliance is to compose a blu
 
 1.  Now that all planned artifacts have been added, select **Save Draft** at the bottom of the page.
 
-### Task 2:  Edit a blueprint
+#### Task 2:  Edit a blueprint
 
 
 In Create a blueprint, you didn't provide a description or add the role assignment to the new resource group. You can fix both by following these steps:
@@ -192,7 +192,7 @@ In Create a blueprint, you didn't provide a description or add the role assignme
    
 1.  Select **Save Draft** now that it has been updated.
 
-### Task 3: Publish a blueprint
+#### Task 3: Publish a blueprint
 
 
 Now that all the planned artifacts have been added to the blueprint, it's time to publish it. Publishing makes the blueprint available to be assigned to a subscription.
@@ -207,7 +207,7 @@ Now that all the planned artifacts have been added to the blueprint, it's time t
 
 1.  Select **Publish** at the bottom of the page.
 
-### Task 4:  Assign a blueprint
+#### Task 4:  Assign a blueprint
 
 
 After a blueprint has been published, it can be assigned to a subscription. Assign the blueprint that you created to one of the subscriptions under your management group hierarchy. If the blueprint is saved to a subscription, it can only be assigned to that subscription. 
@@ -263,7 +263,7 @@ After a blueprint has been published, it can be assigned to a subscription. Assi
 
 1.  Read the information box at the bottom of the page, and then select **Assign**.
 
-### Task 5: Track deployment of a blueprint
+#### Task 5: Track deployment of a blueprint
 
 
 When a blueprint has been assigned to one or more subscriptions, two things happen:
@@ -285,7 +285,7 @@ When a blueprint has been assigned to one or more subscriptions, two things happ
    that there were no errors during the deployment. If errors occurred, see [Troubleshooting blueprints](./troubleshoot/general.md)
    for steps to determine what went wrong.
 
-### Task 6:  Unassign a blueprint
+#### Task 6:  Unassign a blueprint
 
 
 If you no longer need a blueprint assignment, remove it from a subscription. The blueprint might have been replaced by a newer blueprint with updated patterns, policies, and designs. When a blueprint is removed, the artifacts assigned as part of that blueprint are left behind. To remove a blueprint assignment, follow these steps:
@@ -298,7 +298,7 @@ If you no longer need a blueprint assignment, remove it from a subscription. The
 
 1.  Read the confirmation message and then select **OK**.
 
-### Task 6: Delete a blueprint
+#### Task 6: Delete a blueprint
 
 1.  Select **Blueprint definitions** from the page on the left.
 

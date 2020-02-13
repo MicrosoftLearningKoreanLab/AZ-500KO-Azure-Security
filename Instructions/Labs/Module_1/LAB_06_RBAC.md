@@ -16,9 +16,9 @@ In this module, you'll learn about Role-Based Access Control as the foundation t
 
 # Lab 5: Introduction to Identity Protection in Azure
 
-## Exercise 1: Role-Based Access Control
+### Exercise 1: Role-Based Access Control
 
-### Task 1: Create a User
+#### Task 1: Create a User
 
 1.  Sign in to the Azure portal **`https://portal.azure.com/`**
 
@@ -83,7 +83,7 @@ In this module, you'll learn about Role-Based Access Control as the foundation t
 You should now have 3 users in your Azure AD
 
 
-### Task 2: Create Groups In Portal, PowerShell, and CLI
+#### Task 2: Create Groups In Portal, PowerShell, and CLI
 
 1.  In the Azure Portal click **Azure Active Directory**  on the **Azure AD blade** click **Groups** and select **New group**.
  
@@ -117,9 +117,9 @@ You should now have 3 users in your Azure AD
      ![Screenshot](../Media/Module-1/c4bf8dc8-e4dc-4603-8961-0cdc0ba57cd5.png)
 
 
-## Exercise 2: Practice - RBAC
+### Exercise 2: Practice - RBAC
 
-### Task 1: Create a resource group
+#### Task 1: Create a resource group
 
 1.  In the navigation list, choose **Resource groups**.
 
@@ -135,7 +135,7 @@ You should now have 3 users in your Azure AD
 
    The new resource group appears in your resource groups list.
 
-### Task 2: Grant access
+#### Task 2: Grant access
 
 
 In RBAC, to grant access, you create a role assignment.
@@ -160,7 +160,7 @@ In RBAC, to grant access, you create a role assignment.
    After a few moments, the user is assigned the Virtual Machine Contributor role at the myRBACrg resource group scope.
 
   
-### Task 3: Remove access
+#### Task 3: Remove access
 
 
 In RBAC, to remove access, you remove a role assignment.
@@ -177,7 +177,7 @@ In RBAC, to remove access, you remove a role assignment.
 1.  In the remove role assignment message that appears, choose **Yes**.  
    
   
-## Exercise 3:  Role-based Access Control (RBAC) using PowerShell
+### Exercise 3:  Role-based Access Control (RBAC) using PowerShell
 
 
 In this exercise you use PowerShell to :
@@ -186,7 +186,7 @@ In this exercise you use PowerShell to :
 -   Use the `Remove-AzResourceGroup` command to remove access
 
 
-### Task 1: Grant access
+#### Task 1: Grant access
   
 
 To grant access for the user, you use the New-AzRoleAssignment command to assign a role. You must specify the security principal, role definition, and scope.  
@@ -224,7 +224,7 @@ To grant access for the user, you use the New-AzRoleAssignment command to assign
        ```
 
   
-### Task 2: List access  
+#### Task 2: List access  
   
 1.  To verify the access for the subscription, use the Get-AzRoleAssignment command to list the role assignments use the following command:
   
@@ -245,7 +245,7 @@ To grant access for the user, you use the New-AzRoleAssignment command to assign
 
  In the output, you can see that both the Contributor and Reader roles have been assigned to the RBAC Tutorial User. The Contributor role is at the myRBACrg resource group scope and the Reader role is inherited at the subscription scope.
 
-### Task 3: Remove access
+#### Task 3: Remove access
   
 
 To remove access for users, groups, and applications, use `Remove-AzRoleAssignment` to remove a role assignment.

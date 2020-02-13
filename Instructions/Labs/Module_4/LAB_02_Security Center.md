@@ -11,7 +11,7 @@ Azure Security Center is a unified infrastructure security management system tha
 Keeping your resources safe is a joint effort between your cloud provider, Azure, and you, the customer. You have to make sure your workloads are secure as you move to the cloud, and at the same time, when you move to IaaS (infrastructure as a service) there is more customer responsibility than there was in PaaS (platform as a service), and SaaS (software as a service). Azure Security Center provides you the tools needed to harden your network, secure your services and make sure you're on top of your security posture.
 
 
-## Exercise 1: Onboard your Azure subscription to Security Center Standard
+### Exercise 1: Onboard your Azure subscription to Security Center Standard
 
 
 Azure Security Center provides unified security management and threat protection across your hybrid cloud workloads. While the Free tier offers limited security for your Azure resources only, the Standard tier extends these capabilities to on-premises and other clouds. Security Center Standard helps you find and fix security vulnerabilities, apply access and application controls to block malicious activity, detect threats using analytics and intelligence, and respond quickly when under attack. You can try Security Center Standard at no cost. To learn more, see the pricing page.
@@ -19,7 +19,7 @@ Azure Security Center provides unified security management and threat protection
 In this Exercise, you upgrade to the Standard tier for added security and install the Microsoft Monitoring Agent on your virtual machines to monitor for security vulnerabilities and threats.
 
 
-### Task 1: Automate data collection
+#### Task 1: Automate data collection
 
 
 Security Center collects data from your Azure VMs and non-Azure computers to monitor for security vulnerabilities and threats. Data is collected using the Microsoft Monitoring Agent, which reads various security-related configurations and event logs from the machine and copies the data to your workspace for analysis. By default, Security Center will create a new workspace for you.
@@ -48,7 +48,7 @@ To enable automatic provisioning of the Microsoft Monitoring Agent:
 
  With this new insight into your Azure VMs, Security Center can provide additional Recommendations related to system update status, OS security configurations, endpoint protection, as well as generate additional Security alerts.
 
-## Exercise 2: Onboard Windows computers to Azure Security Center
+### Exercise 2: Onboard Windows computers to Azure Security Center
 
 
 After you onboard your Azure subscriptions, you can enable Security Center for resources running outside of Azure, for example on-premises or in other clouds, by provisioning the Microsoft Monitoring Agent.
@@ -56,7 +56,7 @@ After you onboard your Azure subscriptions, you can enable Security Center for r
 This exercise shows you how to install the Microsoft Monitoring Agent on a Windows computer.
 
 
-### Task 1: Add new Windows computer
+#### Task 1: Add new Windows computer
 
 1.  In the Azure Portal, select **Security Center**. **Security Center - Overview** opens.
 
@@ -81,13 +81,13 @@ This exercise shows you how to install the Microsoft Monitoring Agent on a Windo
  
 1.  Notice your Virtual Machine is now monitored.
 
-## Exercise 3: Manage and respond to alerts in Azure Security Center
+### Exercise 3: Manage and respond to alerts in Azure Security Center
 
 
 Security Center automatically collects, analyzes, and integrates log data from your Azure resources, the network, and connected partner solutions, like firewall and endpoint protection solutions, to detect real threats and reduce false positives. A list of prioritized security alerts is shown in Security Center along with the information you need to quickly investigate the problem and recommendations for how to remediate an attack.
 
 
-### Task 1: Manage your alerts
+#### Task 1: Manage your alerts
  
 1.  From the Security Center dashboard, see the  **Threat protection** tile to view and overview of the alerts.
 
@@ -103,7 +103,7 @@ Security Center automatically collects, analyzes, and integrates log data from y
 
        ![Screenshot](../Media/Module-4/f486410b-6664-48dd-b3ed-5a5b4e7bcbdb.png)
 
-### Task 2: Respond to recommendations
+#### Task 2: Respond to recommendations
 
 1.  In the Azure Security Center click **Overview**.
 

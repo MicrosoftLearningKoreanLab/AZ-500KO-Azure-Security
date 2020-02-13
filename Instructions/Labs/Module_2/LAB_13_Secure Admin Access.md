@@ -16,9 +16,9 @@ SSH is an encrypted connection protocol that allows secure sign-ins over unsecur
 
 Your public key can be shared with anyone, but only you (or your local security infrastructure) should possess your private key.
 
-## Exercise 1: Deploy and connect to an Azure VM securely.
+### Exercise 1: Deploy and connect to an Azure VM securely.
 
-### Task 1: Create SSH keys with PuTTYgen
+#### Task 1: Create SSH keys with PuTTYgen
 
 1.  Open a browser and navigate to the following URL:
 
@@ -59,7 +59,7 @@ Your public key can be shared with anyone, but only you (or your local security 
 
      ![Screenshot](../Media/Module-2/b9d641c5-b0da-412b-a9a2-e3ec98ea5624.png)
 
-### Task 2: Create a Linux virtual machine in the Azure portal
+#### Task 2: Create a Linux virtual machine in the Azure portal
 
 1.  Navigate back to the **Azure Portal**.
 
@@ -98,7 +98,7 @@ It will take a few minutes for your VM to be deployed. When the deployment is fi
 
 
 
-### Task 3: Connect to your VM
+#### Task 3: Connect to your VM
 
 
 One way to make an SSH connection to your Linux VM from Windows is to use an SSH client. This is the preferred method if you have an SSH client installed on your Windows system, or if you use the SSH tools in Bash in Azure Cloud Shell. If you prefer a GUI-based tool, you can connect with PuTTY.  In this task you will use PuTTY.

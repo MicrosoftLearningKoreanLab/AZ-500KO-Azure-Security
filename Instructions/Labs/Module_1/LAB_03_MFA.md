@@ -7,9 +7,9 @@ lab:
 # 랩: MFA를 사용하여 보안 접근
 
 
-## Exercise 1: MFA Authentication Pilot (Require MFA for specific apps with Azure Active Directory conditional access)
+### Exercise 1: MFA Authentication Pilot (Require MFA for specific apps with Azure Active Directory conditional access)
 
-### Task 1: Create your conditional access policy 
+#### Task 1: Create your conditional access policy 
 
 
 This section shows how to create the required conditional access policy. The scenario uses:
@@ -95,7 +95,7 @@ d. On the **Users and groups** page, click **Done**.
 16.  Click **Create**.
 
 
-### Task 2: Evaluate a simulated sign-in
+#### Task 2: Evaluate a simulated sign-in
 
 
 Now that you have configured your conditional access policy, you probably want to know whether it works as expected. As a first step, use the conditional access what if policy tool to simulate a sign-in of your test user. The simulation estimates the impact this sign-in has on your policies and generates a simulation report.  
@@ -140,7 +140,7 @@ To initialize the what if policy evaluation tool, set:
      ![Screenshot](../Media/Module-1/6568f6de-0c9e-4ee1-ba48-eab401651416.png)
 
 
-### Task 3: Test your conditional access policy
+#### Task 3: Test your conditional access policy
 
 In the previous section, you have learned how to evaluate a simulated sign-in. In addition to a simulation, you should also test your conditional access policy to ensure that it works as expected. 
 
@@ -149,7 +149,7 @@ To test your policy, try to sign-in to the Azure portal **`https://portal.azure.
 
 
 
-## Exercise 2: MFA Conditional Access (Complete an Azure Multi-Factor Authentication pilot roll out)
+### Exercise 2: MFA Conditional Access (Complete an Azure Multi-Factor Authentication pilot roll out)
 
 
 In this lab, you walk you through configuring a conditional access policy enabling Azure Multi-Factor Authentication (Azure MFA) when logging in to the Azure portal. The policy is deployed to and tested on a specific group of pilot users. Deployment of Azure MFA using conditional access provides significant flexibility for organizations and administrators compared to the traditional enforced method.
@@ -158,7 +158,7 @@ In this lab, you walk you through configuring a conditional access policy enabli
 - Test Azure Multi-Factor Authentication
 
 
-### Task 1: Enable Azure Multi-Factor Authentication
+#### Task 1: Enable Azure Multi-Factor Authentication
 
 1.  Return to the the Azure portal that is logged in as your Global Admin account.
 
@@ -207,7 +207,7 @@ In this lab, you walk you through configuring a conditional access policy enabli
 10. Set the **Enable policy** toggle to **On**
 11. Click **Create**
 
-### Task 2: Test Azure Multi-Factor Authentication
+#### Task 2: Test Azure Multi-Factor Authentication
 
 
 To prove that your conditional access policy works, you test logging in to a resource that should not require MFA and then to the Azure portal that requires MFA.

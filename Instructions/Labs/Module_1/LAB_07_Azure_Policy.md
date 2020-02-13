@@ -10,11 +10,11 @@ In this lab, you will learn to use Azure Policy to do some of the more common ta
 
 > - Assign a policy to enforce a condition for resources you create in the future
 
-## Exercise 1: Using Azure Policy
+### Exercise 1: Using Azure Policy
 
 In this exercise, you will learn the basics of using Azure Policy. You will use a built-in policy to restrict which Azure regions can be used. You will then verify that the policy is working.
 
-### Task 1: Create an Azure Policy Assignment
+#### Task 1: Create an Azure Policy Assignment
 
 In this task, you will first browse the built-in policy definitions using the Azure portal. You will then create a policy assignment using one of the built-in definitions to restrict which Azure Regions can be used. This policy will be scoped to the Test-RG resource group.
 
@@ -91,7 +91,7 @@ In this task, you will first browse the built-in policy definitions using the Az
 
     **Note:** The reason the Azure policy assignment takes up to 30 minutes to be assigned is that is has to replicate globally although in the real world it generally only takes 2 - 3 minutes to be implemented.  If the next task fails, simply wait a few minutes and attempt the steps again.
 
-### Task 2: Verify the Azure Policy Assignment
+#### Task 2: Verify the Azure Policy Assignment
 
 In this task, you will verify that the policy assignment created in the previous task is effective by attempting to create a virtual network in both a permitted region and a different region.
 

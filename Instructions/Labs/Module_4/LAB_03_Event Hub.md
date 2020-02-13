@@ -14,9 +14,9 @@ In this lab, you will:
 - Configure applications to send or receive messages through an Event Hub
 - Evaluate Event Hub performance using the Azure portal
 
-## Exercise 1: Implementing Event Hub
+### Exercise 1: Implementing Event Hub
 
-### Task 1: Enabling Event Hubs Namespace
+#### Task 1: Enabling Event Hubs Namespace
 
 1.  Log into the Azure portal
 
@@ -35,7 +35,7 @@ In this lab, you will:
 
 4.  Click **Create**
 
-### Task 2: Create a storage account for later user
+#### Task 2: Create a storage account for later user
 
 
 **Note**: We also need to create a storage account and a blob store container to store events that will be sent to the Event Hubs later on
@@ -65,7 +65,7 @@ In this lab, you will:
 12.  Set the **Public Access Level** to **Container**
 13.  Click **OK**
 
-### Task 3: Create new event hub
+#### Task 3: Create new event hub
 
 1.  Return to event Hubs click the name of your newly created Event Hub namespace
 
@@ -90,7 +90,7 @@ In this lab, you will:
 
 10.  Click **Create**
 
-### Task 4: Collect data to be able to send events into event hubs
+#### Task 4: Collect data to be able to send events into event hubs
 
 1.  Under event hubs namespace click **Shared access policies**
 
@@ -105,7 +105,7 @@ In this lab, you will:
 **Note**: You will need this primary key and other information for the scripts that will be run later to enter some data into the event hubs system
 
 
-### Task 5: Download the script files
+#### Task 5: Download the script files
 
 
 We will now download the scripts that will be used to create some events to be sent into the Event Hub, this will simulate the Event Hub receiving data from an application in the environment that has been written to communicate with Event Hubs, or from other systems that communicate with Azure Event Hubs. The script files have been developed and published on the PowerShell gallery
@@ -120,7 +120,7 @@ We will now download the scripts that will be used to create some events to be s
 **Note**: If prompted confirm the installation. The script files have now been downloaded and are available for use in PowerShell
 
 
-### Task 6: Send some events to Event Hub
+#### Task 6: Send some events to Event Hub
 
 
 For this section you will need the primary key copied from the portal erlier
@@ -148,7 +148,7 @@ If you recieve a series if **401 Unauthorised errors** from the script check the
 **Note**: This will send a series of events to the Event Hub with randomised data
 
 
-### Task 7: Review the Events in EventHub and Blob Storage
+#### Task 7: Review the Events in EventHub and Blob Storage
 
 1.  Return to Event Hubs and your **Event hubs namespace**
 
@@ -167,7 +167,7 @@ If you recieve a series if **401 Unauthorised errors** from the script check the
 **Information**: Here you can review the raw .avro events that have been created by the Event Hubs system, for more information about the .avro format used by Event Hubs see the following wiki article **`https://en.wikipedia.org/wiki/Apache_Avro`**
 
 
-### Task 8: Review the Events from a REST query to the Blob storage
+#### Task 8: Review the Events from a REST query to the Blob storage
 
 1.  Launch **PowerShell**
 

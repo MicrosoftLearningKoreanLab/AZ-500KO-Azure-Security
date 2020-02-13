@@ -19,9 +19,9 @@ Lessons include:
 
 
 
-## Exercise 1: DNS Zones
+### Exercise 1: DNS Zones
 
-### Task 1: Create a DNS zone
+#### Task 1: Create a DNS zone
 
 1.  Sign in to the Azure Portal.
 2.  On the Hub menu, click **All services** and search for and select **DNS zone**.
@@ -43,13 +43,13 @@ Lessons include:
 
      ![Screenshot](../Media/Module-2/8a6454d2-1b27-4f54-91e8-69c764406c78.png)
 
-## Exercise 2: Manage DNS records and record sets by using the Azure portal
+### Exercise 2: Manage DNS records and record sets by using the Azure portal
 
 
 This exercise shows you how to manage record sets and records for your DNS zone by using the Azure portal.
 
 
-### Task 1: Add a new record to a record set
+#### Task 1: Add a new record to a record set
 
 1.  In the Azure Portal, navigate to **All resources** and select your DNS zone you created in the previous task.
 
@@ -64,7 +64,7 @@ This exercise shows you how to manage record sets and records for your DNS zone 
 
      ![Screenshot](../Media/Module-2/6e491490-0b00-4dda-b0e3-28a3f1784171.png)
 
-### Task 2: Update a record
+#### Task 2: Update a record
 
 1.  In the Overview blade for your DNS zone, select the testrecord you created.
 
@@ -74,7 +74,7 @@ This exercise shows you how to manage record sets and records for your DNS zone 
 
      ![Screenshot](../Media/Module-2/cf207752-7e3b-4b88-9514-c272d5cdd971.png)
  
-### Task 3: Remove a record from a record set
+#### Task 3: Remove a record from a record set
 
 
 You can use the Azure portal to remove records from a record set. Note that removing the last record from a record set does not delete the record set.

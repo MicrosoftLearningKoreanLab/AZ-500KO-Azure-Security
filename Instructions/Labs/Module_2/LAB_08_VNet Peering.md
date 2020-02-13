@@ -16,9 +16,9 @@ You can connect virtual networks to each other with virtual network peering. The
 - Communicate between VMs
 
 
-### Exercise 1: Create Virtual Networks and implement Peering.
+#### Exercise 1: Create Virtual Networks and implement Peering.
 
-### Task 1: Create virtual networks
+#### Task 1: Create virtual networks
 
 1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
 2.  Select **Networking**, and then select **Virtual network**.
@@ -44,7 +44,7 @@ You can connect virtual networks to each other with virtual network peering. The
     |Resource group| Select **Use existing** and then select **myResourceGroup**.|
     |Subnet Address range|10.1.0.0/24|
 
-### Task 2: Peer virtual networks
+#### Task 2: Peer virtual networks
 
 1.  In the Search box at the top of the Azure portal, begin typing *MyVirtualNetwork1*. When **myVirtualNetwork1** appears in the search results, select it.
 2.  Select **Peerings**, under **SETTINGS**, and then select **+ Add**.
@@ -69,7 +69,7 @@ You can connect virtual networks to each other with virtual network peering. The
     
     
 
-### Task 3: Create virtual machines
+#### Task 3: Create virtual machines
 
 1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
 2.  Select **Compute**, and then select **Windows Server 2016 Datacenter**. You can select a different operating system, but the remaining steps assume you selected **Windows Server 2016 Datacenter**. 
@@ -113,7 +113,7 @@ You can connect virtual networks to each other with virtual network peering. The
 
 
 
-### Task 4: Communicate between VMs
+#### Task 4: Communicate between VMs
 
 1.  In the *Search* box at the top of the portal, begin typing *myVM1*. When **myVM1** appears in the search results, select it.
 2.  Create a remote desktop connection to the *myVm1* VM by selecting **Connect**.

@@ -13,9 +13,9 @@ The Azure Bastion service is a new fully platform-managed PaaS service that you 
 Bastion provides secure RDP and SSH connectivity to all VMs in the virtual network in which it is provisioned. Using Azure Bastion protects your virtual machines from exposing RDP/SSH ports to outside world while still providing secure access using RDP/SSH. With Azure Bastion, you connect to the virtual machine directly from the Azure portal. You don't need an additional client, agent, or piece of software.
 
 
-## Exercise 1: Implement Azure Bastion
+### Exercise 1: Implement Azure Bastion
 
-### Task 1: Enable Azure Bastion on your subscription
+#### Task 1: Enable Azure Bastion on your subscription
 
 1.  Open the **Cloud Shell (PowerShell)** and create storage if required.
 
@@ -47,7 +47,7 @@ Bastion provides secure RDP and SSH connectivity to all VMs in the virtual netwo
 
      ![Screenshot](../Media/Module-2/a5f29b4f-4bf1-42cd-b045-ac110bae5d7c.png)
 
-### Task 2: Create a bastion host
+#### Task 2: Create a bastion host
 
 1.  From the home page in the **Azure portal** click **+ Create a resource**. 
 
@@ -81,7 +81,7 @@ Bastion provides secure RDP and SSH connectivity to all VMs in the virtual netwo
 1.  On the Create a bastion page, click **Create**.
 1.  You will see a message letting you know that your deployment is underway. Status will display on this page as the resources are created. It takes about 5 mins for the Bastion resource to be created and deployed.
 
-### Task 3: Connect to a VM using a bastion host 
+#### Task 3: Connect to a VM using a bastion host 
 
 
 If you create a bastion host in the portal by using an existing VM, various settings will automatically default corresponding to your virtual machine and/or virtual network.

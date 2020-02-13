@@ -6,9 +6,9 @@ lab:
 
 # 랩: Database 감사
 
-## Exercise 1: Enable auditing on your database
+### Exercise 1: Enable auditing on your database
 
-### Task 1: Lab Setup
+#### Task 1: Lab Setup
 
 1.  Open **PowerShell** and run the following command to deploy a database for the lab:
 
@@ -24,7 +24,7 @@ lab:
 warning
 **Note**: You must wait for the SQL database with the test data to deploy
 
-### Task 2: Enable auditing on your databasease
+#### Task 2: Enable auditing on your databasease
 
 1.  Select your resource group created in the lab setup
 
@@ -50,9 +50,9 @@ warning
 
 12. Click **Save** to save the **auditing configuration**
 
-## Exercise 2: Review audit logs
+### Exercise 2: Review audit logs
 
-### Task 1: Review audit logs on the SQL DB.
+#### Task 1: Review audit logs on the SQL DB.
 
 1.  To review audit logs for a database return to the resource group created in the lab setup
 

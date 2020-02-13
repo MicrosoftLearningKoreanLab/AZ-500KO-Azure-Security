@@ -17,13 +17,13 @@ In this lab you will configure Azure Monitor to:
 
 
  
-## Exercise 1: Collect data from an Azure virtual machine with Azure Monitor
+### Exercise 1: Collect data from an Azure virtual machine with Azure Monitor
 
 
 Azure Monitor can collect data directly from your Azure virtual machines into a Log Analytics workspace for detailed analysis and correlation. Installing the Log Analytics VM extension for Windows and Linux allows Azure Monitor to collect data from your Azure VMs. This exercise shows you how to configure and collect data from your Azure Linux or Windows VMs using the VM extension with a few easy steps.  
 
 
-### Task 1: Deploy an Azure VM to monitor.
+#### Task 1: Deploy an Azure VM to monitor.
 
 1.  Open the Azure Cloud Shell and run the following two commands to create a Resource Group and Azure VM that you will use to monitor:
 
@@ -37,7 +37,7 @@ Azure Monitor can collect data directly from your Azure virtual machines into a 
 
 1.  When prompted for credentials enter **LocalAdmin** as the User and use the password **Pa55w.rd1234**
 
-### Task 2: Create a workspace
+#### Task 2: Create a workspace
 
 1.  In the Azure portal, select **All services**. In the list of resources, type **Log Analytics**. As you begin typing, the list filters based on your input. Select **Log Analytics workspaces**.
 
@@ -57,7 +57,7 @@ Azure Monitor can collect data directly from your Azure virtual machines into a 
 
 1.  While the information is verified and the workspace is created, you can track its progress under **Notifications** from the menu. 
 
-### Task 2: Enable the Log Analytics VM Extension
+#### Task 2: Enable the Log Analytics VM Extension
 
 
 For Windows and Linux virtual machines already deployed in Azure, you install the Log Analytics agent with the Log Analytics VM Extension. Using the extension simplifies the installation process and automatically configures the agent to send data to the Log Analytics workspace that you specify. The agent is also upgraded automatically when a newer version is released, ensuring that you have the latest features and fixes. Before proceeding, verify the VM is running otherwise the process will fail to complete successfully. 
@@ -78,7 +78,7 @@ For Windows and Linux virtual machines already deployed in Azure, you install th
 
 6.  After you install and connect the agent, the **Log Analytics connection status** will be updated with **This workspace**.
 
-### Task 3: Collect event and performance of a Windows VM.
+#### Task 3: Collect event and performance of a Windows VM.
 
 
 Azure Monitor can collect events from the Windows event logs or Linux Syslog and performance counters that you specify for longer term analysis and reporting, and take action when a particular condition is detected. Follow these steps to configure collection of events from the Windows system log and Linux Syslog, and several common performance counters to start with.  
@@ -107,7 +107,7 @@ Azure Monitor can collect events from the Windows event logs or Linux Syslog and
 8.  Select **Save** at the top of the page to save the configuration.
 
 
-### Task 4: View data collected
+#### Task 4: View data collected
 
 
 Now that you have enabled data collection, lets run a simple log search example to see some data from the target VMs.  
@@ -123,7 +123,7 @@ Now that you have enabled data collection, lets run a simple log search example 
 
        ![Screenshot](../Media/Module-4/28ecfff4-d9ef-4593-adc9-7fa90171065e.png)
 
-## Exercise 2: Monitor Websites with Azure Monitor Application Insights
+### Exercise 2: Monitor Websites with Azure Monitor Application Insights
 
 
 With Azure Monitor Application Insights, you can easily monitor your website for availability, performance, and usage. You can also quickly identify and diagnose errors in your application without waiting for a user to report them. Application Insights provides both server-side monitoring as well as client/browser-side monitoring capabilities.
@@ -131,7 +131,7 @@ With Azure Monitor Application Insights, you can easily monitor your website for
 This exercise guides you through adding the open source Application Insights JavaScript SDK which allows you to understand the client/browser-side experience for visitors to your website.
 
 
-### Task 1: Enable Application Insights
+#### Task 1: Enable Application Insights
 
 
 Application Insights can gather telemetry data from any internet-connected application, running on-premises or in the cloud. Use the following steps to start viewing this data.
@@ -149,7 +149,7 @@ Application Insights can gather telemetry data from any internet-connected appli
 
 2.  Click **Create**.
 
-### Task 2: Create an HTML file
+#### Task 2: Create an HTML file
 
 1.  On your local computer, create a file called ``hello_world.html``. For this example the file will be placed on the root of the C: drive at ``C:\hello_world.html``.
 2.  Copy the script below into ``hello_world.html``:
@@ -180,7 +180,7 @@ Application Insights can gather telemetry data from any internet-connected appli
     </html>
     ```
 
-### Task 3: Configure App Insights SDK
+#### Task 3: Configure App Insights SDK
 
 1.  Select **Overview** > **Essentials** > Copy your application's **Instrumentation Key**.
 
@@ -190,7 +190,7 @@ Application Insights can gather telemetry data from any internet-connected appli
 
 4.  Open ``hello_world.html`` in a local browser session. This will create a single pageview. You can refresh your browser to generate multiple test page views.
 
-### Task 4: Start monitoring in the Azure portal
+#### Task 4: Start monitoring in the Azure portal
 
 1.  You can now reopen the Application Insights **Overview** page in the Azure portal, where you retrieved your instrumentation key, to view details about your currently running application. The four default charts on the overview page are scoped to server-side application data. Since we are instrumenting the client/browser-side interactions with the JavaScript SDK this particular view doesn't apply unless we also have a server-side SDK installed.
 

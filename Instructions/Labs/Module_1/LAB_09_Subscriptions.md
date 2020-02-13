@@ -11,9 +11,9 @@ lab:
 Occasionally, a need arises for transferring a subscription from an owner to an Azure AD tenant. In order to transfer a subscription from an Azure AD owner to another subscription, you need access to another subscription. If you do not have access to multiple subscriptions at this time, just review the process outlined below.
 
 
-## Exercise 1: Transfer Azure subscriptions between Azure AD tenants
+### Exercise 1: Transfer Azure subscriptions between Azure AD tenants
 
-### Task 1: To transfer the ownership of an Azure subscription
+#### Task 1: To transfer the ownership of an Azure subscription
 
 1.  Sign in at the Azure Portal as the account admin.
 

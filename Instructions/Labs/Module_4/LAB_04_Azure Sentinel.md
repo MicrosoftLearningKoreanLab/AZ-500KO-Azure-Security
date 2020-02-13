@@ -9,7 +9,7 @@ lab:
 Azure Sentinel is your bird's-eye view across the enterprise. Put the cloud and large-scale intelligence from decades of Microsoft security experience to work. Make your threat detection and response smarter and faster with artificial intelligence (AI)
 
 
-## Exercise 1: On-board Azure Sentinel
+### Exercise 1: On-board Azure Sentinel
 
 
 To on-board Azure Sentinel, you first need to enable Azure Sentinel, and then connect your data sources. Azure Sentinel comes with a number of connectors for Microsoft solutions, available out of the box and providing real-time integration, including Microsoft Threat Protection solutions, Microsoft 365 sources, including Office 365, Azure AD, Azure ATP, and Microsoft Cloud App Security, and more. In addition, there are built-in connectors to the broader security ecosystem for non-Microsoft solutions. You can also use common event format, Syslog or REST-API to connect your data sources with Azure Sentinel.  
@@ -17,7 +17,7 @@ To on-board Azure Sentinel, you first need to enable Azure Sentinel, and then co
 After you connect your data sources, choose from a gallery of expertly created workbooks that surface insights based on your data. These workbooks can be easily customized to your needs.
 
 
-### Task 1: Enable Azure Sentinel
+#### Task 1: Enable Azure Sentinel
 
 1.  In the Azure portal, search for Azure Sentinel. 
 
@@ -32,7 +32,7 @@ After you connect your data sources, choose from a gallery of expertly created w
 6.  Click **Add Azure Sentinel**.
   
 
-### Task 3: Connect data sources
+#### Task 3: Connect data sources
 
 
 Azure Sentinel creates the connection to services and apps by connecting to the service and forwarding the events and logs to Azure Sentinel. For machines and virtual machines, you can install the Azure Sentinel agent that collects the logs and forwards them to Azure Sentinel. For Firewalls and proxies, Azure Sentinel utilizes a Linux Syslog server. The agent is installed on it and from which the agent collects the log files and forwards them to Azure Sentinel. 

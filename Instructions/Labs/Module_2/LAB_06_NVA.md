@@ -19,9 +19,9 @@ Azure routes traffic between all subnets within a virtual network, by default. Y
 > * Deploy virtual machines (VM) into different subnets
 > * Route traffic from one subnet to another through an NVA
 
-## Exercise 1: Route network traffic with a route table using the Azure portal
+### Exercise 1: Route network traffic with a route table using the Azure portal
 
-### Task 1: Create a route table
+#### Task 1: Create a route table
 
 1.  On the upper-left side of the screen, select **Create a resource** > **Networking** > **Route table**.
 
@@ -37,7 +37,7 @@ Azure routes traffic between all subnets within a virtual network, by default. Y
 
 1.  Select **Create**.
 
-### Task 2: Create a route
+#### Task 2: Create a route
 
 1.  In the portal's search bar, enter *myRouteTablePublic*.
 
@@ -57,7 +57,7 @@ Azure routes traffic between all subnets within a virtual network, by default. Y
 
 1.  Select **OK**.
 
-### Task 3: Associate a route table to a subnet
+#### Task 3: Associate a route table to a subnet
 
 
 Before you can associate a route table to a subnet, you have to create a virtual network and subnet.
@@ -79,7 +79,7 @@ Before you can associate a route table to a subnet, you have to create a virtual
 
 1.  Leave the rest of the defaults and select **Create**.
 
-### Task 4: Add subnets to the virtual network
+#### Task 4: Add subnets to the virtual network
 
 1.  In the portal's search bar, enter *myVirtualNetwork*.
 
@@ -109,7 +109,7 @@ Before you can associate a route table to a subnet, you have to create a virtual
 
     Azure shows the three subnets: **Public**, **Private**, and **DMZ**.
 
-### Task 5: Associate myRouteTablePublic to your Public subnet
+#### Task 5: Associate myRouteTablePublic to your Public subnet
 
 1.  Select **Public**.
 
@@ -117,7 +117,7 @@ Before you can associate a route table to a subnet, you have to create a virtual
 
        ![Screenshot](../Media/Module-2/977a7e1f-07ff-4813-87f8-cfaf539181d2.png)
 
-### Task 6: Create an NVA
+#### Task 6: Create an NVA
 
 NVAs are VMs that help with network functions like routing and firewall optimization. You can select a different operating system if you want. This tutorial assumes you're using **Windows Server 2016 Datacenter**.
 
@@ -182,7 +182,7 @@ NVAs are VMs that help with network functions like routing and firewall optimiza
 
 1.  When your VM is ready, select **Go to resource**.
 
-### Task 7: Turn on IP forwarding
+#### Task 7: Turn on IP forwarding
 
 
 Turn on IP forwarding for *myVmNva*. When Azure sends network traffic to *myVmNva*, if the traffic is destined for a different IP address, IP forwarding will send the traffic to the correct location.
@@ -198,7 +198,7 @@ Turn on IP forwarding for *myVmNva*. When Azure sends network traffic to *myVmNv
 
        ![Screenshot](../Media/Module-2/e9450da2-4761-4cf2-b7bd-2fc53d9f74a5.png)
 
-### Task 8: Create public and private virtual machines
+#### Task 8: Create public and private virtual machines
 
 
 Create a public VM and a private VM in the virtual network. Later, you'll use them to see that Azure routes the *Public* subnet traffic to the *Private* subnet through the NVA.
@@ -231,7 +231,7 @@ Create a public VM and a private VM in the virtual network. Later, you'll use th
 
 You can create the *myVmPrivate* VM while Azure creates the *myVmPublic* VM. Don't continue with the rest of the steps until Azure finishes creating both VMs.
 
-### Task 9: Route traffic through an NVA
+#### Task 9: Route traffic through an NVA
 
 1.  Sign in to myVmPrivate over remote desktop
 
@@ -257,7 +257,7 @@ You can create the *myVmPrivate* VM while Azure creates the *myVmPublic* VM. Don
 
 1.  Select **Yes** to connect to the VM.
 
-### Task 10: Enable ICMP through the Windows firewall
+#### Task 10: Enable ICMP through the Windows firewall
 
 
 In a later step, you'll use the trace route tool to test routing. Trace route uses the Internet Control Message Protocol (ICMP), which the Windows Firewall denies by default. Enable ICMP through the Windows firewall.
@@ -273,7 +273,7 @@ In a later step, you'll use the trace route tool to test routing. Trace route us
 
     You're using trace route to test routing in this tutorial. For production environments, we don't recommend allowing ICMP through the Windows Firewall.
 
-### Task 11: Turn on IP forwarding within myVmNva
+#### Task 11: Turn on IP forwarding within myVmNva
 
 
 You turned on IP forwardingfor the VM's network interface using Azure. The VM's operating system also has to forward network traffic. Turn on IP forwarding for *myVmNva* VM's operating system with these commands.
@@ -308,7 +308,7 @@ You turned on IP forwardingfor the VM's network interface using Azure. The VM's 
     New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
     ```
 
-### Task 12: Test the routing of network traffic
+#### Task 12: Test the routing of network traffic
 
 
 First, let's test routing of network traffic from the *myVmPublic* VM to the *myVmPrivate* VM.

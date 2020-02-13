@@ -6,9 +6,9 @@ lab:
 
 # 랩: 온-프레미스와 Azure 연결 - VPN 게이트웨이와 터널링
 
-## Exercise 1: Deploy Virtual Appliances and Gateways for intersite connectivity.
+### Exercise 1: Deploy Virtual Appliances and Gateways for intersite connectivity.
 
-### Task 1: Deploy a Virtual Appliance.
+#### Task 1: Deploy a Virtual Appliance.
 
 
 In this task you will create a Sophos XG Virtual Appliance which will emulate an on-premises device.  The layout of this is depicted in the digaram below
@@ -35,7 +35,7 @@ In this task you will create a Sophos XG Virtual Appliance which will emulate an
  
 4.  Scroll to the bottom of the blade and click the check box next to  I agree to the terms and conditions..... and click **Purchase**. 
  
-### Task 2: Create a Resource Group and VNet.
+#### Task 2: Create a Resource Group and VNet.
 
 
 In this task you will create a Virtual Machine and a Virtual Network inside a new Resource group which will be use to connect to your emulated On-Prem environment.
@@ -58,7 +58,7 @@ In this task you will create a Virtual Machine and a Virtual Network inside a ne
 
 
 
-### Task 2: Create a Gateway Subnet and a Virtual network Gateway.
+#### Task 2: Create a Gateway Subnet and a Virtual network Gateway.
 
 
 In this tak you will Create a Gateway Subnet and a Virtual network Gateway which will enable you to create a connection between On-Prem and your Azure VNet.
@@ -104,7 +104,7 @@ In this tak you will Create a Gateway Subnet and a Virtual network Gateway which
 **Note:**  The gateway may take upto 45 minutes to deploy, although. in most cases it is much quicker.  Monitor this by clicking on the Bell Icon. You can continue to the next task whilst the Gateway is deploying.
 
 
-### Task 3: Configure the Sophos virtual appliance.
+#### Task 3: Configure the Sophos virtual appliance.
 
 1.  On the Azure Portal Hub menu click **Resource Groups**.
 
@@ -196,7 +196,7 @@ In this tak you will Create a Gateway Subnet and a Virtual network Gateway which
 
 
 
-### Task 4: Creating Azure connection.
+#### Task 4: Creating Azure connection.
 
 
 In this task you will create a connection on your Azure Gateway to the On-Prem firewall and establish the connection.

@@ -20,9 +20,9 @@ Security Center also provides you with an **Overall secure score**.
 
 
  
-## Exercise 1: Improve your secure score in Azure Security Center.
+### Exercise 1: Improve your secure score in Azure Security Center.
 
-### Task 1: View the secure score in the Azure Portal.
+#### Task 1: View the secure score in the Azure Portal.
 
 1.  In the Azure dashboard, click **Security Center** and then click **Secure score**.
 2.  At the top you can see Secure score highlights:
@@ -43,7 +43,7 @@ Security Center also provides you with an **Overall secure score**.
 
        ![Screenshot](../Media/Module-4/45893315-b503-4beb-8beb-20730b0fc9d3.png)
 
-### Task 2: View the individual secure scores.
+#### Task 2: View the individual secure scores.
 
 
 In addition, to view individual secure scores, you can find these within the individual recommendation blade.  

@@ -21,9 +21,9 @@ In this lab, you learn how to:
 
 
 
-## Exercise 1: Create an Azure private DNS zone using the Azure portal
+### Exercise 1: Create an Azure private DNS zone using the Azure portal
 
-### Task 1: Create a private DNS zone
+#### Task 1: Create a private DNS zone
 
 
 The following example creates a DNS zone called **private.contoso.com** in a resource group called **MyAzureResourceGroup**.
@@ -48,7 +48,7 @@ A DNS zone contains the DNS entries for a domain. To start hosting your domain i
 
 It may take a few minutes to create the zone.
 
-### Task 2: Create a virtual network
+#### Task 2: Create a virtual network
 
 1.  On the portal page upper left, select **Create a resource**, then **Networking**, then select **Virtual network**.
 
@@ -57,7 +57,7 @@ It may take a few minutes to create the zone.
 4.  For **Location**, select **East US**.
 5.  Accept the other default values and select **Create**.
 
-### Task 3: Link the virtual network
+#### Task 3: Link the virtual network
 
 
 To link the private DNS zone to a virtual network, you create a virtual network link.
@@ -74,7 +74,7 @@ To link the private DNS zone to a virtual network, you create a virtual network 
 
      ![Screenshot](../Media/Module-2/1baf1a71-3ab4-4379-9b1c-d7358ec70a78.png)
 
-### Task 4: Create the test virtual machines
+#### Task 4: Create the test virtual machines
 
 
 Now, create two virtual machines so you can test your private DNS zone:
@@ -100,7 +100,7 @@ Now, create two virtual machines so you can test your private DNS zone:
 
 It will take a few minutes for both virtual machines to complete.
 
-### Task 5: Create an additional DNS record
+#### Task 5: Create an additional DNS record
 
 
 The following example creates a record with the relative name **db** in the DNS Zone **private.contoso.com**, in resource group **MyAzureResourceGroup**. The fully qualified name of the record set is **db.private.contoso.com**. The record type is "A", with the IP address of **myVM01**.
@@ -113,7 +113,7 @@ The following example creates a record with the relative name **db** in the DNS 
 4.  For **IP Address**, type the IP address you see for **myVM01**. This should be auto registered when the virtual machine started.
 5.  Select **OK**.
 
-### Task 6: Test the private zone
+#### Task 6: Test the private zone
 
 
 Now you can test the name resolution for your **private.contoso.com** private zone.
@@ -131,7 +131,7 @@ You can use the ping command to test name resolution. So, configure the firewall
 
 1.  Repeat for myVM02.
 
-### Task 7: Ping the VMs by name
+#### Task 7: Ping the VMs by name
 
 1.  From the myVM02 Windows PowerShell command prompt, ping myVM01 using the automatically registered host name:
 

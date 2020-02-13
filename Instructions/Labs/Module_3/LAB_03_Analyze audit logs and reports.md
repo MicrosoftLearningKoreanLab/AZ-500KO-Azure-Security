@@ -6,9 +6,9 @@ lab:
 
 # 랩: 감사 로그와 보고서 분석
 
-## Exercise 1: Get started with SQL database auditing
+### Exercise 1: Get started with SQL database auditing
 
-### Task 0: Lab Setup
+#### Task 0: Lab Setup
 
 1.  Open **PowerShell** and run the following command to deploy a database for the lab.
 
@@ -22,7 +22,7 @@ lab:
 
 1.  Click **Purchase** 
 
-### Task 1 - Set up auditing for your database
+#### Task 1 - Set up auditing for your database
 
 1.  **Navigate** to **Resource Groups**
 
@@ -113,7 +113,7 @@ warning
 **Note**: Because we have set up logs on a new database with test data, there are minimnal log available to see, to show how log are displayed in example we can use example log analytics website that is populated with example data to view.
 
 
-### Task 2 - Analyze audit logs and reports
+#### Task 2 - Analyze audit logs and reports
 
 1.  Visit **`https://portal.loganalytics.io/demo`** in a new web browser tab, this will direct you to a demo log analytics workspace with demo data populated
 

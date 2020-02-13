@@ -20,7 +20,7 @@ Security Center reports the following endpoint protection issues:
   - Unknown -  An antimalware solution is installed but its status is unknown or reporting an unknown error.
 
 
-## Exercise 1: Implement the recommendation
+### Exercise 1: Implement the recommendation
 
 
 Endpoint protection issues is presented as a recommendation in Security Center.  If your environment is vulnerable to antimalware threats, this recommendation will be displayed under **Recommendations** and under **Compute**. To see the **Endpoint protection issues dashboard**, you need to follow the Compute workflow.
@@ -28,7 +28,7 @@ Endpoint protection issues is presented as a recommendation in Security Center. 
 In this exercise, we will use **Compute**.  We will look at how to install antimalware on Azure VMs and on non-Azure computers.
 
 
-### Task 1: Install antimalware on Azure VMs
+#### Task 1: Install antimalware on Azure VMs
 
 1.  Select **Compute & apps** under the Security Center main menu or **Overview**.
 

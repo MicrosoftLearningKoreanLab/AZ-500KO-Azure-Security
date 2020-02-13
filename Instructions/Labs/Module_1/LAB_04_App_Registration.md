@@ -13,9 +13,9 @@ Enterprise developers and software-as-a-service (SaaS) providers can develop com
 This lab shows you how to add and register an application using the App registrations experience in the Azure portal so that your app can be integrated with the Microsoft identity platform.
 
 
-## Exercise 1: Application Registration
+### Exercise 1: Application Registration
 
-### Task 1: Register a new application using the Azure portal
+#### Task 1: Register a new application using the Azure portal
 
 1.  Sign in to the Azure portal.
 
