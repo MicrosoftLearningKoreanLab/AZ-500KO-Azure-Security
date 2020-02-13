@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure 보안 센터의 보안 점수'
+    title: 'LAB 07_Azure 보안 센터의 보안 점수'
     module: '모듈 04 - 보안 운영 관리'
 ---
 

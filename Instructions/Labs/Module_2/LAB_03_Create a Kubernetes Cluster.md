@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Kubernetes 클러스터 만들기'
+    title: 'LAB 03_Kubernetes 클러스터 만들기'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

@@ -1,6 +1,6 @@
 ---
 lab:
-    title: '보안 기준 생성'
+    title: 'LAB 08_보안 기준 생성'
     module: '모듈 04 - 보안 운영 관리'
 ---
 
@@ -42,7 +42,7 @@ All non-Administrators should not have access due to the sensitive data and the 
 
 4.  Ensure that Restrict access to Azure AD administration portal is set to Yes. Setting this value to Yes restricts all non-administrators from accessing any Azure AD data in the administration portal, but does not restrict such access using PowerShell or another client such as Visual Studio.
 
-       ![Screenshot](../Media/Module-4/7dd3586e-538f-4823-9d60-0d7bf5e96f17.png)
+     ![Screenshot](../Media/Module-4/7dd3586e-538f-4823-9d60-0d7bf5e96f17.png)
 
 1.  Click **Save**.
 
@@ -74,7 +74,7 @@ Enable it for privileged and non-privileged users.
 
 4.  Select Abbi Skinner and click **Enable**
 
-       ![Screenshot](../Media/Module-4/fbfead4c-92e0-4cc3-9b79-fdd091af8727.png)
+     ![Screenshot](../Media/Module-4/fbfead4c-92e0-4cc3-9b79-fdd091af8727.png)
 
 1.  Select **enable multi-factor auth** then click **Close**.
 
@@ -98,7 +98,7 @@ Remember Multi-Factor Authentication feature for devices and browsers that are t
 
 5.  Ensure that **Restore multi-factoe authentication on all remembered devices** is Selected then click **Save**.
 
-       ![Screenshot](../Media/Module-4/73dabcbb-b9ff-40b1-9760-9ee748e1a849.png)
+     ![Screenshot](../Media/Module-4/73dabcbb-b9ff-40b1-9760-9ee748e1a849.png)
 
 #### Task 4: About guests 
 
@@ -114,7 +114,7 @@ In this task you will ensure that no guest users exist, or alternatively if the 
 
 4.  Verify that there are no guest users listed (`USER TYPE=Guest`).
 
-       ![Screenshot](../Media/Module-4/a33565de-a4d1-4df4-9f16-64259704b8ad.png)
+     ![Screenshot](../Media/Module-4/a33565de-a4d1-4df4-9f16-64259704b8ad.png)
 
 #### Task 5: Password options
 

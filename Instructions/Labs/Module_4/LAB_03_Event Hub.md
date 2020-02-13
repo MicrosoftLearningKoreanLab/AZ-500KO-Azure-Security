@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Event hub'
+    title: 'LAB 03_Event hub'
     module: '모듈 04 - 보안 운영 관리'
 ---
 

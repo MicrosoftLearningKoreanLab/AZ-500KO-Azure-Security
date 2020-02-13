@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Private DNS'
+    title: 'LAB 19_Private DNS'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

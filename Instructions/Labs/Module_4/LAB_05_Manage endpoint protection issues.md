@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure 보안 센터를 사용하여 Endpoint 보호 문제 관리'
+    title: 'LAB 05_Azure 보안 센터를 사용하여 Endpoint 보호 문제 관리'
     module: '모듈 04 - 보안 운영 관리'
 ---
 

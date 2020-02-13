@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Monitor & Autoscale'
+    title: 'LAB 01_Monitor & Autoscale'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

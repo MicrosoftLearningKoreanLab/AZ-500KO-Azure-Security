@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Application Service Principal'
+    title: 'LAB 05_Application Service Principal'
     module: '모듈 01 - 계정과 접근 관리'
 ---
 

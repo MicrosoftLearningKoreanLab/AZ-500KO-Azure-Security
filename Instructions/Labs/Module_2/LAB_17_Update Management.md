@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Automation을 사용하여 Windows 업데이트 관리'
+    title: 'LAB 17_Azure Automation을 사용하여 Windows 업데이트 관리'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

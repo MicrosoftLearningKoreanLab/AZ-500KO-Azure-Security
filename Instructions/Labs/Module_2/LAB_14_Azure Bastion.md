@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Bastion'
+    title: 'LAB 14_Azure Bastion'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

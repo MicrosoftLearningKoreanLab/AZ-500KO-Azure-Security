@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Sentinel'
+    title: 'LAB 04_Azure Sentinel'
     module: '모듈 04 - 보안 운영 관리'
 ---
 

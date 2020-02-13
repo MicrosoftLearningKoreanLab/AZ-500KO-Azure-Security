@@ -1,6 +1,6 @@
 ---
 lab:
-    title: '보안된 Admin 액세스'
+    title: 'LAB 13_보안된 Admin 액세스'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Service Endpoints'
+    title: 'LAB 07_Service Endpoints'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

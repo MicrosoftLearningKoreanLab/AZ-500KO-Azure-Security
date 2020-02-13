@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Monitor'
+    title: 'LAB 01_Azure Monitor'
     module: '모듈 04 - 보안 운영 관리'
 ---
 

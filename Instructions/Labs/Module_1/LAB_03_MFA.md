@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'MFA를 사용하여 보안 접근'
+    title: 'LAB 03_MFA를 사용하여 보안 접근'
     module: '모듈 01 - 계정과 접근 관리'
 ---
 

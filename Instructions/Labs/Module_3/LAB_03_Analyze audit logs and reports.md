@@ -1,133 +1,136 @@
 ---
 lab:
-    title: '감사 로그와 보고서 분석'
+    title: 'LAB 03_감사 로그와 보고서 분석'
     module: '모듈 03 - 데이터와 응용프로그램 보안'
 ---
 
 # 랩: 감사 로그와 보고서 분석
 
-### Exercise 1: Get started with SQL database auditing
+### 연습 1: SQL 데이터베이스 감사 시작
 
-#### Task 0: Lab Setup
+ > **참고** LAB 01에서 설정한 Azure SQL Database를 그대로 활용해도 됩니다.
 
-1.  Open **PowerShell** and run the following command to deploy a database for the lab.
+#### 작업 1: 랩 설정
 
-     ```powershell
-    start "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod3_Lab03%2Fazuredeploy.json" 
+1. 웹 브라우저에 [이 URL](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod3_Lab03%2Fazuredeploy.json)로 접속합니다.
+
+1. 리소스 그룹에서 **새로 만들기**를 선택하고 `az5000303`를 입력합니다.
+
+1. **SQL server name**은 `az5000303xxx` (xxx는 유니크 해야 함)을 입력합니다.
+
+1. **위에 명시된 사용 약관에 동의함** 체크박스에 체크를 한 후 **구매**버튼을 클릭합니다.
+
+1. 1. **+ 리소스 만들기**를 클릭한 다음 **event hubs**를 입력하고 **Event Hubs**를 클릭합니다.
+
+1. **Event Hubs** 블레이드가 뜨면 **만들기** 버튼을 클릭합니다.
+
+1. 다음을 참고하여 정보를 입력한 후 **만들기** 버튼을 클릭하여 리소스를 배포합니다. 정의되지 않은 설정은 기본값으로 둡니다.
+
+     | 설정 | 값 |
+     | --- | --- |
+     | 이름 | **az5000303hubxxx** (xxx는 유니크 해야 함) |
+     | 가격 책정 계층 | **표준 (20 소비자 그룹, 1000 조정된 연결)** |
+     | 구독 | 이 랩에서 사용할 구독 |
+     | 리소스 그룹 | **az5000303** |
+     | 위치 | **미국 동부** |
+
+1. 이벤트 허브의 배포가 완료되면 리소스를 탐색합니다.
+
+1. **엔터티** 섹션에서 **Event Hubs**를 클릭합니다.
+
+1. 상단에 **+이벤트 허브**를 클릭합니다.
+
+1. 다음을 참고하여 정보를 입력한 후 **만들기** 버튼을 클릭하여 이벤트 허브를 생성합니다.
+
+     | 설정 | 값 |
+     | --- | --- |
+     | 이름 | **az5000303eventhub** |
+     | 메시지 보존기간 | **3** |
+
+#### 작업 2: 데이터베이스 감사 설정
+
+1. **az5000303** 리소스 그룹을 탐색합니다.
+
+1. SQL Server인 **az5000303xxx**를 클릭합니다.
+
+1. **보안** 섹션에서 **감사**를 클릭합니다.
+
+1. **감사** 옵션을 **설정**으로 변경합니다.
+
+1. **감사 로그 대상(하나 이상 선택**에서 **Storage**, **로그 분석(미리 보기)**, **이벤트 허브(미리 보기)** 세 가지 옵션 전부 선택합니다.
+
+1. **스토리지 세부 정보**을 클릭한 후 **스토리지 설정** 블레이드가 뜨면 **스토리지 계정**을 클릭합니다.
+
+1. **스토리지 계정 선택** 블레이드에서 **+ 새로 만들기**를 클릭합니다.
+
+    > **참고**: 이 메뉴는 자동으로 선택될 수 있습니다.
+
+1. **스토리지 계정 만들기** 블레이드가 뜨면 **이름**에 `az5000303stlogxxx` (xxx는 유니크 해야 함)을 입력한 후 **확인** 버튼을 클릭하여 스토리지 계정을 배포합니다.
+
+1. **보존(일)**에 5를 입력합니다.
+
+1. **확인** 버튼을 클릭한 후 감사 블레이드로 돌아오면 상단에 **저장**을 클릭하여 감사 설정을 저장합니다.
+
+1. **Log Analytics 세부 정보**를 클릭한 후 **Log Analytics 작업 영역** 블레이드가 뜨면 **+ 새 작업 영역 만들기**를 클릭합니다.
+
+1. 새로운 **Log Analytics 작업 영역** 블레이드가 뜨면 다음을 참고하여 정보를 입력한 후 **확인** 버튼을 클릭하여 리소스를 배포합니다.
+
+     | 설정 | 값 |
+     | --- | --- |
+     | Log Analytics 작업 영역 | **az5000303-log** |
+     | 구독 | 이 랩에서 사용할 구독 |
+     | 리소스 그룹 | **az5000303** |
+     | 위치 | **미국 동부** |
+     | 가격 책정 계층 | **종량제** |
+
+1. 배포가 완료되면 자동으로 **감사** 블레이드로 돌아갑니다.
+
+1. **이벤트 허브 세부 정보**를 클릭합니다.
+
+1. **이벤트 허브 선택** 블레이드가 뜨면 다음을 참고하여 정보를 입력한 후 **확인** 버튼을 클릭합니다.
+
+     | 설정 | 값 |
+     | --- | --- |
+     | 구독 | 이 랩에서 사용할 구독 |
+     | 이벤트 허브 네임스페이스 선택 | **az5000303hubxxx** |
+     | 이벤트 허브 이름 선택(선택 사항) | **az5000303eventhub** |
+     | 이벤트 허브 정책 이름 선택 | **RootManageSharedAccessKey** |
+
+1. 상단에 **저장** 버튼을 클릭하여 감사 설정을 저장합니다.
+
+1. **az5000303** 리소스 그룹으로 돌아옵니다.
+
+1. 생성된 **az5000303-log** Log Analytics 작업 영역을 클릭합니다.
+
+1. **일반** 섹션에 있는 **로그**를 클릭합니다.
+
+1. 쿼리 편집기에 다음과 같이 입력한 후 **실행** 버튼을 클릭합니다.
+
+     ```Kusto
+     Event | where Source == "MSSQLSERVER" 
      ```
 
-1.  Under **Resource group** click create new and use the default name "**Mod3Lab3**"
+3. 결과가 표시되지 않는 것을 확인합니다.
 
-1.  You can use the default populated SQL server name
+> **참고**: 테스트 데이터가 있는 새 데이터베이스에 로그를 설정 했으므로 볼 수 있는 최소 로그가 있습니다. 예를 들어 로그가 표시되는 방법을 보여주기 위해 예제 데이터로 채워진 예제 로그를 분석 웹 사이트를 사용하여 볼 수 있습니다.
 
-1.  Click **Purchase** 
+#### 작업 3: 감사 로그 및 보고서 분석
 
-#### Task 1 - Set up auditing for your database
+1. 새로운 웹 브라우저 탭에서 [https://portal.loganalytics.io/demo](https://portal.loganalytics.io/demo)를 탐색합니다. 이 페이지를 탐색하면 데모 데이터가 채워진 Log Analytics 작업 영역으로 이동합니다.
 
-1.  **Navigate** to **Resource Groups**
+1. 쿼리 편집기에 다음과 같이 입력한 후 **실행** 버튼을 클릭합니다.
 
-1.  **Select** your resource group created above ("**Mod3Lab3**" if you chose the same name as the instructions)
-
-1.  **Click** your **SQL Server** name
-
-1.  On the left pane click auditing
-
-1.  **Change** auditing to **ON** from **OFF**.
-warning
-**Note**: You now have the option to select where you wish audit logs to be writting to.
-
-
-1.  **Select** all **3 options**, **Storage**, **Log analytics**, **Event hub**.
-
-1.  **Under Storage**, **Click** configure.
-
-1.  **Click subscription** and select your subscription
-
-1.  **Click** storage account
-
-1.  Under create storage account input a unique name (**e.g. Mod3Lab3YOURNAME**)
-
-1.  **Click OK**.
-
-1.  When validated click **OK** again
-
-1.  Under Log analytics click configure
-
-1.  **Click** create new workspace
-
-1.  Enter the following settings
-
-     |Log Analytics Workspace|Subscription|Resource Group | Location| Pricing   Tier|
-     |-----------------------|------------|---------------|---------|   -------------
-     |Mod3Lab3YOURNAME|Your Subscription|The RG you created in the lab setup|   East US | Per GB (2018)|
-
-1.  **Click OK**.
-warning
-**Note**: Setting up Event hub Requires extra steps as the Azure portal does not allow you to create an event hub from this location
-
-
-1.  To setup an **Event Hub** for configuration click **Azure Cloud Shell** at the top of the **Portal**.
-
-1.  **Enter** the following **Powerhshell Commands**.
-
-     ```powershell
-    New-AzEventHubNamespace -ResourceGroupName Mod3Lab3  -NamespaceName Mod3Lab3 -Location eastus
+     ```Kusto
+     Event | where Source == "MSSQLSERVER"
      ```
 
-     ```powershell
-    New-AzEventHub -ResourceGroupName Mod3Lab3 -NamespaceName Mod3Lab3  -EventHubName Mod3Lab3 -MessageRetentionInDays 3
-     ```
+     > **참고**: 결과값이 출력되지 않을 수 있습니다. 데모 데이터가 지속적으로 업데이트 되기 때문입니다.
 
-1.  When these commands have completed click **configure under event hubs**
+1. 여기에서 일부 감사 로그 예제를 확장하여 실제 시스템에서 어떻게 보이는지 확인할 수 있습니다.
 
-1.  **Select** the following information
+1. 쿼리 편집기에 다음과 같이 입력한 후 **실행** 버튼을 클릭합니다.
 
-     | Subscription|Hub Namespace|Hub Name| Hub Policy Name|
-     |-------------|-------------|--------|----------------|
-     |Your Subscription| Mod3Lab3|mod3lab3|RootManageSharedAccessKey|
-
-
-1.  **Click OK**
-
-1.  You can now click **Save** on the **Auditing Settings** page
-
-    **Result**: You have now turned on auditing for your SQL Db 
-
-
-1.  To access the logs return to the **Resource group** where the **SQL Database** and **Server reside**
-
-1.  **Select** the **Mod3Lab3** Log analytics workspace you created erlier
-
-1.  **Click** logs
-
-1.  **Click Get Started**
-
-2.  In the query space enter the following code and **click Run**.
-
-     ```cli
-    Event | where Source  == "MSSQLSERVER" 
-     ```
-
-3.  You will not see any results, please read the below warning
-warning
-**Note**: Because we have set up logs on a new database with test data, there are minimnal log available to see, to show how log are displayed in example we can use example log analytics website that is populated with example data to view.
-
-
-#### Task 2 - Analyze audit logs and reports
-
-1.  Visit **`https://portal.loganalytics.io/demo`** in a new web browser tab, this will direct you to a demo log analytics workspace with demo data populated
-
-1.  In the query space enter the following code and **click Run**.
-
-     ```cli
-    Event | where Source  == "MSSQLSERVER" 
-     ```
-
-1.  From here you can expand some of the example audit logs to view what they would look like in a live system
-
-1.  In the query space enter the following code and **Click Run**.
-
-     ```cli
+     ```Kusto
     Event 
     | where EventLevelName == "Error" 
     | where TimeGenerated > ago(1d) 
@@ -136,20 +139,50 @@ warning
     | summarize count() by Source
      ```
 
-1.  **Click chart**
+1. 결과창 상단에 있는 **차트**를 클릭합니다.
 
-1.  From here you can review how log data can be displayed as chart data
+1. 로그 데이터가 차트 데이터로 표시되는 것을 확인할 수 있습니다.
 
-1.  **Click** the **Stacked Coloumn** drop down and select **Pie**
+1. **누적 세로 막대형**을 클릭하여 **원형**으로 변경합니다.
 
-1.  Here you can see the same data as a different chart
+1. 데이터는 동일하지만 차트가 변경되는 것을 확인할 수 있습니다.
 
-1.  From the top right of the window you can **Click Export** to export the data as **CSV**.
+1. 쿼리 편집기 상단에 **내보내기**를 클릭하면 CSV로 내보내기 옵션을 확인할 수 있습니다.
 
- The query language used by log analytics is called the Kusto query language, the full documentation for this language can be found here **`https://docs.microsoft.com/en-us/azure/kusto/query/`**
+로그 분석에 사용되는 쿼리 언어를 Kusto 쿼리 언어라고 하며, 이 언어에 대한 전체 설명서는 [여기](https://docs.microsoft.com/en-us/azure/kusto/query/)에서 찾을 수 있습니다.
 
+### 연습 2: 랩 리소스 삭제
 
+#### 작업 1: 리소스 잠금 삭제
 
-**Results**: You have now completed the setup of logs on a SQL database and run queries against the log analytics workspace to view the audit logs that will be generated
+1. **az5000303** 리소스 그룹을 탐색합니다.
 
+1. **설정** 섹션에서 **잠금**을 클릭합니다.
 
+1. 설정되어 있는 모든 잠금을 삭제합니다.
+
+#### 작업 2: Cloud Shell 열기
+
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 엽니다.
+
+1. Cloud Shell 인터페이스에서 **Bash**를 선택합니다.
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv
+    ```
+
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인합니다. 이 그룹은 다음 작업에서 삭제됩니다.
+
+#### 작업 3: 리소스 그룹 삭제하기
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+    ```
+
+1. **Cloud Shell** 명령 프롬프트를 닫습니다.
+
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.

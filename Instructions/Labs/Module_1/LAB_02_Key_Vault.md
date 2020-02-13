@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Key Vault(상시 암호화를 설정하여 데이터 보안 구현)'
+    title: 'LAB 02_Key Vault(상시 암호화를 설정하여 데이터 보안 구현)'
     module: '모듈 01 - 계정과 접근 관리'
 ---
 

@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Load Balancer'
+    title: 'LAB 10_Load Balancer'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

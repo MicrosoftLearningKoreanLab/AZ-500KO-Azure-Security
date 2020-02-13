@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'ID와 접근 관리'
+    title: 'LAB 06_ID와 접근 관리'
     module: '모듈 01 - 계정과 접근 관리'
 ---
 

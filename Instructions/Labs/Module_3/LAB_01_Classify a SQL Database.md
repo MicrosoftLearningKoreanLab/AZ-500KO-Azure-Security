@@ -1,99 +1,104 @@
 ---
 lab:
-    title: 'SQL Database 분류'
+    title: 'LAB 01_SQL 데이터베이스 분류'
     module: '모듈 03 - 데이터와 응용프로그램 보안'
 ---
 
-# 랩: SQL Database 분류
+# 랩: SQL 데이터베이스 분류
 
-### Exercise 1: Classify your SQL Database
+### 연습 1: SQL 데이터베이스 분류
 
-#### Task 1: Lab Setup
+#### 작업 1: 랩 설정
 
-1.  Open **PowerShell** and run the following command:
+1. 웹 브라우저에 [이 URL](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod3_Lab01%2Fazuredeploy.json)로 접속합니다.
 
-     ```powershell
-    start "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod3_Lab01%2Fazuredeploy.json" 
-     ```
+1. 리소스 그룹에서 **새로 만들기**를 선택하고 `az5000301`을 입력합니다.
 
-1.  Under **Resource group** click create new and use the default name "**Mod3Lab1**"
+1. **SQL server name**은 `az5000301xxx` (xxx는 유니크 해야 함)을 입력합니다.
 
-1.  You can use the default populated **SQL server name** with a **unique** string added to make a **globaly unique** name
+1. **위에 명시된 사용 약관에 동의함** 체크박스에 체크를 한 후 **구매**버튼을 클릭합니다.
 
-1.  Click **Purchase**. 
-warning
-**Note**: You must wait for the SQL database with the test data to deploy
+#### 작업 2: 고급 데이터 보안 활성화
 
+1. 배포가 완료되면 생성된 리소스 그룹인 **az5000301**을 탐색하여 **az5000301xxx**를 클릭합니다.
 
+1. **보안** 섹션에서 **고급 데이터 보안**을 클릭합니다.
 
+1. **고귿 베이터 보안** 옵션을 **설정**으로 변경한 후 상단에 **저장**을 클릭합니다.
 
-1.  Sign-in to the Azure portal.
+1. **az5000301** 리소스 그룹으로 돌아갑니다.
 
-1.  **Select** the resource group of **Mod3Lab1**
+1. SQL 데이터베이스인 **AZ500LabDb(az5000301xxx/AZ500LabDb)**를 클릭합니다.
 
-1.  Click **az500labserver**
+1. **보안** 섹션에서 **고급 데이터 보안**을 클릭합니다.
 
-1.  Under the **Security heading** in the **Azure SQL Database** pane, navigate to **Advanced Data Security**.
+1. 상단에 있는 **취약성 평가에 사용할 스토리지 계정을 선택하여 Advanced Data Security 설정 완료**를 클릭합니다.
 
-1.  Select **ON** under **Advanced Data Security**
+1. **서버 설정** 블레이드가 뜨면 **고급 데이터 보안** 옵션이 **설정**으로 되어있는지 확인합니다.
 
-1.  **Click Save**
+1. **스토리지 계정**을 클릭합니다.
 
-1.  Return to the **Mod3Lab1** resource group
+1. **스토리지 계정 선택** 블레이드에서 **+ 새로 만들기**를 클릭합니다.
 
-1.  **Select** the **SQL databse AZ500LabDb (az500labserver/AZ500LabDb)**
+    > **참고**: 이 메뉴는 자동으로 선택될 수 있습니다.
 
-1.  **Click** Advanced Data Security again 
+1. **스토리지 계정 만들기** 블레이드가 뜨면 **이름**에 `az5000301stlogxxx` (xxx는 유니크 해야 함)을 입력한 후 **확인** 버튼을 클릭하여 스토리지 계정을 배포합니다.
 
-1.  **Click** the bar at the top **Complete Advanced Data Security setup by selecting a storage account for Vulnerability Assesment**
+1. 스토리지 계정의 배포가 완료되면 **서버 설정** 블레이드에서 **저장**을 클릭하여 설정을 저장합니다.
 
-1.  Make sure the option for **Advanced Data Security** is set to **On** 
+1. **서버 설정**의 저장이 완료되면 **고급 데이터 보안** 블레이드로 돌아옵니다.
 
-1.  **Click** storage account
+1. **데이터 검색 및 분류**를 클릭합니다.
 
-1.  **Click** create new
+### 연습 2: 분류 시작
 
-1.  For the name use **mod3lab1yourname** replacing **yourname** with your name to make it unique but memorable
+1. 분류를 시작하기 위해 상에 있는 **분류** 탭으로 이동합니다.
 
+1. 분류 엔진은 데이터베이스에서 중요한 데이터가 포함된 열을 검색하고 권장되는 열 분류 목록을 제공합니다.
 
-1.  Click **OK**
+1. 분류 권장사항을 적용하려면 상단에 있는 **분류 권장 사항이 있는 00개 열을 발견했습니다.**를 클릭합니다.
 
-1.  **Select** the **save** option
+1. 모든 추천을 선택하려면 왼쪽 상단에 있는 **모두 선택**을 클릭합니다.
 
-1.  **Return** to the previous **Advanced Data Security** pane
+    - 권장 사항 기반 분류의 대안 또는 추가로 컬럼을 수동으로 분류할 시 상단에 있는 메뉴에서 **+분류 추가**를 클릭합니다.
 
-1.  **Select** the **Data discovery** and **classification** card.
+    - 분류 추가 블레이드에서 표시되는 5개의 필드를 구성한 후 **분류 추가** 버튼을 클릭합니다.
+        - **스키마 이름**
+        - **테이블 이름**
+        - **열 이름**
+        - **정보 유형**
+        - **민감도 레이블**
 
-### Exercise 2: Begin Classification
+1. **선택한 권장 사항 적용** 버튼을 클릭합니다.
 
-1.  To begin classifying your data, select the **Classification tab** at the top of the window.
+1. 분류를 완료하고 새로운 분류 메타 데이터로 데이터베이스 열에 레이블을 지정 (**tag**)하려면 **저장**을 클릭합니다.
 
-1.  The classification engine scans your database for columns containing potentially sensitive data and provides a list of recommended column classifications.
+1. **고급 데이터 보안**으로 돌아오면 데이터 분류 개요 창에서 분류된 데이터의 개요를 확인할 수 있습니다.
 
-1.  To view and apply classification recommendations:
+### 연습 3: 랩 리소스 삭제
 
-    - View the list. To view the list of recommended column classifications, select the **recommendations** panel at the top of the window. (**Blue Bar**)   
+#### 작업 1: Cloud Shell 열기
 
-1.  Click **Select all** in the top left to select all reccomendations
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 엽니다.
 
-    - To manually classify columns as an alternative to or in addition to the recommendation-based classification, in the top menu of the window, select Add classification.
+1. Cloud Shell 인터페이스에서 **Bash**를 선택합니다.
 
-    - In the Add classification blade, configure the five fields that display, and then select Add classification:
-       - **Schema name**
-       - **Table name**
-       - **Column name**
-       - **Information type**
-       - **Sensitivity label.**
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열합니다.
 
-1.  Click **Accept Selected Reccomendations**
+   ```sh
+   az group list --query "[?starts_with(name,'az500')].name" --output tsv
+   ```
 
-1.  To complete your classification and persistently label (**tag**) the database columns with the new classification metadata, select **Save**. 
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인합니다. 이 그룹은 다음 작업에서 삭제됩니다.
 
-1.  Upon returning to the **Advanced Data Security** pane you will be able to see in the overview pane for Data classification an overview of the data that was classified.
+#### 작업 2: 리소스 그룹 삭제하기
 
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제합니다.
 
-**Results**: You have now classified information in a SQL database on Azure for GPDR and data protection compliance
+   ```sh
+   az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+   ```
 
+1. **Cloud Shell** 명령 프롬프트를 닫습니다.
 
-
-
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.

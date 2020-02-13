@@ -1,75 +1,92 @@
 ---
 lab:
-    title: 'Database 감사'
+    title: 'LAB 02_데이터베이스 감사'
     module: '모듈 03 - 데이터와 응용프로그램 보안'
 ---
 
-# 랩: Database 감사
+# 랩: 데이터베이스 감사
 
-### Exercise 1: Enable auditing on your database
+### 연습 1: 데이터베이스 감사 활성화
 
-#### Task 1: Lab Setup
+  > **참고** LAB 01에서 설정한 Azure SQL Database를 그대로 활용해도 됩니다.
 
-1.  Open **PowerShell** and run the following command to deploy a database for the lab:
+#### 작업 1: 랩 설정
 
-     ```powershell
-    start "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod3_Lab02%2Fazuredeploy.json" 
-     ```
+1. 웹 브라우저에 [이 URL](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod3_Lab02%2Fazuredeploy.json)로 접속합니다.
 
-1.  **Under Resource** group click create new and use the default name "**Mod3Lab2**"
+1. 리소스 그룹에서 **새로 만들기**를 선택하고 `az5000302`를 입력합니다.
 
-1.  You can use the default **populated SQL server** name with a **unique** string added to make a **globaly unique** name
+1. **SQL server name**은 `az5000302xxx` (xxx는 유니크 해야 함)을 입력합니다.
 
-1.  Click **Purchase**
-warning
-**Note**: You must wait for the SQL database with the test data to deploy
+1. **위에 명시된 사용 약관에 동의함** 체크박스에 체크를 한 후 **구매**버튼을 클릭합니다.
 
-#### Task 2: Enable auditing on your databasease
+#### 작업 2: 데이터베이스 감사 활성화
 
-1.  Select your resource group created in the lab setup
+1. 배포가 완료되면 **az5000302** 리소스 그룹을 탐색합니다.
 
-2.  **Select** the SQL server **az500labserver2**
+1. SQL Server인 **az5000302xxx**를 클릭합니다.
 
-3.  **Under Security**, select **Auditing**
+1. **보안** 섹션에서 **감사**를 클릭합니다.
 
-4.  **Switch Auditing** to **ON**.
+1. **감사** 옵션을 **설정**으로 변경합니다.
 
-5.  Select **storage** as the location to send the audit logs to
+1. **감사 로그 대상(하나 이상 선택)**에서 **Storage**의 체크박스에 체크합니다.
 
-6.  **Click configure**
+1. **스토리지 세부 정보**을 클릭한 후 **스토리지 설정** 블레이드가 뜨면 **스토리지 계정**을 클릭합니다.
 
-7.  Select **Your Subscription**
+1. **스토리지 계정 선택** 블레이드에서 **+ 새로 만들기**를 클릭합니다.
 
-8.  **Click Create New**.
+    > **참고**: 이 메뉴는 자동으로 선택될 수 있습니다.
 
-9.  Name the storage account **mod4lab2yourname** ensuring you replace **yourname** with a unique name using lowercase letters
+1. **스토리지 계정 만들기** 블레이드가 뜨면 **이름**에 `az5000302stlogxxx` (xxx는 유니크 해야 함)을 입력한 후 **확인** 버튼을 클릭하여 스토리지 계정을 배포합니다.
 
-10. **Click OK**.
+1. **보존(일)**에 5를 입력합니다.
 
-11. Change the retention days to **5** and click **OK** 
+1. **확인** 버튼을 클릭한 후 감사 블레이드로 돌아오면 상단에 **저장**을 클릭하여 감사 설정을 저장합니다.
 
-12. Click **Save** to save the **auditing configuration**
+### 연습 2: 강사 로그 검토
 
-### Exercise 2: Review audit logs
+#### 작업 1: SQL DB에서 감사 로그 검토
 
-#### Task 1: Review audit logs on the SQL DB.
+1. 데이터베이서에 대한 감사 로그를 검토하려면 랩 설정에서 생성된 **az5000302** 리소스 그룹으로 돌아갑니다.
 
-1.  To review audit logs for a database return to the resource group created in the lab setup
+1. SQL 데이터베이스인 **AZ500LabDb(az5000302xxx/AZ500LabDb)**를 클릭합니다.
 
-1.  Click **AZ500LabDb (az500labserver2/AZ500LabDb)** to select your test database
+1. **보안** 섹션에서 **감사**를 클릭합니다.
+ 
+  > **참고**: 감사는 여기서 보이지 않지만 기본 서버 레벨에서 설정되어이 데이터베이스에 대해 설정됩니다.
 
-1.  **Under Security**, select **Auditing**
-  
-    **Note**: that the Auditing looks off here but it is set on the underlying server level so it is turned on for this database
+1. 상단에 **감사 로그 보기**를 클릭합니다.
 
+  > **참고**: 여기서는 SQL 주입 시도를 포함하여 DB의 감사 로그 출력을 검토합니다. 이는 로그가 생성되지 않은 테스트 데이터베이스이기 때문에 현재 로그에 로그가 있으면 최소한의 감사가 수행되기 때문입니다.
 
-1.  Click **View Audit Log**.
+서버 감사가 사용 가능한 경우 데이터베이스 구성 감사는 서버 감사와 함께 있습니다.
+감사 로그가 Azure 저장소 계정, Azure Monitor 로그에서 사용할 수 있도록 Log Analytics 작업 영역 또는 이벤트 허브를 사용하여 소비 할 이벤트 허브에 기록되도록 선택할 수 있습니다. 이러한 옵션의 조합을 구성 할 수 있으며 감사 로그가 각각 기록됩니다.
 
-  **Note**: Here you will review the output of the audit logs of the Db including any attempted SQL injections, since this is a test database that has been created not log ago the will be minimal audits if any in the log at the current time.
+### 연습 2: 랩 리소스 삭제
 
-  If server auditing is enabled, the database-configured audit will exist side-by-side with the server audit.
-Notice that you can select for audit logs to be written to an Azure storage account, to a Log Analytics workspace for consumption by Azure Monitor logs, or to event hub for consumption using an event hub. You can configure any combination of these options, and audit logs will be written to each.
+#### 작업 1: Cloud Shell 열기
 
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 엽니다.
 
+1. Cloud Shell 인터페이스에서 **Bash**를 선택합니다.
 
-**Results**: You have now setup up auditing on a SQL database and reviewed where to view the auditing output
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv
+    ```
+
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인합니다. 이 그룹은 다음 작업에서 삭제됩니다.
+
+#### 작업 2: 리소스 그룹 삭제하기
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+    ```
+
+1. **Cloud Shell** 명령 프롬프트를 닫습니다.
+
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.

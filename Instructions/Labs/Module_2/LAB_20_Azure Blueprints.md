@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Blueprints'
+    title: 'LAB 20_Azure Blueprints'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

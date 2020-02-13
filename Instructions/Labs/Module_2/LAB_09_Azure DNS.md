@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure DNS'
+    title: 'LAB 09_Azure DNS'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

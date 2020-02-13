@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'JIT'
+    title: 'LAB 09_JIT'
     module: '모듈 04 - 보안 운영 관리'
 ---
 

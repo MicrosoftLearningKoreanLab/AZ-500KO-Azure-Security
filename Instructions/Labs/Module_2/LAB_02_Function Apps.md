@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Function Apps'
+    title: 'LAB 02_Function Apps'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

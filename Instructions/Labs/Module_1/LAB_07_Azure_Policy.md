@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Policy'
+    title: 'LAB 07_Azure Policy'
     module: '모듈 01 - 계정과 접근 관리'
 ---
 

@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure AD Privileged Identity Management'
+    title: 'LAB 01_Azure AD Privileged Identity Management'
     module: '모듈 01 - 계정과 접근 관리'
 ---
 

@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Sentinel의 보안 플레이 북'
+    title: 'LAB 06_Azure Sentinel의 보안 플레이 북'
     module: '모듈 04 - 보안 운영 관리'
 ---
 

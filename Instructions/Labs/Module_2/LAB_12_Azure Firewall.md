@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure Firewall'
+    title: 'LAB 12_Azure Firewall'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

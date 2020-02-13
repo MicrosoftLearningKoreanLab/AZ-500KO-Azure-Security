@@ -1,6 +1,6 @@
 ---
 lab:
-    title: '온-프레미스와 Azure 연결 - VPN 게이트웨이와 터널링'
+    title: 'LAB 11_온-프레미스와 Azure 연결 - VPN 게이트웨이와 터널링'
     module: '모듈 02 - 플랫폼 보호'
 ---
 

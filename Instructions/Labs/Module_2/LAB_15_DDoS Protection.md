@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Azure DDoS Protection Standard 관리'
+    title: 'LAB 15_Azure DDoS Protection Standard 관리'
     module: '모듈 02 - 플랫폼 보호'
 ---
 
