@@ -41,7 +41,7 @@ Kubernetes 클러스터를 관리하려면 Kubernetes 명령줄 클라이언트 
 
 1. 다음 명령어를 사용하여 Kubernetes 클러스터에 연결하도록 `kubectl`을 구성합니다.
 
-     ```Azure CLI
+     ```Azurecli
      az aks get-credentials --resource-group az5000203 --name az5000203-aks
      ```
 
