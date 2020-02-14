@@ -6,56 +6,83 @@ lab:
 
 # 랩: JIT
 
-**Scenario**
+JIT (Just-In-Time) 가상 머신(VM) 액세스를 사용하여 Azure VM에 대한 인바운드 트래픽을 제어하고 공격에 대한 노출을 줄이면서 필요할때 VM에 쉽게 액세스 할 수 있습니다.
 
-Just-in-time (JIT) virtual machine (VM) access can be used to lock down inbound traffic to your Azure VMs, reducing exposure to attacks while providing easy access to connect to VMs when needed.
+무차별 대입 공격은 일반적으로 VM에 액세스하기 위한 수단으로 관리 포트를 대상으로 합니다. 성공하면 공격자가 VM을 제어하고 환경에 발판을 마련 할 수 있습니다.
 
-Brute force attacks commonly target management ports as a means to gain access to a VM. If successful, an attacker can take control over the VM and establish a foothold into your environment.
+무차별 대입 공격에 대한 노출을 줄이는 한 가지 방법은 포트가 열려있는 시간을 제한하는 것입니다. 관리 포트를 항상 열 필요는 없습니다. 예를 들어 관리 또는 유지 관리 작업을 수행하기 위해 VM에 연결되어 있는 동안에만 열어야 합니다. JIT(Just-In-Time)가 활성화되면 보안 센터는 네트워크 보안 그룹 (NSG) 및 Azure 방화벽 규칙을 사용하여 공격자가 대상 포트를 관리할 수 ​​없도록 관리 포트에 대한 액세스를 제한합니다.
 
-One way to reduce exposure to a brute force attack is to limit the amount of time that a port is open. Management ports don't need to be open at all times. They only need to be open while you're connected to the VM, for example to perform management or maintenance tasks. When just-in-time is enabled, Security Center uses network security group (NSG) and Azure Firewall rules, which restrict access to management ports so they cannot be targeted by attackers.
+> **참고**: 이 실습을 하기 위해서 보안 센터 표준 계층을 사용해야 합니다.
 
+### 연습 1: just-in-time을 사용하여 가상 머신 액세스 관리
 
+VM에서 JIT 정책을 구성하는 방법에는 세 가지가 있습니다.
 
-### Exercise 1: Manage virtual machine access using just-in-time
+- Azure 보안 센터에서 JIT 액세스 구성
+- Azure VM 블레이드에서 JIT 액세스 구성
+- 프로그래밍 방식으로 VM에서 JIT 정책 구성
 
+#### 작업 1: Azure VM 배포
 
-There are three ways to configure a JIT policy on a VM:
+1. <a href="https://portal.azure.com" target="_blank"><span style="color: #0066cc;" color="#0066cc">Azure Portal</span></a>에 로그인 하고 다음을 참고하여 Windows Server 2016 Datacenter를 배포합니다.
 
-- Configure JIT access in Azure Security Center
-- Configure JIT access in an Azure VM blade
-- Configure a JIT policy on a VM programmatically
+    - **기본 사항**
 
+    | 설정 | 값 |
+    | --- | --- |
+    | 구독 | 이 랩에서 사용할 구독 |
+    | 리소스 그룹 | **az5000409** |
+    | 가상 머신 이름 | **az5000409vm** |
+    | 지역 | **(아시아 태평양)한국 중부** |
+    | 이미지 | **Windows Server 2016 Datacenter** |
+    | 크기 | **Standard DS1 v2** |
+    | 사용자 이름 | **student** |
+    | 암호 | **Pa55w.rd1234** |
+    | 공용 인바운드포트 | **HTTP, RDP** |
 
+    > **참고**: 다음을 이용하여 Cloud Shell의 PowerShell 모드에서 간단하게 배포할 수 있습니다.
 
-#### Task 1: Configure JIT access on a VM in Azure Security Center
+       ```powershell
+       New-AzResourceGroup -Name "az5000409" -Location "koreacentral"
+       ```
 
-1.  In the Azure Portal open the **Security Center** and then click **Getting Started**.
+       ```powershell
+       New-AzVm -ResourceGroupName "az5000409" -Name "az5000409vm" -Location "koreacentral" -VirtualNetworkName "az5000409-vnet" -SubnetName "Default" -SecurityGroupName "az5000409vm-sg" -PublicIpAddressName "az5000409vm-ip" -OpenPorts 80,3389
+       ```
 
-1.  Click **Install agents**.
+       - 인증을 입력하라는 명령 프롬프트가 출력되면 사용자 이름을 **student**, 암호를 **Pa55w.rd1234**로 입력합니다.
+
+#### 작업 2: Azure 보안 센터에서 JIT 액세스 구성
+
+1. Azure Portal에서 **보안 센터**를 탐색합니다.
+
+1. **일반** 섹션에서 **시작**을 클릭하고 상단에 **에어진트 설치** 탭으로 이동합니다.
+
+1. JIT를 활성화 할 구독을 선택하고 **에이전트 설치** 버튼을 클릭합니다.
 
      ![Screenshot](../Media/Module-4/5aaae50a-e29f-4c79-90d3-70c2697caa14.png)
 
-**Note**: You may have to wait upto 5 minutes for the agents to deploy.
+     > **참고**: 에이전트가 배포되기까지 최대 5 분을 기다려야 할 수 있습니다.
 
+1. **일반** 섹션에 있는 **개요**를 클릭합니다.
 
-2.  In the left pane, select **Overview**.
-
-1.  Select **Compute & app resources**.
+1. **리소스 보안 예방 조치**에 있는 **컴퓨팅 및 앱 리소스**를 클릭합니다.
 
      ![Screenshot](../Media/Module-4/471a9a5c-4288-4b60-9c4f-00e01481fb9f.png)
 
-1.  On the Compute blade, note the recommendations.
+1. **컴퓨팅** 블레이드에서 **권장 구성**을 확인합니다.
 
-1.  Select the **Just-In-Time network access control should be applied on virtual machines**.
+1. **가상 머신에서 Just-In-Time 네트워크 액세스 제어를 적용해야 합니다**를 클릭합니다.
 
      ![Screenshot](../Media/Module-4/65bbd383-1b20-4b9b-a8b5-fce9464a8789.png)
 
-1.  Select all 4 virtual machines and click **Enable JIT on 4 VMs**.
+1. **Just-In-Time VM 액세스 제어 적용** 블레이드가 뜨면 모든 가상 컴퓨터를 선택한 후 **VM x대에서 JIT 사용**을 클릭합니다.
 
      ![Screenshot](../Media/Module-4/894ab4e4-d343-4d05-8797-8b2707eed681.png)
 
-1.  On the **JIT VM access configuration** blade click **Save**.
-  - This blade displays the default ports recommended by Azure Security Center:
+1. **JIT VM 액세스 구성** 블레이드가 뜨면 **저장** 버튼을 클릭하여 JIT 구성을 완료합니다.
+
+  - 이 블레이드에서는 다음과 같은 Azure 보안센터에서 제어해야 할 포트를 권장합니다.:
       - 22 - SSH
       - 3389 - RDP
       - 5985 - WinRM 
@@ -63,143 +90,158 @@ There are three ways to configure a JIT policy on a VM:
  
      ![Screenshot](../Media/Module-4/4a160905-d91b-4601-8d61-d4b513cae1e4.png)
 
-1.  Close all the blade and on the Security Center blade click **Just in time VM access**.
+1. **보안 센터** 블레이드로 돌아가 **Just-In-Time VM 액세스**를 클릭합니다.
 
      ![Screenshot](../Media/Module-4/c664992b-a505-44b0-8cf2-581f8a579928.png)
 
-    The **Just-in-time VM access** window opens.
+     **Just-in-time VM 액세스** 창이 열립니다.
       
-    **Just-in-time VM access** provides information on the state of your VMs:
+     **Just-in-time VM 액세스**는 VM의 상태에 대한 정보를 제공합니다.
 
-    - **Configured** - VMs that have been configured to support just-in-time VM access. The data presented is for the last week and includes for each VM the number of approved requests, last access date and time, and last user.
-    - **Recommended** - VMs that can support just-in-time VM access but haven't been configured to. We recommend that you enable just-in-time VM access control for these VMs.
-    - **No recommendation** - Reasons that can cause a VM not to be recommended are:
-      - Missing NSG - The just-in-time solution requires an NSG to be in place.
-      - Classic VM - Security Center just-in-time VM access currently supports only VMs deployed through Azure Resource Manager. A classic deployment is not supported by the just-in-time solution. 
-      - Other - A VM is in this category if the just-in-time solution is turned off in the security policy of the subscription or the resource group, or if the VM is missing a public IP and doesn't have an NSG in place.
-</br>
+     - **구성됨** - 적시에 VM 액세스를 지원하도록 구성된 VM입니다. 제시된 데이터는 지난 주에 대한 것이며 각 VM에 대해 승인 된 요청 수, 마지막 액세스 날짜 및 시간 및 마지막 사용자를 포함합니다.
 
-
-**Note**: When JIT VM Access is enabled for a VM, Azure Security Center creates "deny all inbound traffic" rules for the selected ports in the network security groups associated and Azure Firewall with it. If other rules had been created for the selected ports, then the existing rules take priority over the new "deny all inbound traffic" rules. If there are no existing rules on the selected ports, then the new "deny all inbound traffic" rules take top priority in the Network Security Groups and Azure Firewall.
-
-
-
-#### Task 2: Request JIT access via ASC
-
-
-To request access to a VM via ASC:
-
-
-1.  Under **Just in time VM access**, select the **Configured** tab.
-
-2.  Under **Virtual Machine**, select one of the VMs that you want to request access for. This puts a checkmark next to the VM.
-
-
-    - The icon in the **Connection Details** column indicates whether JIT is enabled on the NSG or FW. If it's enabled on both, only the Firewall icon appears.
-
-    - The **Connection Details** column provides the information required to connect the VM, and its open ports.
-
-      ![Screenshot](../Media/Module-4/b012f4be-139b-4cd7-ab66-d6bc536b3f18.png)
-
-3.  Click **Request access**. The **Request access** window opens.
-
-       ![Screenshot](../Media/Module-4/590a9be3-89d5-4302-b671-8f3643746037.png)
-
-4.  Under **Request access**, for each VM, configure the ports that you want to open and the source IP addresses that the port is opened on and the time window for which the port will be open. It will only be possible to request access to the ports that are configured in the just-in-time policy. Each port has a maximum allowed time derived from the just-in-time policy.
-
-5.  Click **Open ports**.
-
-
-**Note**: If a user who is requesting access is behind a proxy, the option **My IP** may not work. You may need to define the full IP address range of the organization.
-
-
-#### Task 3:  Edit a JIT access policy via ASC
-
-
-You can change a VM's existing just-in-time policy by adding and configuring a new port to protect for that VM, or by changing any other setting related to an already protected port.
-
-
-To edit an existing just-in-time policy of a VM:
-
-1.  In the **Configured** tab, under **VMs**, select a VM to which to add a port by clicking on the three dots within the row for that VM. 
-
-1.  Select **Edit**.
-1.  Under **JIT VM access configuration**, you can either edit the existing settings of an already protected port or add a new custom port. 
-  
-      ![Screenshot](../Media/Module-4/cc4d097f-31b1-495d-ba30-a955f692ee49.png)
-
-#### Task 4:  Audit JIT access activity in ASC
-
-
-You can gain insights into VM activities using log search. To view logs:
-
-
-1.  Under **Just-in-time VM access**, select the **Configured** tab.
-2.  Under **VMs**, select a VM to view information about by clicking on the three dots within the row for that VM and select **Activity Log** in the menu. The **Activity log** opens.
-
-       ![Screenshot](../Media/Module-4/b335d921-7b46-42c5-bddf-d1cf0c03774f.png)
-
-   **Activity log** provides a filtered view of previous operations for that VM along with time, date, and subscription.
-
-You can download the log information by selecting **Click here to download all the items as CSV**.
-
-Modify the filters and click **Apply** to create a search and log.
-
-
-
-#### Task 5: Configure JIT access on a VM via the Azure VM blade
-
-
-To make it easy to roll out just-in-time access across your VMs, you can set a VM to allow only just-in-time access directly from within the VM.
-
-
-1.  In the Azure portal, select **Virtual machines**.
-
-2.  Click on the virtual machine you want to limit to just-in-time access.
-3.  In the menu, click **Configuration**.
-4.  Under **Just-in-time-access** click **Enable just-in-time policy**. 
-
-    This enables just-in-time access for the VM using the following settings:
-
-       - Windows servers:
-         - RDP port 3389
-         - Three hours of maximum allowed access
-         - Allowed source IP addresses is set to Any
+     - **권장** - 적시에 VM 액세스를 지원할 수 있지만 구성되지 않은 VM. 이러한 VM에 대해 적시에 VM 액세스 제어를 사용하는 것이 좋습니다.
     
-       - Linux servers:
-         - SSH port 22
-         - Three hours of maximum allowed access
-         - Allowed source IP addresses is set to Any
+     - **권장 사항 않음** - VM을 권장하지 않는 이유는 다음과 같습니다.
+    
+          - `누락 된 NSG` -적시 솔루션에는 NSG가 있어야합니다.
+          - `클래식 VM` -보안 센터 적시에 VM 액세스는 현재 Azure Resource Manager를 통해 배포 된 VM 만 지원합니다. JIT (Just-In-Time) 솔루션에서는 클래식 배포를 지원하지 않습니다.
+          - `기타` - 구독 또는 리소스 그룹의 보안 정책에서 JIT (Just-In-Time) 솔루션을 끄거나 VM에 공개 IP가없고 NSG가 없는 경우 VM이이 범주에 속합니다.
+
+> **참고** : VM에 JIT VM 액세스를 사용하도록 설정하면 Azure 보안 센터는 연결된 네트워크 보안 그룹 및 Azure 방화벽과 연결된 선택된 포트에 대해 "모든 인바운드 트래픽 거부" 규칙을 만듭니다. 선택한 포트에 대해 다른 규칙을 만든 경우 기존 규칙은 새로운 "모든 인바운드 트래픽 거부" 규칙보다 우선합니다. 선택한 포트에 기존 규칙이 없으면 Network Security Groups 및 Azure Firewall에서 새로운 "모든 인바운드 트래픽 거부" 규칙이 우선 순위를 갖습니다.
+
+#### 작업 3: ASC를 통한 JIT 액세스 요청
+
+1. Azure Portal에서 **보안 센터**의 **Just in time VM 액세스**를 탐색하여 **구성 됨** 탭으로 이동합니다.
+
+1. 리스트에 출력된 **가상 머신**에서 액세스를 요청하려는 VM 하나를 클릭하면 VM 옆에 확인 표시가 나타납니다.
+
+     - **연결 세부 정보** 열의 아이콘은 NSG 또는 FW에서 JIT가 활성화되어 있는지 여부를 나타냅니다. 둘 다 활성화 된 경우 방화벽 아이콘만 나타납니다.
+
+     - **연결 세부 정보** 열은 VM 및 열린 포트를 연결하는 데 필요한 정보를 제공합니다.
+
+          ![Screenshot](../Media/Module-4/b012f4be-139b-4cd7-ab66-d6bc536b3f18.png)
+
+1. **액세스 요청** 버튼을 클릭하여 **액세스 요청** 블레이드로 이동합니다.
+
+     ![Screenshot](../Media/Module-4/590a9be3-89d5-4302-b671-8f3643746037.png)
+
+1. **액세스 요청**에서 각 VM에 대해 열려는 포트와 포트가 열려있는 소스 IP 주소 그리고 포트가 열리는 시간 창을 구성합니다. JIT (Just-In-Time) 정책으로 구성된 포트에 대한 액세스만 요청할 수 있습니다. 각 포트에는 JIT (Just-In-Time) 정책에서 파생된 최대 허용 시간이 있습니다.
+
+1. **포트 열기** 버튼을 클릭합니다.
+
+> **참고**: 액세스를 요청하는 사용자가 프록시 뒤에있는 경우 **내 IP** 옵션이 동작하지 않을 수 있습니다. 이럴 때 조직의 전체 IP 주소 범위를 정의해야 할 수도 있습니다.
+
+#### 작업 4: ASC를 통해 JIT 액세스 정책 편집
+
+해당 VM을 보호하기 위해 새 포트를 추가 및 구성하거나 이미 보호 된 포트와 관련된 다른 설정을 변경하여 VM의 기존 JIT (Just-In-Time) 정책을 변경할 수 있습니다.
+
+1. Azure Portal에서 **보안 센터**의 **Just in time VM 액세스**를 탐색하여 **구성 됨** 탭으로 이동합니다.
+
+1. **구성 됨** 탭에 출력된 VM 목록에서 정책 수정을 원하는 VM의 행의 오른쪽에서 3개의 점을 클릭하여 **Edit**를 클릭합니다.
+
+1. **JIT VM 액세스 구성**에서 이미 보호 된 포트의 기존 설정을 편집하거나 새 사용자 정의 포트를 추가 할 수 있습니다.
+  
+     ![Screenshot](../Media/Module-4/cc4d097f-31b1-495d-ba30-a955f692ee49.png)
+
+#### 작업 5: ASC에서 JIT 액세스 활동 감사
+
+로그 검색을 사용하여 VM 활동에 대한 통찰력을 얻을 수 있습니다.
+
+1. Azure Portal에서 **보안 센터**의 **Just in time VM 액세스**를 탐색하여 **구성 됨** 탭으로 이동합니다.
+
+1. **구성 됨** 탭에 출력된 VM 목록에서 로그를 확인하기 원하는 VM의 행의 오른쪽에서 3개의 점을 클릭하여 **작업 로그**를 클릭합니다.
+
+     ![Screenshot](../Media/Module-4/b335d921-7b46-42c5-bddf-d1cf0c03774f.png)
+
+     **활동 로그** 시간, 날짜 및 구독과 함께 해당 VM에 대한 이전 작업의 필터링된 보기를 제공합니다.
+
+상단에 **CSV로 다운로드**를 클릭하면 로그 정보를 다운로드 할 수 있습니다.
+
+필터를 수정하고 **적용** 버튼을 클릭하여 로그를 필터링 할 수 있습니다.
+
+#### 작업 6: Azure VM 블레이드를 통해 VM에서 JIT 액세스 구성
+
+여러 VM에서 just-in-time 액세스 할 수 있도록 VM 내에서 just-in-time 액세스 할 수 있도록 VM을 설정할 수 있습니다.
+
+1. Azure Portal에서 **가상 머신**을 탐색합니다.
+
+1. just-in-time 액세스로 제한하려는 VM을 클릭합니다.
+
+1. **설정** 섹션에 있는 **구성**을 클릭합니다.
+
+1. **구성** 창이 뜨면 Just-In-Time 액세스 아래에 있는 **Just-In-Time 사용** 버튼을 클릭하여 Just-In-Time 액세스를 활성화 합니다.
+
+    그러면 다음 설정을 사용하여 VM에 Just-In-Time 액세스를 사용할 수 있습니다.
+
+     - Windows 서버:
+          - 원격 데스크톱 포트 3389
+          - 최대 3시간 액세스 허용
+          - 허용 된 소스 IP 주소가 Any로 설정
+    
+     - Linux 서버:
+          - SSH 포트 22
+          - 최대 3시간 액세스 허용
+          - 허용 된 소스 IP 주소가 Any로 설정
      
-    If a VM already has just-in-time enabled, when you go to its configuration page you will be able to see that just-in-time is enabled and you can use the link to open the policy in Azure Security Center to view and change the settings. 
+     VM에 이미 JIT (Just-In-Time)가 활성화 되어있는 경우 구성 페이지로 이동하면 JIT (Just-In-Time)가 활성화가 되어 있으며 링크를 사용하여 Azure 보안 센터에서 정책을 열어서 볼 수 있습니다.
 
      ![Screenshot](../Media/Module-4/620cf312-47b6-45ee-8b4a-f1160dab4989.png)
 
-#### Task 5:  Request JIT access to a VM via the Azure VM blade
+#### 작업 7: Azure VM 블레이드를 통해 VM에 대한 JIT 액세스 요청
 
-In the Azure portal, when you try to connect to a VM, Azure checks to see if you have a just-in-time access policy configured on that VM.
+1. Azure Portal에서 VM에 연결하려고하면 Azure는 해당 VM에 Just-In-Time 액세스 정책이 구성되어 있는지 확인합니다.
 
-- If you do have a JIT policy configured on the VM, you can click **Request access** to enable you to have access in accordance with the JIT policy set for the VM. 
+1. VM에 JIT 정책이 구성되어 있으면 **액세스 요청** 버튼을 클릭하여 VM에 설정된 JIT 정책에 따라 액세스 할 수 있습니다.
 
      ![Screenshot](../Media/Module-4/0223c493-bc9e-4e9a-8be5-1550251497fc.png)
 
-  The access is requested with the following default parameters:
+     다음 기본 매개 변수를 사용하여 액세스가 요청됩니다.
 
-  - **source IP**: 'Any' (*) (cannot be changed)
-  - **time range**: Three hours (cannot be changed) 
-  - **port number** RDP port 3389 for Windows / port 22 for Linux (can be changed)
+     - **원본 IP**: 'Any' (*) (변경 불가능)
+     - **시간**: 3시간 (변경 불가능) 
+     - **포트 번호** Windows의 경우 RDP 포트인 3389 / Linux의 경우 SSH 포트인 22 (변경 불가능)
 
-  **Note**: After a request is approved for a VM protected by Azure Firewall, Security Center provides the user with the proper connection details (the port mapping from the DNAT table) to use to connect to the VM.
+     > **참고**: Azure 방화벽으로 보호되는 VM에 대한 요청이 승인되면 보안 센터는 사용자에게 VM에 연결하는 데 사용할 적절한 연결 세부 정보 (DNAT 테이블의 포트 매핑)를 제공합니다.
 
+     - VM에 JIT를 구성하지 않은 경우 JIT 정책을 구성하라는 메시지가 표시됩니다.
 
-  - If you do not have JIT configured on a VM, you will be prompted to configure a JIT policy it.
+          ![Screenshot](../Media/Module-4/c456f80a-1b94-4a35-9ef8-03cc7396941e.png)
 
-      ![Screenshot](../Media/Module-4/c456f80a-1b94-4a35-9ef8-03cc7396941e.png)
+### 연습 3: 랩 리소스 삭제
 
+#### 작업 1: 보안 그룹 표준 구독 제거
 
-| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
-| --- |
+1. Azure Portal에서 **보안 센터**를 탐색합니다.
 
+1. **일반** 섹션에 있는 **가격 책정 및 설정**을 클릭합니다.
 
-**Results**: You have now completed this lab.
+1. 나열된 구독에서 **가격 책정 계층**이 **표준**으로 되어있는 구독을 클릭합니다.
 
+1. **가격 책정 계층** 블레이드가 뜨면 **무료(Azure 리소스 전용)** 타일을 클릭한 후 상단에 **저장**을 클릭하여 보안 그룹 표준 구독을 무료로 변경합니다.
+
+#### 작업 2: Cloud Shell 열기
+
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 엽니다.
+
+1. Cloud Shell 인터페이스에서 **Bash**를 선택합니다.
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열합니다.
+
+   ```sh
+   az group list --query "[?starts_with(name,'az500')].name" --output tsv
+   ```
+
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인합니다. 이 그룹은 다음 작업에서 삭제됩니다.
+
+#### 작업 3: 리소스 그룹 삭제하기
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제합니다.
+
+   ```sh
+   az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+   ```
+
+1. **Cloud Shell** 명령 프롬프트를 닫습니다.
+
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.
