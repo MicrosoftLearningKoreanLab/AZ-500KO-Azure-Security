@@ -1,228 +1,193 @@
----
-lab:
-    title: 'LAB 03_MFA를 사용하여 보안 접근'
-    module: '모듈 01 - 계정과 접근 관리'
----
-
-# 랩: MFA를 사용하여 보안 접근
+# 모듈 1: 랩 3: 보안 접근을 위한 다단계(Multi-Factor) 인증 사용
 
 
-### Exercise 1: MFA Authentication Pilot (Require MFA for specific apps with Azure Active Directory conditional access)
+## 연습 1: MFA 인증 파일럿 (Azure Active Directory 조건부 접근이 가능한 특정 앱의 경우 MFA 필요)
 
-#### Task 1: Create your conditional access policy 
+### 작업 1: 조건부 접근 정책 생성
 
-
-This section shows how to create the required conditional access policy. The scenario uses:
+이 섹션에는 필요한 조건부 액세스 정책을 만드는 방법을 안내합니다. 이 시나리오에서는 다음을 사용합니다.
 
 - The Azure portal as placeholder for a cloud app that requires MFA. 
-- Your sample user to test the conditional access policy.  
+- MFA가 필요한 클라우드 앱의 자리 표시자로 사용되는 Azure 포털  
+- 조건부 액세스 정책을 테스트할 샘플 사용자
 
-In your policy, set:
+다음 값으로 정책을 설정합니다.
 
-|Setting |Value|
+|설정 |값|
 |---     | --- |
 |Users and groups | Isabella Simonsen |
 |Cloud apps | Microsoft Azure Management |
 |Grant access | Require multi-factor authentication |
 
- 
-1.  Sign in to the Azure Portal.
+1.  Azure 포털에 로그인한다.
 
-2.  In the Azure portal, on the hub menu, click **Azure Active Directory**.
+2.  Azure 포털의 메뉴에서 **Azure Active Directory**를 클릭한다.
 
-3.  In the **Properties** section, click **Manage Security defaults**.
+3.  **관리** 섹션의 **속성**을 클릭하고, 하단의 **보안 기본값 관리**를 클릭한다.
 
-4.  Change the **Enable Security defaults** option to **No**. Under reason, select **My organisation is using Conditional Access**, and click **Save**. 
+4.  **보안 기본값 사용** 옵션을 **아니요**로 설정하고, **저장**을 클릭한다. 
 
-5.  In the **Manage** section, click **Security**.
+5.  **관리** 섹션에서 **보안**을 클릭한다.
 
-6.  In the **Security - Getting started blade**  click **Conditional access**.
+6.  **보안** 블레이드에서**조건부 액세스**를 클릭한다.
 
      ![Screenshot](../Media/Module-1/NewConditionalAccessScreen.png)
  
-7.  On the **Conditional Access** page, in the toolbar on the top, click **New Policy**.
+7.  **조건부 액세스** 페이지 상단의 **+ 새 정책**을 클릭한다.
 
-    **Note**: if this is greyed out, refresh the browser session.
+    **참고**: 창이 활성화되지 않으면 브라우저를 새로고침 하십시오.
 
+8.  **새로 만들기** 페이지에서 **이름** 창에 **Require MFA for Azure portal access**를 입력한다.
 
+9.  **할당** 섹션의 **사용자 및 그룹**을 클릭한다.
 
+10.  다음 작업을 실행한다.
 
-8.  On the **New** page, in the **Name** textbox, type **Require MFA for Azure portal access**.
+      a. **사용자 및 그룹 선택**을 클릭하고, **사용자 및 그룹**을 선택한다.
 
+      b. **선택**을 클릭한다.
 
+      c. **선택** 페이지에서 **Isabella Simonsen**을 할당하고 **선택**을 클릭한다.
 
-9.  In the **Assignment** section, click **Users and groups**.
+11.  **클라우드 앱 또는 작업**을 클릭한다.
 
+12.  다음 작업을 실행한다.
 
+    a. **앱 선택**을 클릭한다.
 
-10.  On the **Users and groups** page, perform the following steps:
+    b. **선택**을 클릭한다.
 
-a. Click **Select users and groups**, and then select **Users and groups**.
+    c. **선택** 페이지에서 **Microsoft Azure Management**를 클릭하고, **선택**을 클릭한다.
 
-b. Click **Select**.
+13.  **액세스 제어** 섹션의 **허용**을 클릭한다.
 
-c. On the **Select** page, select **Isabella Simonsen**, and then click **Select**.
+14.  **허용** 페이지에서 다음 작업을 진행한다. 
+     1. **액세스 허용**을 선택한다.
+     2. **다단계 인증 기능 필요**를 선택한다.
+     3. **선택**을 클릭한다.
 
-d. On the **Users and groups** page, click **Done**.
+15.  **정책 사용** 섹션에서 **설정**을 클릭한다.
 
-11.  Click **Cloud apps or actions**.
-
-
-
-12. On the **Cloud apps** page, perform the following steps:
-
-
-
-    a. Click **Select apps**.
-
-    b. Click **Select**.
-
-    c. On the **Select** page, select **Microsoft Azure Management**, and then click **Select**.
-
-    d. On the **Cloud apps** page, click **Done**.
+16.  **만들기**를 클릭한다.
 
 
-13.  In the **Access controls** section, click **Grant**.
+### 작업 2: 시뮬레이션된 로그인 평가
 
+조건부 액세스 정책을 구성했으므로, 이 정책이 예상대로 작동하는지 여부를 확인합니다. 첫 번째 단계로 what if 정책 도구를 사용하여 테스트 사용자의 로그인을 시뮬레이션하십시오. 시뮬레이션은 이 로그인이 정책에 미치는 영향을 추정하고 시뮬레이션 보고서를 생성합니다.
 
-14.  On the **Grant** page, perform the following steps:
-     1. Select **Grant access**.
-     2.  Select **Require multi-factor authentication**.
-     3.  Click **Select**.
+다음 설정으로 정책 평가 도구를 시작합니다.
 
-15.  In the **Enable policy** section, click **On**.
+- 사용자 : **Isabella Simonsen** 
+- cloud app : **Microsoft Azure Management** 
 
-16.  Click **Create**.
+**What If**를 사용하면 다음 보고서를 생성합니다.
 
+- **적용되는 정책** - **Require MFA for Azure portal access** 
+- **컨트롤 권한 부여** - **다단계 인증 필요**
 
-#### Task 2: Evaluate a simulated sign-in
-
-
-Now that you have configured your conditional access policy, you probably want to know whether it works as expected. As a first step, use the conditional access what if policy tool to simulate a sign-in of your test user. The simulation estimates the impact this sign-in has on your policies and generates a simulation report.  
-
-To initialize the what if policy evaluation tool, set:
-
-- **Isabella Simonsen** as user 
-- **Microsoft Azure Management** as cloud app
-
- Clicking **What If** creates a simulation report that shows:
-
-- **Require MFA for Azure portal access** under **Policies that will apply** 
-- **Require multi-factor authentication** as **Grant Controls**.
-
-
-1.  On the Conditional access - Policies page, in the menu on the top, click **What If**.  
+1.  조건부 액세스 - 정책 페이지 상단 메뉴에서 **What If**를 클릭한다.
  
      ![Screenshot](../Media/Module-1/448e616a-7524-44a5-8335-c2fc8193dae6.png)
 
-2.  Click **Users**, select **Isabella Simonsen**, and then click **Select**.
+2.  **사용자**를 클릭하고, **Isabella Simonsen**를 할당한 후 **선택**을 클릭한다.
 
+3.  다음 작업을 수행하여 클라우드 앱을 선택한다.
 
+    a. **클라우드 앱 또는 작업**을 클릭한다.
 
-3.  To select a cloud app, perform the following steps:
+    b. **클라우드 앱** 항목에서, **앱 선택**을 클릭한다.
 
+    c. **선택**을 클릭한다.
 
+    d. **선택** 페이지에서 **Microsoft Azure Management**를 클릭하고 **선택**을 클릭한다.
 
-    a. Click **Cloud apps or actions**.
+    e. **클라우드 앱 또는 작업** 페이지에서 **완료**를 클릭한다.
 
-    b. On the **Cloud apps page**, click **Select apps**.
+4.  **What If** 버튼을 클릭한다.
 
-    c. Click **Select**.
-
-    d. On the **Select** page, select **Microsoft Azure Management**, and then click **Select**.
-
-    e. On the cloud apps page, click **Done**.
-
-4.  Click **What If**.
-
-5.  Note the result, Require MFA for Azure portal access.
+5.  평가 결과에 **다단계 인증 필요**가 나타난 것을 확인한다. 
 
      ![Screenshot](../Media/Module-1/6568f6de-0c9e-4ee1-ba48-eab401651416.png)
 
 
-#### Task 3: Test your conditional access policy
+### 작업 3: 조건부 접근 정책 테스트
 
-In the previous section, you have learned how to evaluate a simulated sign-in. In addition to a simulation, you should also test your conditional access policy to ensure that it works as expected. 
+이전 섹션에서 시뮬레이션된 로그인을 평가하는 방법을 알아보았습니다. 시뮬레이션 외에도 조건부 접근 정책이 예상한 대로 작동하는지 테스트해야 합니다. 
 
-To test your policy, try to sign-in to the Azure portal **`https://portal.azure.com`** using your **Isabella Simonsen** test account. You should see a dialog that requires you to set your account up for additional security verification.
-
-
+정책을 테스트하기 위해 **Isabella Simonsen** 테스트 계정으로 **`https://portal.azure.com`** 에 로그인합니다. 추가 보안 확인을 위해 계정을 설정해야 하는 대화 상자가 표시되어야 합니다.
 
 
-### Exercise 2: MFA Conditional Access (Complete an Azure Multi-Factor Authentication pilot roll out)
+## 연습 2: MFA 조건부 액세스 (Azure Multi-Factor Authentication 파일럿 롤아웃 완료)
+
+이 실습에서는 Azure 포털에 로그인할 때 Azure MFA(Azure Multi-Factor Authentication)를 활성화하는 조건부 액세스 정책을 구성하는 과정을 안내합니다. 이 정책은 특정 파일럿 사용자 그룹에 배치되고 테스트됩니다. 조건부 액세스를 이용한 Azure MFA 구축은 기존의 시행 방식과 비교할 때 조직과 관리자에게 상당한 유연성을 제공합니다.
+
+- 다단계(Multi-Factor) 인증 사용
+- 다단계(Multi-Factor) 인증 테스트
 
 
-In this lab, you walk you through configuring a conditional access policy enabling Azure Multi-Factor Authentication (Azure MFA) when logging in to the Azure portal. The policy is deployed to and tested on a specific group of pilot users. Deployment of Azure MFA using conditional access provides significant flexibility for organizations and administrators compared to the traditional enforced method.
+### 작업 1: Azure 다단계 인증 사용
 
-- Enable Azure Multi-Factor Authentication
-- Test Azure Multi-Factor Authentication
+1.  Azure 포털에 전역 관리자 계정으로 로그인한다.
 
+1.  **Azure Active Directory**를 선택한다.
 
-#### Task 1: Enable Azure Multi-Factor Authentication
-
-1.  Return to the the Azure portal that is logged in as your Global Admin account.
-
-1.  On the Hub menu click **Azure Active Directory**,
-
-1.  Click **Groups** and click **+ New group**.
+1.  **그룹**을 선택하고, **+ 새 그룹**을 클릭한다.
 
      ![Screenshot](../Media/Module-1/cb9c5324-cbb6-476e-9c7d-1920de301d40.png)
 
-1.  Enter the following information then click **Create**:
+1.  다음 정보를 입력하고 **만들기**를 클릭한다.
 
-      * Group type; **Security**
-      * Group Name: **MFA Pilot**
-      * Group description: **MFA Pilot Group**
-      * Membership type: **Assigned**
-      * Members: Select **Isabella**
-  
+      * 그룹 유형: **보안**
+      * 그룹 이름: **MFA Pilot**
+      * 그룹 설명: **MFA Pilot Group**
+      * 구성원 자격 유형: **할당됨**
+      * 구성원: **Isabella** 선택
   
       ![Screenshot](../Media/Module-1/5457b62d-dc78-4043-bd72-3d7901bbcd71.png)
   
-2.  Browse to **Azure Active Directory**, click **Security** and select **Conditional access** on the **Security** Blade.
+2.  **Azure Active Directory**의 **보안**을 클릭하고, **조건부 액세스**를 클릭한다. 
 
- 
+3.  **+ 새 정책**을 클릭한다.
 
-3.  Select **+ New policy**
+4.  이름 : **MFA Pilot**
 
- 
-
-4.  Name your policy **MFA Pilot**
-5.  Under **users and groups**, select the **Select users and groups** check box
-    * Select your pilot group **MFA Pilot**
-    * Click **Select**
-    * Click **Done**
+5.  **사용자 및 그룹**을 클릭하고, **사용자 및 그룹 선택**의 체크박스를 선택한다. 
+    * **MFA Pilot** 파일럿 그룹을 선택한다.
+    * **선택**을 클릭한다.
     </br>
-6.  Under **Cloud apps or actions**, select the **Select apps** radio button
-    * The cloud app for the Azure portal is **Microsoft Azure Management**
-    * Click **Select**
-    * Click **Done**
+
+6.  **클라우드 앱 또는 작업**에서 **앱 선택**을 클릭한다. 
+    * **Microsoft Azure Management**를 할당한다.
+    * **선택**을 클릭한다.
     </br>
-7.  Skip the **Conditions** section
-8.  Under **Grant**, make sure the **Grant access** radio button is selected
-    * Check the box for **Require multi-factor authentication**
-    * Click **Select**
+
+7.  **조건**은 그대로 둔다.
+
+8.  **엑세스 제어** 아래 **허용**을 클릭한다.
+    * **다단계 인증 기능 필요** 체크 박스를 클릭한다.
+    * **선택**을 클릭한다.
     </br>
-9.  Skip the **Session** section
-10. Set the **Enable policy** toggle to **On**
-11. Click **Create**
 
-#### Task 2: Test Azure Multi-Factor Authentication
+9.  **세션**은 그대로 둔다.
 
+10. **정책 사용**에서 **설정**을 클릭한다. 
 
-To prove that your conditional access policy works, you test logging in to a resource that should not require MFA and then to the Azure portal that requires MFA.
+11. **만들기**를 클릭한다.
 
 
-1.  Open a new browser window in InPrivate or incognito mode and browse to **`https://account.activedirectory.windowsazure.com`**
-    * Log in with the test user created as part of the prerequisites section of this article and note that it should not ask you to complete MFA.
-    * Close the browser window.
+### 작업 2: Azure 다단계 인증 테스트
 
-2.  Open a new browser window in InPrivate or incognito mode and browse to **`https://portal.azure.com`**
+조건부 액세스 정책이 작동하는지 확인하려면 MFA가 필요하지 않은 리소스에 로그인한 다음 MFA가 필요한 Azure 포털에 로그인하십시오.
 
-       * Log in with the test user created as part of the prerequisites section of this article and note that you should now be required to register for and use Azure Multi-Factor Authentication.
-       * Close the browser window.
+1.  InPrivate 또는 Incognito 모드에서 새 브라우저 창을 열고 다음 주소로 접속한다. **`https://account.activedirectory.windowsazure.com`**
+    * Isabella 계정으로 로그인한다. MFA를 요구받지 않는다. 
+    * 브라우저 창을 닫는다.
 
-| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
+2.  InPrivate 또는 Incognito 모드에서 새 브라우저 창을 열고 다음 주소로 접속한다.**`https://portal.azure.com`**
+
+       * Isabella 계정으로 로그인한다.account. 이제 Azure Multi-Factor 인증이 요구된다.
+       * 브라우저 창을 닫는다.
+
+| 경고: 계속하기 전에 이 랩에 사용된 모든 리소스를 제거하십시오. **Azure 포털**에서 이 작업을 수행하려면 **리소스 그룹**을 클릭하십시오. 생성한 리소스 그룹을 선택하고, **리소스 그룹 삭제**를 누른 후 리소스 그룹 이름을 입력하여 **삭제**를 누르십시오. 생성한 추가 리소스 그룹에 대해 이 과정을 반복하십시오. **이 작업을 수행하지 않을 경우 다른 랩에 문제가 발생할 수 있습니다.** |
 | --- |
 
-**Results** : You have now completed this lab.

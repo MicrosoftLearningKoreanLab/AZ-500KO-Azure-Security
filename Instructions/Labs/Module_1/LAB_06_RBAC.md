@@ -1,277 +1,256 @@
----
-lab:
-    title: 'LAB 06_ID와 접근 관리'
-    module: '모듈 01 - 계정과 접근 관리'
----
+# 모듈 1: 랩 6 - ID 및 접근 관리
 
-# 랩: ID와 접근 관리
+**시나리오**
 
-**Scenario**
+이 모듈에서는 최소 특권의 원칙에 따라 조직의 관리 액세스를 구성하고 관리하기 위한 역할 기반 액세스 제어에 대해 안내합니다. 또한 Azure Active Directory 개념을 검토하고, IT 조직에 노출되는 보안 위험 및 보안 위험에 대한 통찰력을 얻을 수 있습니다. 
 
-In this module, you'll learn about Role-Based Access Control as the foundation to organizing and managing an organization's administrative access based on the principle of least privilege. You will also review Azure Active Directory concepts, as well as gain insight into the threat landscape and security risks that are exposed to IT organizations through breach of privileged access. Lessons include:
-
-- Role-Based Access Control
+- 역할 기반 접근 제어
 - Azure Active Directory (Refresher)
 - Protecting Privileged Access in the Environment
 
-# Lab 5: Introduction to Identity Protection in Azure
 
-### Exercise 1: Role-Based Access Control
+# 랩 5: Azure에서의 ID 보호 도입
 
-#### Task 1: Create a User
+## 연습 1: 역할 기반 접근 제어
 
-1.  Sign in to the Azure portal **`https://portal.azure.com/`**
+### 작업 1: 사용자 생성
 
-2.  Select **Azure Active Directory** and on the overview blade note down your tenant domain.
+1. Azure 포털에 로그인한다. **`https://portal.azure.com/`**
+
+2. **Azure Active Directory**를 선택하고 개요 블레이드에서 테넌트 도메인을 메모해둔다.
 
      ![Screenshot](../Media/Module-1/11eb6969-8efb-462d-8ef0-772b0d75f360.png)
 
-3.  Select **Users**, and then select **New user**.
+3. **사용자**를 선택하고, **새 사용자**를 선택한다.
 
+4. **새 사용자** 페이지에서 다음 정보를 입력한다.
 
-4.  On the **User** page, fill out the blade with the following information:
-
-      - **User name**: bill
-      - **Name**: Bill Smith
-
+      - **사용자 이름**: bill
+      - **이름**: Bill Smith
 
      ![Screenshot](../Media/Module-1/ba852242-eb76-4ab8-8e92-c4c452e9f9cf.png)
 
-5.  Show the auto-generated password provided in the **Password** box. You'll need to give this password to the user for the initial sign-in process.
+5. 자동 생성된 암호를 **암호** 박스에서 볼 수 있다. 이 암호를 초기 로그인 과정에 사용할 수 있다. 
   
-  
+6. **만들기**를 선택한다.
 
-6.  Select **Create**.
+    사용자가 생성되고 Azure AD 테넌트에 추가된다.
 
-    The user is created and added to your Azure AD tenant.
+7. Azure 포털 상단의 PowerShell 아이콘을 클릭하여 **Azure Cloud Shell**을 시작한다. 다음 명령을 사용하여 AzureAD에 연결한다. 
 
-7.  Launch **Azure Cloud Shell** by clicking on the PowerShell icon at the top of the Azure Portal and select PowerShell if prompted.
+    ```powershell
+    Connect-AzureAD
+    ```
 
-  
-8.  **Enter the following commands** to create a user in the PS cloud shell **replacing yourdomain** with your domain noted down erlier
+8. **yourdomain** 부분을 앞서 메모한 테넌트 도메인으로 대체하여 PowerShell에 **다음 명령을 입력한다** 
 
-     ```powershell
-      $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-      ```
-       ```powershell
-      $PasswordProfile.Password = "Pa55w.rd"
-      ```
-       ```powershell
-      New-AzureADUser -DisplayName "Mark" -PasswordProfile $PasswordProfile     -UserPrincipalName "Mark@yourdomain.onmicrosoft.com" -AccountEnabled $true -MailNickName "Mark"
-
-     ```
+    ```powershell
+    $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
+    ```
+    ```powershell
+    $PasswordProfile.Password = "Pa55w.rd"
+    ```
+    ```powershell
+    New-AzureADUser -DisplayName "Mark" -PasswordProfile $PasswordProfile -UserPrincipalName "Mark@yourdomain.onmicrosoft.com" -AccountEnabled $true -MailNickName "Mark"
+    ```
  
      ![Screenshot](../Media/Module-1/d5e26f07-a18e-4ae4-84aa-318eac3d5b5b.png)
 
-9.  Run the following comamand to get a list of the users in Azure AD 
+9. 다음 명령을 입력하여 Azure AD 내의 사용자 목록을 확인한다.
 
-      ```powershell
-      Get-AzureADUser 
-      ```
+    ```powershell
+    Get-AzureADUser 
+    ```
  
-10.  Change the Azure cloud shell to azure CLI mode with Bash by using the drop down menu
+10. 드롭다운 메뉴의 **Bash**를 통해 Azure Cloud Shell의 Azure CLI 모드로 변경한다.
 
      ![Screenshot](../Media/Module-1/28fe2e25-5b8b-4e7a-b83d-0bc4702b0b38.png)
 
-11.  Enter the following command in **azure CLI** to create a user in Azure CLI **replacing yourdomain** with the domain you noted earlier.
+11. **yourdomain** 부분을 앞서 메모한 테넌트 도메인으로 대체하고, **Azure CLI**에 다음 명령을 입력하여 사용자를 생성한다.
+
+    ```cli
+    az ad user create --display-name Tracy --password Pa55w.rd --user-principal-name Tracy@yourdomain.onmicrosoft.com
+    ```
+
+이제 Azure AD 내에 5명의 사용자가 있어야 합니다.
+
+
+### 작업 2: Azure 포털, PawerShell, CLI에서 그룹 생성 
+
+1. Azure포털에서 **Azure Active Directory**를 클릭한다. **그룹**을 선택하고, **+새 그룹**을 클릭한다. 
  
-       ```cli
-      az ad user create --display-name Tracy --password Pa55w.rd --user-principal-name Tracy@yourdomain.onmicrosoft.com
-       ```
-
-
-You should now have 3 users in your Azure AD
-
-
-#### Task 2: Create Groups In Portal, PowerShell, and CLI
-
-1.  In the Azure Portal click **Azure Active Directory**  on the **Azure AD blade** click **Groups** and select **New group**.
- 
-16.  Fill in the details with the following details:
+2. 다음 설정을 사용한다.
   
-       - **Group Type**: Security
-       - **Group Name**: Senior Admins Group 
+      - **그룹 유형**: 보안
+      - **그룹 이름**: Senior Admins Group 
     
-17.  Click **Members** and select **Bill**
+3. 구성원 섹션에서 **선택한 멤버가 없음**을 클릭하고, **Bill**을 찾아 **선택**한다.
 
-18.  Click **Create**
+4. **만들기**를 클릭한다.
 
-1.  Launch the **cloud Shell Bash** by clicking the PowerShell icon at the top of the Azure Portal.
+5. Azure Portal 상단의 Cloud Shell 아이콘을 클릭하여 **Cloud Shell** 내의 **Bash** 모드를 시작한다.
 
-19.  In the **Cloud Shell** enter the following command:
+6. **Cloud Shell**에 다음 명령을 입력한다.
 
-       ```cli
-      az ad group create --display-name ServiceDesk --mail-nickname ServiceDesk
-       ```
+    ```cli
+    az ad group create --display-name ServiceDesk --mail-nickname ServiceDesk
+    ```
 
-20.  Change the Cloud Shell to **PowerShell** and enter the following command:
+7. **PowerShell** 모드로 변경하고, 다음 명령을 입력한다.
 
-       ```powershell
-      New-AzureADGroup -DisplayName "Junior Admins" -MailEnabled $false -SecurityEnabled $true -MailNickName JuniorAdmins
-       ```
+    ```powershell
+    Connect-AzureAD
+    ```
+
+    ```powershell
+    New-AzureADGroup -DisplayName "Junior Admins" -MailEnabled $false -SecurityEnabled $true -MailNickName JuniorAdmins
+    ```
  
-1.  Exit the **Cloud Shell**.
+8. **Cloud Shell**을 닫는다.
 
-21.  In the **Active Directory blade** click **Groups** and confirm you have **4** groups
+9. **Active Directory blade**에서 **그룹**을 클릭하고 **5**개의 그룹이 있는 것을 확인한다. 
 
      ![Screenshot](../Media/Module-1/c4bf8dc8-e4dc-4603-8961-0cdc0ba57cd5.png)
 
 
-### Exercise 2: Practice - RBAC
+## 연습 2: Azure 포털을 이용하여 역할 기반 접근 제어(RBAC)
 
-#### Task 1: Create a resource group
+### 작업 1: 리소스 그룹 생성
 
-1.  In the navigation list, choose **Resource groups**.
+1. Azure 포털에서 **리소스 그룹**을 클릭한다.
 
-1.  Choose **Add** to open the **Resource group** blade.
+2. **추가**를 선택한다.
 
-1.  For **Resource group name**, enter **myRBACrg**
+3. **리소스 그룹** 이름으로 **myRBACrg**를 입력한다.
 
-1.  Select your subscription and the location of **East US**.
+4. 구독을 선택하고, 영역을 **미국 동부**로 지정한다.
 
-1.  Choose **Review + create** then **Create** to create the resource group.
+5. **검토 + 만들기**를 클릭하고, **만들기**를 클릭하여 리소스 그룹을 생성한다. 
 
-1.  Choose **Refresh** to refresh the list of resource groups.
+6. **새로고침**을 클릭하여 리소스 그룹 목록을 업데이트한다.
 
-   The new resource group appears in your resource groups list.
-
-#### Task 2: Grant access
+  리소스 그룹 목록에 새로 생성한 그룹이 나타납니다.
 
 
-In RBAC, to grant access, you create a role assignment.
+### 작업 2: 접근권한 부여
 
+RBAC에서 접근 권한을 부여하려면 역할 할당을 생성해야 합니다.
 
-1.  In the list of **Resource groups**, choose the new **myRBACrg** resource group.
+1. **리소스 그룹** 목록에서 **myRBACrg**를 선택한다.
 
-1.  Choose **Access control (IAM)** to see the current list of role assignments.
+1. **액세스 제어 (IAM)** 를 선택하여 역할 할당 목록을 확인한다. 
 
-       ![Screenshot](../Media/Module-1/fa866a33-93ac-4cc9-adbd-70b8ece05fa5.png)
+      ![Screenshot](../Media/Module-1/fa866a33-93ac-4cc9-adbd-70b8ece05fa5.png)
 
-1.  Choose **Add** to open the **Add role assignment** pane.
+1. **추가**를 선택하여 **역할 할당 추가** 창을 연다.
 
-    If you don't have permissions to assign roles, you won't see the **Add** option.
+    역할을 할당할 수 있는 권한이 없는 경우 **추가** 옵션이 표시되지 않습니다.
 
-1.  In the **Role** drop-down list, select **Virtual Machine Contributor**.
+1. **역할** 드롭다운 목록에서 **가상 머신 참가자**를 선택한다.
 
-1.  In the **Select** list, select **Bill Smith**.
+1. **선택** 목록에서 **Bill Smith**를 선택한다.
 
-1.  Choose **Save** to create the role assignment.
+1. **저장**을 선택하여 역할 할당을 생성한다.
 
-   After a few moments, the user is assigned the Virtual Machine Contributor role at the myRBACrg resource group scope.
-
+  잠시 후, 가상 시스템 기여자 역할이 할당된 사용자가 myRBACrg 리소스 그룹 범위에 나타납니다.
   
-#### Task 3: Remove access
 
+### 작업 3: 접근 권한 제거
 
-In RBAC, to remove access, you remove a role assignment.
+RBAC에서 접근 권한을 삭제하려면 역할 할당을 제거해야 합니다.
 
+1. 역할 할당 탭을 클릭한다.
 
-1.  Click the Role Assignments tab.
+1. 역할 할당 목록에서 가상 머신 참가자 역할 옆의 체크박스를 클릭한다. 
 
-1.  In the list of role assignments, add a checkmark next to user with the Virtual Machine Contributor role.
-  
       ![Screenshot](../Media/Module-1/d821d99b-8a35-431b-aa0e-8e2dac57a168.png)
 
-1.  Choose **Remove**.
+1. **제거**를 선택한다.
 
-1.  In the remove role assignment message that appears, choose **Yes**.  
+1. 역할 할당 제거를 확인하는 메시지가 뜨면, **예**를 클릭한다.
    
   
-### Exercise 3:  Role-based Access Control (RBAC) using PowerShell
+## 연습 3: PowerShell을 사용하여 역할 기반 접근 제어(RBAC) 
+
+이 실습에서는 PowerShell을 사용하여 다음과 같은 실습을 진행합니다.
+
+-   `Get-AzRoleAssignment` 명령을 사용하여 역할 할당 목록을 나열
+-   `Remove-AzResourceGroup` 명령을 사용하여 접근 제거
 
 
-In this exercise you use PowerShell to :
+### 작업 1: 접근 권한 부여
 
--   Use the `Get-AzRoleAssignment` command to list the role assignments
--   Use the `Remove-AzResourceGroup` command to remove access
+사용자에게 접근 권한을 부여하려면 `New-AzRoleAssignment` 명령을 사용하여 역할을 할당합니다. 보안 주체, 역할 정의 및 범위를 지정해야 합니다.
 
-
-#### Task 1: Grant access
+1. **Cloud Shell**의 **PowerShell** 세션을 시작한다.
   
+1. **`Get-AzSubscription`** 명령을 사용하여 구독 ID를 확인한다.
+  
+    ```powershell
+    Get-AzSubscription
+    ```
 
-To grant access for the user, you use the New-AzRoleAssignment command to assign a role. You must specify the security principal, role definition, and scope.  
+1. 다음 명령의 '000000' 부분을 구독 ID로 대체하여 구독 범위를 변수에 저장한다. 
+  
+    ```powershell
+    $subScope = "/subscriptions/00000000-0000-0000-0000-000000000000" 
+    ```  
+  
+1. 다음 명령을 사용하여 구독 범위에 있는 사용자에게 Reader 역할을 할당한다.(`yourdomain`을 앞서 메모한 테넌트 도메인으로 대체한다)
 
-
-1.  Launch the **Cloud Shell PowerShell**.
-  
-1.  Get the ID of your subscription using the **`Get-AzSubscription`** command.
-  
-       ```powershell
-      Get-AzSubscription
-       ```
-
-  
-1.  Save the subscription scope in a variable replacing the 000000's with your subscription ID.
-  
-       ```powershell
-      $subScope = "/subscriptions/00000000-0000-0000-0000-000000000000" 
-       ```  
-  
-
-  
-1.  Assign the Reader role to the user at the subscription scope by using the following command (replacing your domain with the tenant domain you noted earlier):
-  
-       ```powershell
-      New-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -RoleDefinitionName "Reader" -Scope $subScope  
-       ```
+    ```powershell
+    New-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -RoleDefinitionName "Reader" -Scope $subScope  
+    ```
   
       ![Screenshot](../Media/Module-1/f468a5df-aab2-42db-9e28-7ea25a2262ca.png)
   
-1.  Assign the Contributor role to the user at the resource group scope using the following command:
+1. 다음 명령을 사용하여 리소스 그룹 범위에 있는 사용자에게 Contributor 역할을 할당한다.
   
-       ```powershell
-      New-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -RoleDefinitionName "Contributor" -ResourceGroupName "myRBACrg"
-       ```
+    ```powershell
+    New-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -RoleDefinitionName "Contributor" -ResourceGroupName "myRBACrg"
+    ```
 
   
-#### Task 2: List access  
+### 작업 2: List access  접근 권한 리스트
   
-1.  To verify the access for the subscription, use the Get-AzRoleAssignment command to list the role assignments use the following command:
+1. 구독 범위에서 접근 권한을 확인하기 위해 다음과 같이 Get-AzRoleAssignment 명령을 사용하여 역할 할당을 검토한다.
   
-       ```powershell
-      Get-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -Scope $subScope
-       ```
+    ```powershell
+    Get-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -Scope $subScope
+    ```
+      ![Screenshot](../Media/Module-1/d190e8c5-ffc7-4638-ad7e-cc2643b972a0.png)
 
-       ![Screenshot](../Media/Module-1/d190e8c5-ffc7-4638-ad7e-cc2643b972a0.png)
+    출력 결과에서 구독 내 RBAC 튜토리얼 사용자에게 Reader 역할이 할당된 것을 확인할 수 있습니다. 
 
-    In the output, you can see that the Reader role has been assigned to the RBAC Tutorial User at the subscription scope.
+2. 리소스 그룹 범위에서 접근 권한을 확인하기 위해 다음과 같이 Get-AzRoleAssignment 명령을 사용하여 역할 할당을 검토한다. 
 
-2.  To verify the access for the resource group, use the Get-AzRoleAssignment command to list the role assignments using the following command:
-  
-     ```powershell
+    ```powershell
     Get-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com     -ResourceGroupName "myRBACrg"
-     ```
+    ```
+
+  출력에서 Contributor 및 Reader 역할이 모두 RBAC 튜토리얼 사용자에게 할당되었음을 확인할 수 있다. Contributor 역할은 myRBACrg 리소스 그룹 범위에 있고, Reader 역할은 구독 범위에서 상속됩니다.
 
 
- In the output, you can see that both the Contributor and Reader roles have been assigned to the RBAC Tutorial User. The Contributor role is at the myRBACrg resource group scope and the Reader role is inherited at the subscription scope.
+### 작업 3: 접근 권한 제거
 
-#### Task 3: Remove access
+사용자, 그룹, 애플리케이션에 대한 접근 권한을 제거하려면 `Remove-AzRoleAssignment` 명령을 사용합니다.
+
+1. 다음 명령을 사용하여 리소스 그룹 범위 내 사용자의 Contributor 역할 할당을 제거한다. 
   
-
-To remove access for users, groups, and applications, use `Remove-AzRoleAssignment` to remove a role assignment.
-
-
-1.  Use the following command to remove the Contributor role assignment for the user at the resource group scope.
-  
-     ```powershell
+    ```powershell
     Remove-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -RoleDefinitionName "Contributor" -ResourceGroupName "myRBACrg"
-     ```
+    ```
   
-  
-1.  Use the following command to remove the Reader role assignment for the user at the subscription scope.
+1. 다음 명령을 사용하여 구독 범위 내 사용자의 Reader 역할 할당을 제거한다.
 
-     ```powershell
+    ```powershell
     Remove-AzRoleAssignment -SignInName bill@yourdomain.onmicrosoft.com -RoleDefinitionName "Reader" -Scope $subScope
-     ```
+    ```
   
+1. 다음 명령을 사용하여 리소스 그룹을 제거한다. (확인 메시지가 뜨면 Y를 입력한다)
   
-1.  Remove the resource group by running the following command (When prompted to confirm press Y and press enter):
-  
-     ```powershell
+    ```powershell
     Remove-AzResourceGroup -Name "myRBACrg"
-     ```
+    ```
 
-1.  Close the **Cloud Shell**.  
-
-
-**Results**: You have now completed this lab.
+1. **Cloud Shell** 창을 닫는다. 

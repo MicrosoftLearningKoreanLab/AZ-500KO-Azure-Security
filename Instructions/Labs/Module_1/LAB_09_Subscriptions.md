@@ -1,52 +1,43 @@
----
-lab:
-    title: 'LAB 09_구독 이동'
-    module: '모듈 01 - 계정과 접근 관리'
----
-
-# 랩: 구독 이동
-
-**Scenario**
-
-Occasionally, a need arises for transferring a subscription from an owner to an Azure AD tenant. In order to transfer a subscription from an Azure AD owner to another subscription, you need access to another subscription. If you do not have access to multiple subscriptions at this time, just review the process outlined below.
+# 모듈 1: 랩 9 - 구독 이동
 
 
-### Exercise 1: Transfer Azure subscriptions between Azure AD tenants
+**시나리오**
 
-#### Task 1: To transfer the ownership of an Azure subscription
+때때로 소유자에서 Azure AD 테넌트로 구독을 이전해야 할 필요가 있습니다. Azure AD 테넌트에서 다른 구독으로 구독을 이동하려면 다른 구독에 액세스할 수 있어야 합니다. 현재 여러 구독에 액세스할 수 없는 경우 아래에 설명된 프로세스를 검토하십시오.
 
-1.  Sign in at the Azure Portal as the account admin.
 
-1.  Navigate to **Cost Management + Billing** > **Subscriptions** and click **Manage**.
+## 연습 1: Azure AD 테넌트 간 Azure 구독 이동
+
+### 작업 1: Azure 구독의 소유권 양도
+
+1.  Azure Portal에 관리자 계정으로 로그인한다. 
+
+1.  **구독**을 선택하고 **관리**를 클릭한다.
 
      ![Screenshot](../Media/Module-1/24542a01-fb8a-465d-bebf-d5e0d106f56c.png)
 
-2.  Select your subscription.
+2.  구독을 선택한다.
 
-3.  Verify that your subscription is eligible for self-serve transfer by checking the Offer and Offer ID against the supported offers list.
+3.  지원되는 Offer 목록과 비교하여 Offer 및 Offer ID를 확인하여 구독이 자체 서비스 이전 대상인지 확인하십시오.
 
-    **Note**: At the time of writing, Azure Pass - Sponsorship subscriptions are not eligible for transfer.  Follow this guide through for reference.
+    **참고**: 실습 자료 작성일 기준 Azure Pass - Sponsorship 가입은 양도 대상이 아닙니다. 참조를 위해 이 자료를 사용하십시오.
 
-
-4.  Select **Transfer subscription**.
+4.  **Transfer subscription**를 선택한다.
 
      ![Screenshot](../Media/Module-1/6a745f4e-2bc3-4655-8692-65b4f8e6aeed.png)
 
-5.  Specify the recipient.
+5.  수신인을 지정한다.
 
-    **Note**: If you transfer a subscription to a new Azure AD tenant, all role assignments in RBAC will be permanently deleted from the source tenant and not migrated to the target tenant.
-
+    **참고**: 새 Azure AD 테넌트에 구독을 전송하는 경우 RBAC의 모든 역할 할당은 원본 테넌트에서 영구적으로 삭제되며 대상 테넌트로 마이그레이션되지 않습니다.
 
      ![Screenshot](../Media/Module-1/077262ca-0d4d-43d6-bb9e-3580912a8589.png)
 
-6.  The recipient automatically gets an email with an acceptance link.
-7.  The recipient selects the link and follows the instructions, including entering their payment information
+6.  수신자는 자동으로 승인 링크가 포함된 이메일을 받는다.
+
+7.  수취인이 링크를 선택하고 지급 정보 입력 등 지시사항을 준수한다.
 
      ![Screenshot](../Media/Module-1/a72dc585-b813-4823-9370-00e92b0b8f00.png)
 
-8.  Azure completes the subscription transfer.
+8.  Azure 구독 이동을 완료한다.
 
- At this point, billing ownership of the Azure subscription would be transfered to the new subscription.
-
-
-**Results**: You have now completed this module.
+ 이 시점에서, Azure 가입에 대한 청구권 소유권은 새로운 가입으로 이전됩니다.

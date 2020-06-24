@@ -1,26 +1,21 @@
----
-lab:
-    title: 'LAB 07_Azure Policy'
-    module: '모듈 01 - 계정과 접근 관리'
----
+# 모듈 1: 랩 7 - Azure 정책
 
-# 랩: Azure Policy
 
-In this lab, you will learn to use Azure Policy to do some of the more common tasks related to creating, assigning, and managing policies across your organization, such as:
+이 실습에서는 Azure Policy를 사용하여 조직 전체에 걸쳐 정책을 생성, 할당 및 관리하는 것과 관련된 몇 가지 일반적인 작업을 수행하는 방법을 알아봅니다.
 
-> - Assign a policy to enforce a condition for resources you create in the future
+> - 생성할 리소스에 대해 조건을 적용하는 정책 할당
 
-### Exercise 1: Using Azure Policy
+## 연습 1: Azure 정책 사용
 
-In this exercise, you will learn the basics of using Azure Policy. You will use a built-in policy to restrict which Azure regions can be used. You will then verify that the policy is working.
+이 연습에서는 Azure 정책 사용의 기본을 배웁니다. 기본 제공 정책을 사용하여 사용할 수 있는 Azure 지역을 제한하고, 정책이 작동 중인지 확인합니다.
 
-#### Task 1: Create an Azure Policy Assignment
+### 작업 1: Azure 정책 할당 생성
 
-In this task, you will first browse the built-in policy definitions using the Azure portal. You will then create a policy assignment using one of the built-in definitions to restrict which Azure Regions can be used. This policy will be scoped to the Test-RG resource group.
+이 작업에서는 먼저 Azure 포털을 사용하여 기본 제공 정책 정의를 찾아보십시오. 그런 다음 기본 제공 정의 중 하나를 사용하여 정책 할당을 만들어, 사용할 수 있는 Azure 영역을 제한하십시오. 이 정책은 Test-RG 리소스 그룹으로 범위가 지정됩니다.
 
-1.  Log in to the Azure portal at `https://portal.azure.com` using your Azure subscription credentials.
+1.  Azure portal `https://portal.azure.com`에 로그인한다.
 
-1.  Open the Cloud Shell in PowerShell Mode and run the following command to create a Resource Group in the UK South region.
+1.  Cloud Shell의 PowerShell 세션에서 다음 명령을 실행하여 UK South 리전에 리소스 그룹을 생성한다.
 
     ```powershell
     New-AzResourceGroup -Name myResourceGroup -Location UKSouth
@@ -28,104 +23,86 @@ In this task, you will first browse the built-in policy definitions using the Az
 
     ![Screenshot](../Media/Module-1/2019-12-30_18-18-29.png)
 
-   
-
-2.  In the Hub menu, click on **All services**. Enter **Policy** into the search box, and click on the **Policy** service.
+2.  Auzre 포털 메뉴에서 **모든 서비스**를 클릭하고, **정책**을 검색하여 선택한다. 
 
     ![Screenshot](../Media/Module-1/2019-12-30_18-05-57.png)
 
-
-3.  The Azure Policy blade will open. Click on **Definitions** to show the list of available policy definitions.
+3.  Azure 정책 블레이드에서 **정의**를 클릭하여 사용 가능한 정책 목록을 확인한다. 
 
     ![Screenshot](../Media/Module-1/2019-12-30_18-10-13.png)
 
-
-4.  Use the filters and search to find the policy definition called **Allowed locations**.
+4.  필터와 검색을 사용해서 **허용 되는 위치** 정책 정의를 찾는다.
 
     ![Screenshot](../Media/Module-1/2019-12-30_18-10-59.png)
 
+    **참고:** 해당 정책은 리소스 그룹의 위치가 아닌, 리소스의 위치를 제한합니다. '리소스 그룹이 허용된 위치' 정책은 별도로 존재합니다.
 
+5.  **허용되는 위치** 정책 정의를 클릭하여 정의 세부 사항을 확인한다. 
 
-    **Note:** This policy only restricts resource locations, not resource group locations. There is a separate policy for 'Allowed locations for resource groups'.
-
-
-5.  Click on the **Allowed locations** policy definition to open the definition details view. 
-
-    **Note**: Policy definitions take an array of locations as parameters. A policy rule is an ‘if-then’ statement. The ‘if’ clause checks to see if the resource location is included in the parameterized list, and if not the ‘then’ clause denies the resource creation.
+    **참고**: 정책 정의는 위치에 대한 배열을 매개 변수로 사용합니다. 정책 규칙은 'if-then' 구문을 따릅니다. 'if' 절은 리소스 위치가 매개 변수화된 목록에 포함되어 있는지 여부를 확인하고, 지정된 목록에 없으면 'then' 절에서 리소스 생성을 거부합니다.
 
      ![Screenshot](../Media/Module-1/2019-12-30_18-13-49.png)
 
-
-1.  Click **Assign**.
+1.  **할당**을 클릭한다.
 
      ![Screenshot](../Media/Module-1/2019-12-30_18-23-26.png)
 
-
-
-
-2.  Click the Elipsis (...) button and assign the policy to your Subscription and the **myResourceGroup** resource group then click **Select**.
+2.  말줄임표 버튼 (...) 을 클릭하고 구독과 **myResourceGroup** 리소스 그룹을 선택한 뒤, **선택**을 클릭한다.
 
      ![Screenshot](../Media/Module-1/2019-12-30_18-24-20.png)
 
+3.  **기본 내용** 탭에 다음 설정을 사용한다.
 
+    -   제외: **선택하지 않음**
+    -   할당: **Allow UK South for myResourceGroup**
+    -   설명: **Allow resources to be created in UK South Only for myResourceGroup**
+    -   정책 적용: **사용**
+    -   할당한 사람: **본인 이름**
 
-3.  Complete the remainder of the policy assignment **Basics** tab with the following settings:
-
-    -   Exclusions: **Leave blank**
-    -   Assignment name: **Allow UK South for myResourceGroup**
-    -   Description: **Allow resources to be created in UK South Only for myResourceGroup**
-    -   Policy enforcement: **Enabled**
-    -   Assigned by: **Your name**
-
-
-
-
-1.  Click **Next** to proceed to the **Parameters** tab. In this tab you can  provide values for parameters that are specified in the policy defintion. Select **UK South** as the allowed location.
+1.  **다음**을 클릭하고, **매개 변수**를 설정한다. 이 탭에서는 정책 정의에 명시하는 파라미터 값을 입력할 수 있다. 허용되는 위치로 **UK South**를 선택한다. 허용되는 위치로 **영국 남부**를 선택한다. 
 
      ![Screenshot](../Media/Module-1/2019-12-30_18-29-49.png)
 
+2.  **검토 + 만들기**를 클릭하고, **만들기**를 클릭하여 정책 할당을 생성한다. 
 
-2.  Click **Review + create**, followed by **Create** to create the policy assignment. 
+4.  할당 만들기에 성공했으며, 할당을 적용하려면 30분 정도 걸릴 수 있다는 알림을 볼 수 있다. 
 
-4.  You will see a notification that the assignment was successful, and that the assignment will take around 30 minutes to complete.
+    **참고:** Azure 정책 할당에 최대 30분이 걸리는 이유는 실제 환경에서는 구현하는 데 2~3분밖에 걸리지 않지만 글로벌 복제가 필요하기 때문입니다. 다음 작업이 실패하면 몇 분 정도 기다린 후 다시 시도하십시오.
 
-    **Note:** The reason the Azure policy assignment takes up to 30 minutes to be assigned is that is has to replicate globally although in the real world it generally only takes 2 - 3 minutes to be implemented.  If the next task fails, simply wait a few minutes and attempt the steps again.
 
-#### Task 2: Verify the Azure Policy Assignment
+### 작업 2: Azure 정책 할당 확인
 
-In this task, you will verify that the policy assignment created in the previous task is effective by attempting to create a virtual network in both a permitted region and a different region.
+이 작업에서는 허용된 지역과 이외 지역에 각각 가상 네트워크를 생성하여 이전 작업에서 할당한 정책이 잘 작동하는지 확인합니다. 
 
-1.  Click **Virtual Networks** on the Hub menu.
+1.  Azure 포털에서 **가상 네트워크**를 클릭한다.
 
-2.  On the **Virtual Networks** blade, click **+ Add**
-3.  First, you will try to create a virtual network in East US. Since this is not an allowed location, the request should be blocked. Complete in the **Create virtual network** blade as follows:
+2.  **가상 네트워크** 블레이드에서 **+ 추가**를 클릭한다.
 
-    -   Name: **myVnet**
-    -   Address space: **10.0.0.0/16**
-    -   Resource group: **myResourceGroup**
-    -   Location: **East US**
-    -   Address range: **10.0.0.0/24**
+3.  먼저 미국 동부에 가상 네트워크를 생성한다. 해당 지역은 허용된 위치가 아니므로 요청을 차단해야 한다. **가상 네트워크 생성** 블레이드에 다음 값을 입력한다.
 
-    Leave the other settings at their default values and click **Create**.
+    -   이름: **myVnet**
+    -   주소 공간: **10.0.0.0/16**
+    -   리소스 그룹: **myResourceGroup**
+    -   지역: **미국 동부**
+    -   주소 범위: **10.0.0.0/24**
+
+    다른 값은 기본 설정으로 두고 **검토 + 만들기**를 클릭한다.
 
     ![Screenshot](../Media/Module-1/2019-12-30_18-35-10.png)
   
-4.  Once you click create you will see a validation error. Click the error to open the error details.
+4.  만들기를 클릭하면 오류가 표시되며, 클릭하여 오류 세부 정보를 확인한다.
 
     ![Screenshot](../Media/Module-1/2019-12-30_18-37-20.png)
 
 
-5.  You will see the error states you are disallowed by policy.
+5.  정책에서 리소스를 허용하지 않았다는 메시지를 확인할 수 있다.
 
     ![Screenshot](../Media/Module-1/2019-12-30_18-39-17.png)
 
+5.  기본 사항 탭으로 돌아가서 지역을 정책에서 허용된 **영국 남부**로 바꾼다. **검토 + 만들기**를 다시 클릭하고, 작업이 성공한 것을 확인한다. 
 
 
-5.  Change the resource location to **UK South** as this is the location permitted by the policy. Click **Create** again and verify that the operation is successful.
+**요약**
+이 랩에서는 기본 제공 정책 정의를 검색하고 정책 할당을 생성하여 Azure 정책을 사용하는 방법을 배웠습니다.
 
-**Summary**
-
-In this exercise, you learned to use Azure policy by browsing the built-in policy definitions and creating a policy assignment.
-
-**Results**: You have now completed this lab.
 
