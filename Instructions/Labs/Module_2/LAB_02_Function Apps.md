@@ -14,9 +14,10 @@ Azure Function Apps는 Azure App Service 인프라를 사용합니다. 이 랩�
 
 1. 웹 브라우저에 [이 URL](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-500-Azure-Security%2Fmaster%2FAllfiles%2FLabs%2FMod2_Lab02%2Ftemplate.json)로 접속합니다.
 
-1. 리소스 그룹에서 **새로 만들기**를 선택하고 `az5000202`를 입력합니다.
+1. 리소스 그룹에서 **새로 만들기**를 선택하고 `myResourceGroup`을 입력합니다.
 
 1. **위에 명시된 사용 약관에 동의함** 체크박스에 체크를 한 후 **구매**버튼을 클릭합니다.
+
 
 #### 작업 2: Function App에 HTTP 트리거 추가
 

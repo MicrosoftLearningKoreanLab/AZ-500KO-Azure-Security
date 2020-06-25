@@ -1,5 +1,10 @@
-# 모듈 1: 랩 1 - Azure AD Privileged Identity 관리
+---
+lab:
+    title: 'LAB 01_Azure AD Privileged Identity 관리'
+    module: '모듈 01 - 계정과 접근 관리'
+---
 
+# 랩: Azure AD Privileged Identity 관리
 
 **시나리오**
 

@@ -1,5 +1,10 @@
-# 모듈 1: 랩 3: 보안 접근을 위한 다단계(Multi-Factor) 인증 사용
+---
+lab:
+    title: 'LAB 03_보안 접근을 위한 다단계(Multi-Factor) 인증 사용'
+    module: '모듈 01 - 계정과 접근 관리'
+---
 
+# 랩: Multi-Factor
 
 ## 연습 1: MFA 인증 파일럿 (Azure Active Directory 조건부 접근이 가능한 특정 앱의 경우 MFA 필요)
 
