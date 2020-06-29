@@ -97,7 +97,7 @@ Kubernetes 매니페스트 파일은 실행할 컨테이너 이미지와 같은 
 
 #### 작업 5: 응용프로그램 테스트
 
-1. 배포 진행상황을 모니터링 하려면 다음 명령어를 사용할 수 있다.
+1. 배포 진행상황을 모니터링 하려면 `--watch`를 포함한 명령어를 사용할 수 있다.
 
     ```azurecli-interactive
     kubectl get service azure-vote-front --watch

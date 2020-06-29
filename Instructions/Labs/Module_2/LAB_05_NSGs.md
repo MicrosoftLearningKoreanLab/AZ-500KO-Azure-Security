@@ -6,181 +6,225 @@ lab:
 
 # 랩: 네트워크 보안 그룹
 
-You can filter network traffic inbound to and outbound from a virtual network subnet with a network security group. Network security groups contain security rules that filter network traffic by IP address, port, and protocol. Security rules are applied to resources deployed in a subnet. In this tutorial, you learn how to:
+가상 네트워크 서브넷의 인바운드 및 아웃바운드 트래픽을 필터링할 수 있습니다. 네트워크 보안 그룹은 IP 주소, Port, 프로토콜을 기반으로 네트워크 트래픽을 필터링하는 보안 규칙을 포함합니다. 보안 규칙은 서브넷에 배포한 리소스에 적용됩니다. 
 
-- Create a network security group and security rules
-- Create a virtual network and associate a network security group to a subnet
-- Deploy virtual machines (VM) into a subnet
-- Test traffic filters
+- 네트워크 보안 그룹 및 보안 규칙 생성
+- 가상 네트워크 생성 및 서브넷에 네트워크 보안 그룹 연결
+- 서브넷에 가상 머신 배포
+- 트래픽 필터링 테스트 
 
 
-### Exercise 1: Filter network traffic with a network security group using the Azure portal
+### 연습 1: Azure 포털을 사용하여 네트워크 보안 그룹으로 네트워크 트래픽 필터링
 
-#### Task 1:  Create a virtual network
+#### 작업 1: 가상 네트워크 생성
 
-1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
-2.  Select **Networking**, and then select **Virtual network**.
-3.  Enter, or select, the following information, accept the defaults for the remaining settings, and then select **Create**:
+1.  Azure 포털에서 **+ 리소스 만들기**를 선택한다.
 
-    | Setting                 | Value                                              |
+2.  **Virtual network**를 탐색하여 **만들기**를 클릭한다.
+
+3.  다음 정보를 입력하고, **만들기**를 선택한다.
+
+    | 설정                 | 값                                              |
     | ---                     | ---                                                |
-    | Name                    | myVirtualNetwork                                   |
-    | Address space           | 10.0.0.0/16                                        |
-    | Subscription            | Select your subscription.                          |
-    | Resource group          | Select **Create new** and enter *myResourceGroup*. |
-    | Location                | Select **East US**.                                |
-    | Subnet- Name            | mySubnet                                           |
-    | Subnet - Address range  | 10.0.0.0/24                                        |
+    | 이름                    | az5000205vnet                                   |
+    | 구독            | 이 랩에서 사용할 구독의 이름                          |
+    | 리소스 그룹          | **새로 만들기** : *az5000205* |
+    | 지역                | **(아시아 태평양)한국 중부**                                |
 
-#### Task 2:  Create application security groups
+    IP 주소 탭을 선택하고 다음 값을 사용한다.
+
+    | 설정                 | 값                                              |
+    | ---                     | --- |
+    | 주소 공간           | 10.0.0.0/16                                        |
+    | 서브넷 이름            | default 서브넷 이름을 **mySubnet**으로 바꾸고 **저장**을 클릭한다.                                            |
+    | 서브넷 주소 범위  | 10.0.0.0/24                                        |
 
 
-An application security group enables you to group together servers with similar functions, such as web servers.
+#### 작업 2:  애플리케이션 보안 그룹 생성
 
+애플리케이션 보안 그룹은 웹 서버 같은 비슷한 기능을 가진 서버를 그룹화합니다.
 
-1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
-2.  In the **Search the Marketplace** box, enter *Application security group*. When **Application security group** appears in the search results, select it, select **Application security group** again under **Everything**, and then select **Create**.
-3.  Enter, or select, the following information, and then select **Create**:
+1.  **+ 리소스 만들기**를 선택한다.
 
-    | Setting        | Value                                                         |
+2.  *Application security group*을 검색하여 **만들기**를 클릭한다.
+
+3.  다음 정보를 입력하여 **만들기**를 클릭한다.
+
+    | 설정        | 값                                                         |
     | ---            | ---                                                           |
-    | Name           | myAsgWebServers                                               |
-    | Subscription   | Select your subscription.                                     |
-    | Resource group | Select **Use existing** and then select  **myResourceGroup**. |
-    | Location       | East US                                                       |
+    | 이름           | myAsgWebServers                                               |
+    | 구독   | 이 랩에서 사용할 구독                                     |
+    | 리소스 그룹 | az5000205 |
+    | 지역       | **(아시아 태평양)한국 중부**                                                       |
 
-4.  Complete step 3 again, specifying the following values:
+4.  다음 정보를 입력하여 애플리케이션 보안 그룹을 추가 생성한다.
 
-    | Setting        | Value                                                         |
+    | 설정        | 값                                                         |
     | ---            | ---                                                           |
-    | Name           | myAsgMgmtServers                                              |
-    | Subscription   | Select your subscription.                                     |
-    | Resource group | Select **Use existing** and then select  **myResourceGroup**. |
-    | Location       | East US                                                       |
+    | 이름           | myAsgMgmtServers                                              |
+    | 구독   | 이 랩에서 사용할 구독                                     |
+    | 리소스 그룹 | az5000205 |
+    | 지역       | **(아시아 태평양)한국 중부**                                                       |
 
-#### Task 3:  Create a network security group
+#### 작업 3:  네트워크 보안 그룹 생성
 
-1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
-2.  Select **Networking**, and then select **Network security group**.
-3.  Enter, or select, the following information, and then select **Create**:
+1.  **+ 리소스 만들기** 를 선택한다.
 
-    |Setting|Value|
+2.  **Network security group**을 탐색하여 클릭한다.
+
+3.  다음 설정을 입력하고, **만들기**를 클릭한다. 
+
+    | 설정 | 값 |
     |---|---|
-    |Name|myNsg|
-    |Subscription| Select your subscription.|
-    |Resource group | Select **Use existing** and then select *myResourceGroup*.|
-    |Location|East US|
+    | 이름 |myNsg|
+    | 구독 | 이 랩에서 사용할 구독의 이름 |
+    | 리소스 그룹 | az5000205 |
+    | 지역 | **(아시아 태평양)한국 중부** |
 
-#### Task 4:  Associate network security group to subnet
 
-1.  In the *Search resources, services, and docs* box at the top of the portal, begin typing *myNsg*. When **myNsg** appears in the search results, select it.
-2.  Under **SETTINGS**, select **Subnets** and then select **+ Associate**. 
+#### 작업 4:  서브넷에 네트워크 보안 그룹 연결
 
-3.  Under **Associate subnet**, select **Virtual network** and then select **myVirtualNetwork**. Select **Subnet**, select **mySubnet**, and then select **OK**.
+1.  Azure 포털에서 방금 배포한 **myNsg**를 탐색하여 클릭한다. 
 
-#### Task 5:  Create security rules
+2.  **설정** 섹션 아래 **서브넷**을 선택하고, **+ 연결**을 클릭한다. 
 
-1.  Under **SETTINGS**, select **Inbound security rules** and then select **+ Add**.
+3.  **서브넷 연결** 아래 **az5000205vnet**과 **mySubnet**을 선택한 후, **확인**을 클릭한다.
 
-2.  Create a security rule that allows ports 80 and 443 to the **myAsgWebServers** application security group. Under **Add inbound security rule**, enter, or select the following values, accept the remaining defaults, and then select **Add**:
 
-    | Setting                 | Value                                                                                                           |
+#### 작업 5:  보안 규칙 생성
+
+1.  **설정** 섹션 아래 **인바운드 보안 규칙**을 선택하고, **+ 추가**를 클릭한다.
+
+2.  다음 값을 사용하여 **myAsgWebServers** 애플리케이션 보안 그룹에 80 및 443 포트를 허용하는 보안 규칙을 생성한다. 
+
+    | 설정                 | 값                                                                                                           |
     | ---------               | ---------                                                                                                       |
-    | Destination             | Select **Application security group**, and then select **myAsgWebServers** for **Application security group**.  |
-    | Destination port ranges | Enter 80,443                                                                                                    |
-    | Protocol                | Select TCP                                                                                                      |
-    | Name                    | Allow-Web-All                                                                                                   |
+    | 대상 주소             | **Application security group** 선택한 후, **대상 애플리케이션 보안 그룹**으로 **myAsgWebServers** 선택  |
+    | 대상 포트 범위 | 80, 443 입력                                                                                                   |
+    | 프로토콜                | TCP 선택                                                                                                      |
+    | 이름                    | Allow-Web-All                                                                                                   |
 
-3.  Complete step 2 again, using the following values:
+3.  다음 값을 사용하여 이전 단계를 반복한다.
 
-    | Setting                 | Value                                                                                                           |
+    | 설정                 | 값                                                                                                           |
     | ---------               | ---------                                                                                                       |
-    | Destination             | Select **Application security group**, and then select **myAsgMgmtServers** for **Application security group**. |
-    | Destination port ranges | Enter 3389                                                                                                      |
-    | Protocol                | Select TCP                                                                                                      |
-    | Priority                | Enter 110                                                                                                       |
-    | Name                    | Allow-RDP-All                                                                                                   |
+    | 대상 주소             | **Application security group** 선택한 후, **대상 애플리케이션 보안 그룹**으로 **myAsgMgmtServers** 선택 |
+    | 대상 포트 범위 |  3389 입력                                                                                                      |
+    | 프로토콜                |  TCP 선택                                                                                                      |
+    | 우선 순위                |  110 입력                                                                                                      |
+    | 이름                    | Allow-RDP-All                                                                                                   |
 
-    In this tutorial, RDP (port 3389) is exposed to the internet for the VM that is assigned to the *myAsgMgmtServers* application security group. For production environments, instead of exposing port 3389 to the internet, it's recommended that you connect to Azure resources that you want to manage using a VPN or private network connection.
+    이 튜토리얼에서는 *myAsgMgmtServers* 애플리케이션 보안 그룹에 할당된 VM의 RDP(Port 3389)가 인터넷에 노출되어 있습니다. 프로덕션 환경의 경우 인터넷에 포트 3389를 노출하는 대신 VPN 또는 전용 네트워크 연결을 사용하여 관리할 Azure 리소스에 연결하는 것이 좋습니다.
 
 
-#### Task 6:  Create virtual machines
+#### 작업 6:  가상 머신 생성
 
-1.  Select **+ Create a resource** found on the upper, left corner of the Azure portal.
-2.  Select **Compute**, and then select **Windows Server 2016 Datacenter**.
-3.  Enter, or select, the following information, and accept the defaults for the remaining settings:
+1.  **+ 리소스 만들기**를 선택한다.  
 
-    |Setting|Value|
+2.  **Windows Server 2016 Datacenter**를 탐색하여 선택한다. 
+
+3.  다음 값을 설정한다. (다른 값은 기본 설정을 사용한다)
+
+    |설정|값|
     |---|---|
-    |Subscription| Select your subscription.|
-    |Resource group| Select **Use existing** and select **myResourceGroup**.|
-    |Name|myVmWeb|
-    |Location| Select **East US**.|
-    |User name| Enter a user name of your choosing.|
-    |Password| Pa55w.rd1234 |
+    |구독| 이 랩에서 사용할 구독의 이름 |
+    |리소스 그룹| az5000205|
+    |가상 머신 이름|myVmWeb|
+    |지역| **(아시아 태평양)한국 중부** |
+    |사용자 이름| Student |
+    |암호| Pa55w.rd1234 |
+    |크기| Standard_DS2_v2 |
 
-   
+4.  **네트워킹** 탭에 다음 설정을 사용한다. 
 
-4.  Select a size for the VM and then select **Select**.
-5.  Under **Networking**, select the following values, and accept the remaining defaults:
-
-    |Setting|Value|
+    |설정|값|
     |---|---|
-    |Virtual network |Select **myVirtualNetwork**.|
-    |NIC network security group |Select **None**.|
-    |Public Inbound Ports|Select **None**. |
+    |가상 네트워크 |Select **az5000205vnet**.|
+    |NIC 네트워크 보안 그룹 |없음|
 
-6.  Select **Review + Create** at the bottom, left corner, select **Create** to start VM deployment.
+5.  **관리** 탭의 **부트 진단**을 **끄기**로 설정한다. 
 
-#### Task 7:  Create the second VM
-
-Complete above steps 1-6 again, but in step 3, name the VM *myVmMgmt*. The VM takes a few minutes to deploy. Do not continue to the next step until the VM is deployed.
-
-#### Task 8:  Associate network interfaces to an ASG
+6.  **만들기** 를 선택한다. 
 
 
-When the portal created the VMs, it created a network interface for each VM, and attached the network interface to the VM. Add the network interface for each VM to one of the application security groups you created previously:
+#### 작업 7:  VM 추가 배포
+
+작업 6의 과정을 반복하여 가상 머신  *myVmMgmt*을 추가 배포한다. (3번 과정에서 가상 머신 이름을 *myVmMgmt*으로 변경)VM 배포가 완료되면 다음 작업을 진행한다.
 
 
-1.  In the *Search resources, services, and docs* box at the top of the portal, begin typing *myVmWeb*. When the **myVmWeb** VM appears in the search results, select it.
-2.  Under **SETTINGS**, select **Networking**.  Select **Configure the application security groups**, select **myAsgWebServers** for **Application security groups**, and then select **Save**.
+#### 작업 8:  애플리케이션 보안 그룹에 네트워크 인터페이스 연결
 
-3.  Complete steps 1 and 2 again, searching for the **myVmMgmt** VM and selecting the  **myAsgMgmtServers** ASG.
+ VM을 생성할 때 각 VM에 대한 네트워크 인터페이스를 생성하고 네트워크 인터페이스를 VM에 연결합니다. 이전 단계에서 생성한 애플리케이션 보안 그룹 중 하나에 각 VM의 네트워크 인터페이스를 추가하십시오.
 
-#### Task 9:  Test traffic filters
+1.  이전에 배포한 **myVMWeb**을 탐색하여 클릭한다. 
 
-1.  Connect to the *myVmMgmt* VM. Enter *myVmMgmt* in the search box at the top of the portal. When **myVmMgmt** appears in the search results, select it. Select the **Connect** button.
-2.  Select **Download RDP file**.
-3.  Open the downloaded rdp file and select **Connect**. Enter the user name and password you specified when creating the VM. You may need to select **More choices**, then **Use a different account**, to specify the credentials you entered when you created the VM.
-4.  Select **OK**.
-5.  You may receive a certificate warning during the sign-in process. If you receive the warning, select **Yes** or **Continue**, to proceed with the connection.
+2.  **설정** 섹션의 **네트워킹**을 선택한다. **애플리케이션 보안 그룹** 탭을 선택하고, **애플리케이션 보안 그룹 구성**을 클릭한다.목록에서 **myAsgWebServers**을 선택하고, **저장**을 클릭한다. 
 
-    The connection succeeds, because port 3389 is allowed inbound from the internet to the *myAsgMgmtServers* application security group that the network interface attached to the *myVmMgmt* VM is in.
+3.  앞의 두 단계를 반복하여 **myVmMgmt** 가상 머신에 대해서도 **myAsgMgmtServers** 애플리케이션 보안 그룹을 구성한다. 
 
-6.  Connect to the *myVmWeb* VM from the *myVmMgmt* VM by entering the following command in a PowerShell session:
+
+#### 작업 9:  트래픽 필터링 테스트 
+
+1.  **myVmMgmt**를 탐색하여 클릭한다. **연결**을 선택한다. 
+
+2.  **RDP 파일 다운로드**를 선택한다. 
+
+3.  다운로드한 RDP 파일을 열고 **Connect**를 선택한다. VM을 생성할 때 지정한 사용자 이름과 암호를 입력한다. VM을 생성할 때 입력한 자격 증명을 지정하려면 **추가 선택**을 선택한 다음 **다른 계정 사용*을 선택해야 할 수 있다.
+
+4.  로그인 과정 중에 인증서 경고를 받을 수 있다. 경고가 표시되면 **예** 또는 **계속**을 선택하여 연결을 계속한다.
+
+    3389 포트는 *myVmMgmt* VM에 연결된 네트워크 인터페이스가 있는 *myAsgMgmtServers* 애플리케이션 보안 그룹으로 인바운드될 수 있기 때문에 연결에 성공합니다. 
+
+6.  *myVmMgmt*의 PowerShell 세션에 다음 명령을 입력하여 *myVmWeb*에 연결한다. 
 
     ```powershell
     mstsc /v:myVmWeb
     ```
 
-    You are able to connect to the myVmWeb VM from the myVmMgmt VM because VMs in the same virtual network can communicate with each other over any port, by default. You can't however, create a remote desktop connection to the *myVmWeb* VM from the internet, because the security rule for the *myAsgWebServers* doesn't allow port 3389 inbound from the internet and inbound traffic from the Internet is denied to all resources, by default.
 
-7.  To install Microsoft IIS on the *myVmWeb* VM, enter the following command from a PowerShell session on the *myVmWeb* VM:
+    myVmMgmt VM에서 myVmWeb VM에 연결할 수 있습니다. 동일한 가상 네트워크의 VM이 기본적으로 모든 포트를 통해 서로 통신할 수 있기 때문입니다. 그러나 *myAsgWebServers*에 대한 보안 규칙은 인터넷으로부터의 3389 포트 인바운드 및 인터넷으로부터의 인바운드 트래픽을 기본적으로 모두 거부합니다. 따라서 인터넷에서 *myVmWeb* VM에 대한 원격 데스크톱 연결을 생성할 수는 없습니다.
+
+7.  *myVmWeb* 가상 머신에 Microsoft IIS를 설치하기 위해 *myVmWeb* 가상 머신 PowerShell에 다음 명령을 입력한다.  
 
     ```powershell
     Install-WindowsFeature -name Web-Server -IncludeManagementTools
     ```
 
-8.  After the IIS installation is complete, disconnect from the *myVmWeb* VM, which leaves you in the *myVmMgmt* VM remote desktop connection.
-9.  Disconnect from the *myVmMgmt* VM.
-10.  In the *Search resources, services, and docs* box at the top of the Azure portal, begin typing *myVmWeb* from your computer. When **myVmWeb** appears in the search results, select it. Note the **Public IP address** for your VM. The address shown in the following picture is 137.135.84.74, but your address is different:
+8.  IIS 설치가 완료되면 *myVmWeb*과의 연결을 종료한다. 
+
+9.  *myVmMgmt* 가상 머신과의 연결을 종료한다. 
+
+10. **myVmWeb**을 탐색하여 클릭한다. **공용 IP 주소**를 기록한다. 아래 그림에서는 137.135.84.74에 해당하지만 IP 주소는 다를 수 있다. 
 
        ![Screenshot](../Media/Module-2/e3bbd69d-95d0-4b3b-98ce-714d30b4d1ef.png)
   
-11.  To confirm that you can access the *myVmWeb* web server from the internet, open an internet browser on your computer and browse to `http://<public-ip-address-from-previous-step>`. You see the IIS welcome screen, because port 80 is allowed inbound from the internet to the *myAsgWebServers* application security group that the network interface attached to the *myVmWeb* VM is in.
+11.  인터넷에서 *myVmWeb* 웹 서버에 접근할 수 있는지 확인하려면 컴퓨터에서 인터넷 브라우저를 열고 'http://<공용 IP 주소>'로 접속한다. 포트 80이 *myVmWeb* VM에 연결된 네트워크 인터페이스가 있는 *myAsgWebServers* 애플리케이션 보안 그룹으로 인바운드될 수 있으므로 IIS welcome 화면이 표시된다. 
 
 
-| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
-| --- |
+### 연습 2: 랩 리소스 삭제
 
-**Results**: You have now completed this lab.
+#### 작업 1: Cloud Shell 열기
+
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 시작한다.
+
+1. Cloud Shell 인터페이스에서 **Bash**를 선택한다.
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열한다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv
+    ```
+
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인한다. 이 그룹은 다음 작업에서 삭제된다.
+
+#### 작업 2: 리소스 그룹 삭제하기
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제한다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+    ```
+
+1. **Cloud Shell** 명령 프롬프트를 닫는다.
+
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.
