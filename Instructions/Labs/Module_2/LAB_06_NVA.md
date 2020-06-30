@@ -4,323 +4,306 @@ lab:
     module: '모듈 02 - 플랫폼 보호'
 ---
 
-# 랩: 네트워크 가상 어플라이언스
+# 랩: NVA(네트워크 가상 어플라이언스)
 
-**Scenario**
+**시나리오**
 
-Azure routes traffic between all subnets within a virtual network, by default. You can create your own routes to override Azure's default routing. The ability to create custom routes is helpful if, for example, you want to route traffic between subnets through a network virtual appliance (NVA). In this lab, you learn how to:
+Azure는 기본적으로 가상 네트워크 내의 모든 서브넷 간 트래픽을 라우팅합니다. 사용자 지정 경로를 생성하여 Azure의 기본 라우팅을 재설정할 수 있습니다. 만약 네트워크 가상 어플라이언스(NVA)를 통해 서브넷간 트래픽을 라우트하는 경우에는 사용자 지정 경로를 생성하는 것이 유용합니다. 
+
+> * 경로 테이블 생성
+> * 경로 생성 
+> * 다중 서브넷으로 구성된 가상 네트워크 생성
+> * 서브넷에 경로 테이블 연결
+> * 트래픽을 전달하는 NVA 생성
+> * 다른 서브넷에 가상 머신 배포
+> * NVA를 통해 트래픽을 다른 서브넷으로 전달
 
 
-> * Create a route table
-> * Create a route
-> * Create a virtual network with multiple subnets
-> * Associate a route table to a subnet
-> * Create an NVA that routes traffic
-> * Deploy virtual machines (VM) into different subnets
-> * Route traffic from one subnet to another through an NVA
+### 연습 1: Azure 포털을 이용해 경로 테이블로 네트워크 트래픽 라우트
 
-### Exercise 1: Route network traffic with a route table using the Azure portal
+#### 작업 1: 라우트 테이블 생성
 
-#### Task 1: Create a route table
+1.  Azure 포털에서 **경로 테이블**을 탐색하여 선택한다. 
 
-1.  On the upper-left side of the screen, select **Create a resource** > **Networking** > **Route table**.
+1.  **경로 테이블 만들기**를 클릭하고, 다음 값을 입력한다. 
 
-1.  In **Create route table**, enter or select this information:
-
-    | Setting | Value |
+    | 설정 | 값 |
     | ------- | ----- |
-    | Name | Enter *myRouteTablePublic*. |
-    | Subscription | Select your subscription. |
-    | Resource group | Select **Create new**, enter *myResourceGroup*, and select *OK*. |
-    | Location | Leave the default **East US**.
-    | Virtual network gateway route propagation | Leave the default **Enabled**. |
+    | 이름 | *myRouteTablePublic* 입력 |
+    | 구독 | 이 랩에서 사용할 구독 |
+    | 리소스 그룹 | 새로만들기 Select *az5000206* |
+    | 위치 | (Asia Pacific) 동남 아시아 |
+    | 가상 네트워크 게이트웨이 경로 전파 | 사용 |
 
-1.  Select **Create**.
-
-#### Task 2: Create a route
-
-1.  In the portal's search bar, enter *myRouteTablePublic*.
-
-1.  When **myRouteTablePublic** appears in the search results, select it.
-
-1.  In **myRouteTablePublic** under **Settings**, select **Routes** > **+ Add**.
+1.  **만들기**를 클릭한다.
 
 
-1.  In **Add route**, enter or select this information:
+#### 작업 2: 경로 만들기
 
-    | Setting | Value |
+1.  포털에서 *myRouteTablePublic*를 검색하여 클릭한다.
+
+1.  **설정** 섹션에 **경로** > **+ 추가**를 클릭한다.
+
+1.  **경로 추가**에 다음 값을 사용한다. 
+
+    | 설정 | 값 |
     | ------- | ----- |
-    | Route name | Enter *ToPrivateSubnet*. |
-    | Address prefix | Enter *10.0.1.0/24*. |
-    | Next hop type | Select **Virtual appliance**. |
-    | Next hop address | Enter *10.0.2.4*. |
+    | 경로 이름 | *ToPrivateSubnet* 입력 |
+    | 주소 접두사 | *10.0.1.0/24* |
+    | 다음 홉 형식 | **가상 어플라이언스** |
+    | 다음 홉 주소 | *10.0.2.4*. |
 
-1.  Select **OK**.
-
-#### Task 3: Associate a route table to a subnet
+1.  **확인**을 클릭한다.
 
 
-Before you can associate a route table to a subnet, you have to create a virtual network and subnet.
+#### 작업 3: 서브넷에 경로 테이블 연결 
 
+서브넷에 경로 테이블을 연결하기 전에 가상 네트워크와 서브넷을 생성합니다. 
 
-1.  On the upper-left side of the screen, select **Create a resource** > **Networking** > **Virtual network**.
+1.  Azure 포털에서 **가상 네트워크**를 검색하여 선택한다. 
 
-1.  In **Create virtual network**, enter or select this information:
+1.  **가상 네트워크 만들기**에 다음 값을 사용한다. 
 
-    | Setting | Value |
+    | 설정 | 값 |
     | ------- | ----- |
-    | Name | Enter *myVirtualNetwork*. |
-    | Address space | Enter *10.0.0.0/16*. |
-    | Subscription | Select your subscription. |
-    | Resource group | Select ***Select existing*** > **myResourceGroup**. |
-    | Location | Leave the default **East US**. |
-    | Subnet - Name | Enter *Public*. |
-    | Subnet - Address range | Enter *10.0.0.0/24*. |
+    | 이름 | *myVirtualNetwork* |
+    | 주소 공간 | *10.0.0.0/16*. |
+    | 구독 | 이 랩에서 사용할 구독의 이름 |
+    | 리소스 그룹 | **az5000206** |
+    | 지역 | (Asia Pacific) 동남 아시아 |
+    | 서브넷 이름 | *Public* |
+    | 서브넷 주소 범위 | *10.0.0.0/24*. |
 
-1.  Leave the rest of the defaults and select **Create**.
+1.  다른 값은 기본으로 두고 **만들기**를 클릭한다.
 
-#### Task 4: Add subnets to the virtual network
 
-1.  In the portal's search bar, enter *myVirtualNetwork*.
+#### 작업 4: 가상 네트워크에 서브넷 추가
 
-1.  When **myVirtualNetwork** appears in the search results, select it.
+1.  Azure 포털에서 *myVirtualNetwork*를 찾아 클릭한다. 
 
-1.  In **myVirtualNetwork**, under **Settings**, select **Subnets** > **+ Subnet**.
+1.  **설정** 섹션의 **서브넷**을 클릭한다.
 
        ![Screenshot](../Media/Module-2/bbe01f34-8c56-4870-8814-5793e01281d3.png)
 
-1.  In **Add subnet**, enter this information:
+1.  **서브넷 추가**에서 다음 값을 입력한다.
 
-    | Setting | Value |
+    | 설정 | 값 |
     | ------- | ----- |
-    | Name | Enter *Private*. |
-    | Address space | Enter *10.0.1.0/24*. |
+    | 이름 | *Private* |
+    | 주소 범위| *10.0.1.0/24*. |
 
-1.  Leave the rest of the defaults and select **OK**.
+1.  다른 값은 기본으로 두고 **확인**을 클릭한다. 
 
-1.  Select **+ Subnet** again. This time, enter this information:
+1.  **+ 서브넷**을 클릭하고 다음 값으로 서브넷을 추가한다. 
 
-    | Setting | Value |
+    | 설정 | 값 |
     | ------- | ----- |
-    | Name | Enter *DMZ*. |
-    | Address space | Enter *10.0.2.0/24*. |
+    | 이름 | *DMZ* |
+    | 주소 범위 | *10.0.2.0/24*. |
 
-1.  Like the last time, leave the rest of the defaults and select **OK**.
+1.  다른 값은 기본으로 두고 **확인**을 클릭한다. 
 
-    Azure shows the three subnets: **Public**, **Private**, and **DMZ**.
+    **Public**, **Private**, **DMZ**. 서브넷이 생성된 것을 확인한다. 
 
-#### Task 5: Associate myRouteTablePublic to your Public subnet
 
-1.  Select **Public**.
+#### 작업 5: myRouteTablePublic을 서브넷에 연결 
 
-1.  In **Public**, select **Route table** > **MyRouteTablePublic** > **Save**.
+1.  **Public**을 선택한다.
+
+1.  **경로 테이블**에 **MyRouteTablePublic**를 선택하고 **저장**을 클릭한다.
 
        ![Screenshot](../Media/Module-2/977a7e1f-07ff-4813-87f8-cfaf539181d2.png)
+       
 
-#### Task 6: Create an NVA
+#### 작업 6: NVA(네트워크 가상 어플라이언스) 생성
 
-NVAs are VMs that help with network functions like routing and firewall optimization. You can select a different operating system if you want. This tutorial assumes you're using **Windows Server 2016 Datacenter**.
+NVA(네트워크 가상 어플라이언스)는 라우팅이나 방화벽 최적화 등 네트워크 기능을 돕는 가상머신입니다. 필요시 다른 운영 체제를 선택할 수 있습니다. 이 랩은 **Windows Server 2016 Datacenter**를 사용합니다. 
 
-1.  On the upper-left side of the screen, select **Create a resource** > **Compute** > **Windows Server 2016 Datacenter**.
+1.  Azure 포털의 **리소스 만들기** > **새로 만들기**에서 **Windows Server 2016 Datacenter**를 검색하여 클릭한다. 
 
-1.  In **Create a virtual machine - Basics**, enter or select this information:
+1.  **가상 머신 만들기 - 기본 사항** 탭에서 다음 정보를 입력한다. 
 
-    | Setting | Value |
+    | 설정 | 값 |
     | ------- | ----- |
-    | **PROJECT DETAILS** | |
-    | Subscription | Select your subscription. |
-    | Resource group | Select **myResourceGroup** |
-    | **INSTANCE DETAILS** |  |
-    | Virtual machine name | Enter *myVmNva* |
-    | Region | Select **East US**. |
-    | Availability options | Leave the default **No infrastructure redundancy required**. |
-    | Image | Leave the default **Windows Server 2016 Datacenter**. |
-    | Size | Leave the default **Standard DS1 v2**. |
-    | **ADMINISTRATOR ACCOUNT** |  |
-    | Username | Enter a user name of your choosing. |
-    | Password | Pa55w.rd1234|
-    | Confirm Password | Reenter password. |
-    | **INBOUND PORT RULES** |  |
-    | Public inbound ports | Leave the default **None**.
-    | **SAVE MONEY** |  |
-    | Already have a Windows license? | Leave the default **No**. |
+    | **프로젝트 정보** |  |
+    | 구독 | 이 랩에서 사용할 구독의 이름 |
+    | 리소스 그룹 | **az5000206** |
+    | **인스턴스 정보** |  |
+    | 가상 머신 이름 | *myVmNva* |
+    | 지역 | (Asia Pacific) 동남 아시아 |
+    | 가용성 옵션 | **인프라 중복이 필요하지 않습니다** |
+    | 이미지 | **Windows Server 2016 Datacenter** |
+    | 크기 | **Standard DS1 v2** |
+    | **관리자 계정** |  |
+    | 사용자 이름 | Student |
+    | 암호 | Pa55w.rd1234|
+    | **인바운드 포트 규칙** |  |
+    | 공용 인바운드 포트 | 없음 |
+    | **비용 절감** |  |
+    | 이미 Windows Server 라이선스가 있나요 | **아니요** |
 
-1.  Select **Next : Disks**.
+1.  **다음 : 디스크**를 클릭한다.
 
-1.  In **Create a virtual machine - Disks**, select the settings that are right for your needs.
+1.  필요에 맞는 디스크 유형을 선택한다. 
 
-1.  Select **Next : Networking**.
+1.  **다음 : 네트워킹**을 선택한다.
 
-1.  In **Create a virtual machine - Networking**, select this information:
+1.  다음 값을 입력한다.
 
-    | Setting | Value |
+    | 설정 | 값 |
     | ------- | ----- |
-    | Virtual network | Leave the default **myVirtualNetwork**. |
-    | Subnet | Select **DMZ (10.0.2.0/24)**. |
-    | Public IP | Select **None**. You don't need a public IP address. The VM won't connect over the internet.|
+    | 가상 네트워크 | **myVirtualNetwork**. |
+    | 서브넷 | **DMZ (10.0.2.0/24)**. |
+    | 공용 IP | Select **없음**을 선택한다.(가상 머신을 인터넷에 연결하지 않음) |
 
-1.  Leave the rest of the defaults and select **Next : Management**.
+1.  다른 값은 기본으로 두고 **다음 : 관리**를 클릭한다.
 
-1.  In **Create a virtual machine - Management**, for **Diagnostics storage account**, select **Create New**.
+1.  **진단 스토리지 계정**에 **새로 만들기**를 클릭한다.
 
-1.  In **Create storage account**, enter or select this information:
+1.  다음 값을 이용하여 스토리지 계정을 생성한다. 
 
-    | Setting | Value |
+    | 설정 | 값 |
     | ------- | ----- |
-    | Name | Enter *mynvastorageaccount*. |
-    | Account kind | Leave the default **Storage (general purpose v1)**. |
-    | Performance | Leave the default **Standard**. |
-    | Replication | Leave the default **Locally-redundant storage (LRS)**.
+    | 이름 | *az5000206storage* (고유한 값 입력) |
+    | 계정 종류 | **Storage (범용 v1)** |
+    | 성능 | 표준 |
+    | 복제 | Leave the default **LRS(로컬 중복 스토리지)** |
 
-1.  Select **OK**
+1.  **확인**을 클릭한다.
 
-1.  Select **Review + create**. You're taken to the **Review + create** page and Azure validates your configuration.
+1.  **검토 + 만들기**를 클릭한다.
 
-1.  When you see that **Validation passed**, select **Create**.
+1.  유효성 검사에 통과하면 **만들기**를 클릭한다. 
 
-    The VM takes a few minutes to create. Don't keep going until Azure finishes creating the VM. The **Your deployment is underway** page will show you deployment details.
-
-1.  When your VM is ready, select **Go to resource**.
-
-#### Task 7: Turn on IP forwarding
+1.  가상 머신을 배포하는 데 몇 분이 소요된다. 배포가 완료되면 **리소스로 이동**을 클릭한다. 
 
 
-Turn on IP forwarding for *myVmNva*. When Azure sends network traffic to *myVmNva*, if the traffic is destined for a different IP address, IP forwarding will send the traffic to the correct location.
+#### 작업 7: IP 전달 설정
 
+*myVmNva*에 대한 IP 전달을 설정합니다. 만약 *myVmNva*로 다른 IP 주소로 향하는 네트워크 트래픽을 전송하면 IP 전달을 통해 올바른 목적지로 트래픽을 전송합니다. 
 
-1.  On **myVmNva**, under **Settings**, select **Networking**.
+1.  **myVmNva**의 **설정** 섹션에서 **네트워킹**을 클릭한다.
 
-1.  Select **myvmnva123**. That's the network interface Azure created for your VM. It will have a string of numbers to make it unique for you.
+1.  가상 머신의 네트워크 인터페이스로 생성된 **myvmnva123**을 선택한다. myvmnva 뒤의 숫자(123)는 다를 수 있습니다. 
 
-1.  Under **Settings**, select **IP configurations**.
+1.  **설정** 섹션의 **IP 구성**을 선택한다.
 
-1.  On **myvmnva123 - IP configurations**, for **IP forwarding**, select **Enabled** and then select **Save**.
+1.  **IP 전달**을 **사용**으로 선택하고 **저장**을 클릭한다.
 
        ![Screenshot](../Media/Module-2/e9450da2-4761-4cf2-b7bd-2fc53d9f74a5.png)
 
-#### Task 8: Create public and private virtual machines
 
+#### 작업 8: 공용 및 개인 가상 머신 생성
 
-Create a public VM and a private VM in the virtual network. Later, you'll use them to see that Azure routes the *Public* subnet traffic to the *Private* subnet through the NVA.
+가상 네트워크에 공용 및 개인 가상 머신을 생성합니다. 이는 NVA를 통해 공용 서브넷 트래픽을 개인 서브넷으로 전달하는 동작을 확인하기 위해 사용됩니다. 
 
+1.  다음 설정을 사용하여 *작업 6*에서 NVA를 생성한 과정을 두 번 반복한다. (아래 명시된 값을 제외하고 나머지는 *작업 6*과 동일한 설정을 사용)
 
-1.  Complete steps 1-12  of the Create an NVA task. Use most of the same settings. These values are the ones that have to be different:
-
- | Setting | Value |
+ | 설정 | 값 |
  | ------- | ----- |
  | **PUBLIC VM** | |
- | BASICS |  |
- | Virtual machine name | Enter *myVmPublic*. |
- | NETWORKING | |
- | Subnet | Select **Public (10.0.0.0/24)**. |
-| Public IP address | Accept the default. |
-| Public inbound ports | Select **Allow selected ports**. |
-| Select inbound ports | Select **HTTP** and **RDP**. |
-| MANAGEMENT | |
-| Diagnostics storage account | Leave the default **mynvastorageaccount**. |
+ | 기본 사항 |  |
+ | 가상 머신 이름 | *myVmPublic*. |
+ | 네트워킹 | |
+ | 서브넷 | Select **Public (10.0.0.0/24)**. |
+| 공용 IP 주소 | 기본 값 사용 |
+| 공용 인바운드 포트 | 선택한 포트 허용 |
+| 인바운드 포트 선택 | **HTTP**, **RDP** |
+| 관리 | |
+| 진단 스토리지 계정 | **az5000206storage** (앞서 생성한 스토리지 계정 선택) |
 | **PRIVATE VM** | |
-| BASICS |  |
-| Virtual machine name | Enter *myVmPrivate*. |
-| NETWORKING | |
-| Subnet | Select **Private (10.0.1.0/24)**. |
-| Public IP address | Accept the default. |
-| Public inbound ports | Select **Allow selected ports**. |
-| Select inbound ports | Select **HTTP** and **RDP**. |
-| MANAGEMENT | |
-| Diagnostics storage account | Leave the default **mynvastorageaccount**. |
+| 기본 사항 |  |
+| 가상 머신 이름 | Enter *myVmPrivate*. |
+| 네트워킹 | |
+| 서브넷 | **Private (10.0.1.0/24)**. |
+| 공용 IP 주소 | 기본 값 사용 |
+| 공용 인바운드 포트 | 선택한 포트 허용 |
+| 인바운드 포트 선택 | **HTTP**, **RDP** |
+| 관리 | |
+| 진단 스토리지 계정 | **az5000206storage** (앞서 생성한 스토리지 계정 선택 |
 
-You can create the *myVmPrivate* VM while Azure creates the *myVmPublic* VM. Don't continue with the rest of the steps until Azure finishes creating both VMs.
-
-#### Task 9: Route traffic through an NVA
-
-1.  Sign in to myVmPrivate over remote desktop
-
-1.  In the portal's search bar, enter *myVmPrivate*.
-
-1.  When the **myVmPrivate** VM appears in the search results, select it.
-
-1.  Select **Connect** to create a remote desktop connection to the *myVmPrivate* VM.
-
-1.  In **Connect to virtual machine**, select **Download RDP File**. Azure creates a Remote Desktop Protocol (*.rdp*) file and downloads it to your computer.
-
-1.  Open the downloaded *.rdp* file.
-
-    1. If prompted, select **Connect**.
-
-    1. Enter the user name and password you specified when creating the Private VM.
-
-    1. You may need to select **More choices** > **Use a different account**, to use the Private VM credentials.
-
-1.  Select **OK**.
-
-    You may receive a certificate warning during the sign in process.
-
-1.  Select **Yes** to connect to the VM.
-
-#### Task 10: Enable ICMP through the Windows firewall
+*myVmPublic*을 배포하는 동안 *myVmPrivate*을 생성할 수 있습니다. 모든 가상 머신 생성이 완료된 후 다음 단계를 진행하십시오. 
 
 
-In a later step, you'll use the trace route tool to test routing. Trace route uses the Internet Control Message Protocol (ICMP), which the Windows Firewall denies by default. Enable ICMP through the Windows firewall.
+#### 작업 9: NVA를 통해 트래픽 전달
+
+1.  원격 데스크톱 연결을 통해 myVmPrivate에 접속한다. 
+
+1.  포털에서 *myVmPrivate*을 검색하여 클릭한다. 
+
+1.  **연결**을 선택하고 **RDP**를 클릭한다. 
+
+1.  **RDP 파일 다운로드**를 클릭하여 다운로드한다. 
+
+1.  다운로드 된 *.rdp* 파일을 연다. 
+
+    1. 창이 뜨면 **연결**을 클릭한다.
+
+    1. 가상 머신을 생성할 때 설정한 계정 이름과 암호를 이용하여 로그인한다. 
+
+    로그인 과정 중에 인증 경고창이 표시될 수 있습니다. 
 
 
-1.  In the Remote Desktop of *myVmPrivate*, open PowerShell.
+#### 작업 10: Windows 방화벽을 통해 ICMP(Internet Control Message Protocol) 설정
 
-1.  Enter this command:
+나중 단계에서는 경로 추적 도구를 사용하여 라우팅을 테스트합니다. 경로 추적은 Windows 방화벽에서 기본으로 거부하도록 설정된 인터넷 제어 메시지 프로토콜(ICMP)을 사용한다. Windows 방화벽을 통해 ICMP를 사용하도록 설정하십시오.
+
+1.  *myVmPrivate* 원격 데스크톱 세션에서 **PowerShell**을 시작한다. 
+
+1.  다음 명령을 입력한다. 
 
     ```powershell
     New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
     ```
 
-    You're using trace route to test routing in this tutorial. For production environments, we don't recommend allowing ICMP through the Windows Firewall.
-
-#### Task 11: Turn on IP forwarding within myVmNva
+    이 튜토리얼에서는 경로 추적을 사용하여 라우팅을 테스트합니다. 프로덕션 환경에서는 Windows 방화벽을 통해 ICMP를 허용하는 것을 권장하지 않습니다.
 
 
-You turned on IP forwardingfor the VM's network interface using Azure. The VM's operating system also has to forward network traffic. Turn on IP forwarding for *myVmNva* VM's operating system with these commands.
+#### 작업 11: myVmNva에서 IP 전달 설정
 
+Azure를 사용하여 VM의 네트워크 인터페이스에 대해 IP 전달을 설정한 경우, VM의 운영 체제도 네트워크 트래픽을 전달해야 합니다. 다음 명령을 사용하여 *myVmNva* 가상 머신의 운영 체제에 대한 IP 전달을 설정하십시오.
 
-1.  From a command prompt on the *myVmPrivate* VM, open a remote desktop to the *myVmNva* VM:
+1.  *myVmPrivate* 가상 머신의 명령 프롬프트 창에 다음 명령을 입력하여 *myVMNva* 가상 머신에 대한 원격 데스크톱을 실행합니다.
 
     ```cmd
     mstsc /v:myvmnva
     ```
 
-1.  From PowerShell on the *myVmNva*, enter this command to turn on IP forwarding:
+1.  *myVmNva*의 PowerShell에서 다음 명령을 입력하여 IP 전달을 설정한다. 
 
     ```powershell
     Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters -Name IpEnableRouter -Value 1
     ```
 
-1.  Restart the *myVmNva* VM. From the taskbar, select **Start button** > **Power button**, **Other (Planned)** > **Continue**.
+1.  *myVmNva* 가상 머신을 다시 시작한다. (**시작 버튼** > **전원 버튼**, **Other (Planned)** > **Continue**)
 
-    That also disconnects the remote desktop session.
+    해당 작업은 데스크톱 세션을 끊습니다. 
 
-1.  After the *myVmNva* VM restarts, create a remote desktop session to the *myVmPublic* VM. While still connected to the *myVmPrivate* VM, open a command prompt and run this command:
+1.  *myVmNva* 가상 머신을 재시작한 후, *myPublic* 가상 머신에 원격 데스크톱 세션을 생성합니다. *myVmPrivate* 가상 머신에 연결한 채 명령 프롬프트에 다음 명령을 입력한다. 
 
     ```cmd
     mstsc /v:myVmPublic
     ```
-1.  In the Remote Desktop of *myVmPublic*, open PowerShell.
+1.  *myVmPublic* 원격 데스크톱에서 **PowerShell**을 시작한다. 
 
-1.  Enable ICMP through the Windows firewall by entering this command:
+1.  다음 명령을 입력하여 Windows 방화벽을 통한 ICMP를 허용한다. 
 
     ```powershell
     New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
     ```
 
-#### Task 12: Test the routing of network traffic
 
+#### 작업 12: 네트워크 트래픽 전달 테스트
 
-First, let's test routing of network traffic from the *myVmPublic* VM to the *myVmPrivate* VM.
+우선, *myVmPublic* 가상 머신에서 *myVmPrivate* 가상 머신으로 향하는 네트워크 트래픽의 전달을 테스트합니다. 
 
-
-1.  From PowerShell on the *myVmPublic* VM, enter this command:
+1.  *myVmPublic* 가상 머신의 PowerShell에서 다음 명령을 입력한다.
 
     ```powershell
     tracert myVmPrivate
     ```
 
-    The response is similar to this example:
+    아래 결과와 비슷한 응답이 출력된다.
 
     ```powershell
     Tracing route to myVmPrivate.vpgub4nqnocezhjgurw44dnxrc.bx.internal.cloudapp.net [10.0.1.4]
@@ -332,17 +315,17 @@ First, let's test routing of network traffic from the *myVmPublic* VM to the *my
     Trace complete.
     ```
 
-    You can see the first hop is to 10.0.2.4. It's NVA's private IP address. The second hop is to the private IP address of the *myVmPrivate* VM: 10.0.1.4. Earlier, you added the route to the *myRouteTablePublic* route table and associated it to the *Public* subnet. As a result, Azure sent the traffic through the NVA and not directly to the *Private* subnet.
+    첫 번째 홉이 NVA의 개인 IP 주소인 10.0.2.4인 것을 확인할 수 있습니다. 두 번째 홉은 *myVmPrivate* VM의 개인 IP 주소인 10.0.1.4 입니다. 이전 작업에서 *myRouteTablePublic* 경로 테이블에 경로를 추가하고, *Public* 서브넷에 연결한 결과, Azure는 트래픽을 *Private* 서브넷으로 직접 전송하지 않고 NVA를 통해 전송합니다.
 
-1.  Close the remote desktop session to the *myVmPublic* VM, which leaves you still connected to the *myVmPrivate* VM.
+1.  *myVmPublic* 가상 머신의 원격 데스크톱 세션을 종료한다. *myVmPrivate* 가상 머신에 대한 연결은 유지한다.
 
-1.  From a command prompt on the *myVmPrivate* VM, enter this command:
+1.  *myVmPrivate* 가상 머신의 명령 프롬프트 창에 다음 명령을 입력한다. 
 
     ```cmd
     tracert myVmPublic
     ```
 
-    It tests the routing of network traffic from the *myVmPrivate* VM to the *myVmPublic* VM. The response is similar to this example:
+    해당 명령은 *myVmPrivate* 가상 머신에서 *myVmPublic* 가상 머신으로 향하는 네트워크 트래픽 전달을 테스트합니다. 아래 결과와 비슷한 응답이 출력됩니다.
 
     ```cmd
     Tracing route to myVmPublic.vpgub4nqnocezhjgurw44dnxrc.bx.internal.cloudapp.net [10.0.0.4]
@@ -353,17 +336,37 @@ First, let's test routing of network traffic from the *myVmPublic* VM to the *my
     Trace complete.
     ```
 
-    You can see Azure routes traffic directly from the *myVmPrivate* VM to the *myVmPublic* VM. By default, Azure routes traffic directly between subnets.
+    *myVmPrivate* 가상 머신에서 *myVmPublic* 가상 머신으로 트래픽을 직접 라우팅하는 것을 확인할 수 있습니다. 기본적으로 Azure는 서브넷 간 트래픽을 직접 라우팅합니다.
 
-1.  Close the remote desktop session to the *myVmPrivate* VM.
-
-
-| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
-| --- |
-    
+1.  *myVmPrivate* 가상 머신의 원격 데스크톱 세션을 종료한다. 
 
 
-**Results** : You have now completed this lab.
+### 연습 2: 랩 리소스 삭제
 
+#### 작업 1: Cloud Shell 열기
+
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 시작한다.
+
+1. Cloud Shell 인터페이스에서 **Bash**를 선택한다.
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열한다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv
+    ```
+
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인한다. 이 그룹은 다음 작업에서 삭제된다.
+
+#### 작업 2: 리소스 그룹 삭제하기
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제한다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+    ```
+
+1. **Cloud Shell** 명령 프롬프트를 닫는다.
+
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.
 
 
