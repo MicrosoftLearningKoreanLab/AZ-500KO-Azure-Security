@@ -6,10 +6,9 @@ lab:
 
 # 랩: 온-프레미스와 Azure 연결 - VPN 게이트웨이와 터널링
 
-### Exercise 1: Deploy Virtual Appliances and Gateways for intersite connectivity.
+### 연습 1: 사이트간 연결을 위한 가상 어플라이언스 및 게이트웨이 배포
 
-#### Task 1: Deploy a Virtual Appliance.
-
+#### 작업 1: 가상 어플라이언스 배포
 
 In this task you will create a Sophos XG Virtual Appliance which will emulate an on-premises device.  The layout of this is depicted in the digaram below
 

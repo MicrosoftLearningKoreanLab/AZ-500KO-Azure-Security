@@ -6,147 +6,145 @@ lab:
 
 # 랩: 가상 네트워크 피어링
 
-**Scenario**
+**시나리오**
 
-You can connect virtual networks to each other with virtual network peering. These virtual networks can be in the same region or different regions (also known as Global VNet peering). Once virtual networks are peered, resources in both virtual networks are able to communicate with each other, with the same latency and bandwidth as if the resources were in the same virtual network. In this tutorial, you learn how to:
+가상 네트워크 피어링을 통해 가상 네트워크를 서로 연결할 수 있습니다. 이 가상 네트워크는 동일한 리전이나 다른 리전(Global VNet 피어링이라고도 함)에 있을 수 있습니다. 일단 가상 네트워크가 피어링되면, 양쪽 가상 네트워크의 자원은 같은 가상 네트워크에 있는 것과 동일한 지연 시간과 대역폭으로 서로 통신할 수 있습니다. 이 랩은 다음 내용을 포함합니다.
 
-- Create two virtual networks
-- Connect two virtual networks with a virtual network peering
-- Deploy a virtual machine (VM) into each virtual network
-- Communicate between VMs
+- 두 가상 네트워크 생성
+- 가상 네트워크 피어링을 통해 가상 네트워크 간 연결 
+- 각 가상 네트워크에 가상 머신 배포
+- 가상 머신 간 통신
 
 
-#### Exercise 1: Create Virtual Networks and implement Peering.
+#### 연습 1: 가상 네트워크 생성 및 피어링 구현
 
-#### Task 1: Create virtual networks
+#### 작업 1: 가상 네트워크 생성
 
-1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
-2.  Select **Networking**, and then select **Virtual network**.
-3.  Enter, or select, the following information, accept the defaults for the remaining settings, and then select **Create**:
+1.  Azure 포털에서 **+ 리소스 만들기**를 선택한다.
 
-    |Setting|Value|
+2.  **가상 네트워크**를 탐색하여 클릭한다.
+
+3.  **+ 추가**를 클릭하여 다음 값을 입력하고 **만들기**를 클릭한다. 
+
+    |설정|값|
     |---|---|
-    |Name|myVirtualNetwork1|
-    |Address space|10.0.0.0/16|
-    |Subscription| Select your subscription.|
-    |Resource group| Select **Create new** and enter *myResourceGroup*.|
-    |Location| Select **East US**.|
-    |Subnet Name|Subnet1|
-    |Subnet Address range|10.0.0.0/24|
+    |이름|myVirtualNetwork1|
+    |주소 공간|10.0.0.0/16|
+    |구독| 이 랩에서 사용할 구독의 이름 |
+    |리소스 그룹| **새로 만들기** 선택하여 *az5000208* 입력|
+    |지역| **(Asia Pacific) 한국 중부**|
 
+    IP 주소 탭을 선택하여 다음 값을 입력한다. 
 
-4.  Complete steps 1-3 again, with the following changes:
-
-    |Setting|Value|
+    |설정|값|
     |---|---|
-    |Name|myVirtualNetwork2|
-    |Address space|10.1.0.0/16|
-    |Resource group| Select **Use existing** and then select **myResourceGroup**.|
-    |Subnet Address range|10.1.0.0/24|
+    |IPv4 주소 공간|10.0.0.0/16|
+    |서브넷 이름|Subnet1|
+    |서브넷 주소 범위|10.0.0.0/24|
 
-#### Task 2: Peer virtual networks
+4.  1-3 과정을 다음 설정을 이용하여 반복한다.
 
-1.  In the Search box at the top of the Azure portal, begin typing *MyVirtualNetwork1*. When **myVirtualNetwork1** appears in the search results, select it.
-2.  Select **Peerings**, under **SETTINGS**, and then select **+ Add**.
-
-3.  Enter, or select, the following information, accept the defaults for the remaining settings, and then select **OK**.
-
-    |Setting|Value|
+    |설정|값|
     |---|---|
-    |Name|myVirtualNetwork1-myVirtualNetwork2|
-    |Subscription| Select your subscription.|
-    |Virtual network|myVirtualNetwork2 - To select the *myVirtualNetwork2* virtual network, select **Virtual network**, then select **myVirtualNetwork2**. You can select a virtual network in the same region or in a different region.|
-    |Name|myVirtualNetwork2-myVirtualNetwork1|
+    |이름|myVirtualNetwork2|
+    |주소 공간|10.1.0.0/16|
+    |리소스 그룹| **az5000208** |
+    |서브넷 주소 범위|10.1.0.0/24|
 
 
-    The **PEERING STATUS** is *Initiated*, as shown in the following screenshot:
+#### 작업 2: 가상 네트워크 피어링
 
+1.  Azure 포털에서 이전 작업에서 생성한 **myVirtualNetwork1**을 탐색하여 클릭한다.
 
+2.  **설정** 섹션의 **피어링**을 선택하고, **+ 추가**를 클릭한다.
 
-    If you don't see the status, refresh your browser.
+3.  다음 설정을 입력하고 **확인**을 클릭한다. 
 
-    The **PEERING STATUS** is *Connected*. Azure also changed the peering status for the *myVirtualNetwork2-myVirtualNetwork1* peering from *Initiated* to *Connected.* Virtual network peering is not fully established until the peering status for both virtual networks is *Connected.* 
+    |설정|값|
+    |---|---|
+    |이름|myVirtualNetwork1-myVirtualNetwork2|
+    |구독| 이 랩에서 사용할 구독의 이름 |
+    |가상 네트워크|*myVirtualNetwork2* 선택. (같은 리전이나 다른 리전의 가상 네트워크를 선택할 수 있다) |
+    |myVirtualNetwork2에서 myVirtualNetwork1(으)로 피어링 이름|myVirtualNetwork2-myVirtualNetwork1|
+
+    **피어링 상태**가 *시작됨*으로 표시됩니다. 
+    *myVirtualNetwork2-myVirtualNetwork1* 피어링에 대한 피어링 상태가 *시작됨*에서 *연결됨*으로 변경됩니다. 두 가상 네트워크의 피어링 상태가 연결될 때까지 가상 네트워크 피어링이 완전히 설정되지 않습니다.
     
-    
 
-#### Task 3: Create virtual machines
+#### 작업 3: 가상 머신 생성
 
-1.  Select **+ Create a resource** on the upper, left corner of the Azure portal.
-2.  Select **Compute**, and then select **Windows Server 2016 Datacenter**. You can select a different operating system, but the remaining steps assume you selected **Windows Server 2016 Datacenter**. 
-3.  Enter, or select, the following information for **Basics**, accept the defaults for the remaining settings, and then select **Create**:
+1.  Azure 포털에서 **+ 리소스 만들기**를 선택한다.
 
-    |Setting|Value|
+2.  **Windows Server 2016 Datacenter**를 탐색하여 선택한다. 다른 운영체제를 선택할 수 있지만, 이후 작업들은 **Windows Server 2016 Datacenter**을 사용하는 것으로 간주하여 진행된다. 
+
+3.  **기본사항** 탭에 다음 정보를 입력한다. 다른 값은 기본으로 두고 **만들기**를 클릭한다. 
+
+    |설정|값|
     |---|---|
-    |Resource group| Select **myResourceGroup**.|
-    |Name|myVM1|
-    |Region| East US|
-    |User name| localadmin |
-    |Password| Pa55w.rd1234 |
+    |리소스 그룹| **az5000208**|
+    |가상 머신 이름|myVM1|
+    |지역| 동남아시아|
+    |사용자 이름| localadmin |
+    |암호| Pa55w.rd1234 |
        
      ![Screenshot](../Media/Module-2/cb5ebafc-7225-416e-bb48-0643001b8fe8.png)
    
+5.  네트워킹 탭에 다음 값을 설정한다. 
 
-5.  Select the Networking Tab:
-
-    |Setting|Value|
+    |설정|값|
     |---|---|
-    |Virtual network| myVirtualNetwork1 - If it's not already selected, select **Virtual network** and then select **myVirtualNetwork1** under **Choose virtual network**.|
-    |Subnet| Subnet1 - If it's not already selected, select **Subnet** and then select **Subnet1** under **Choose subnet**.|
-    |Public inbound ports| Select **Allow selected ports**|
-    |Select inbound ports| **RDP** |
+    |가상 네트워크| **myVirtualNetwork1** 선택|
+    |서브넷| Subnet1 선택|
+    |공용 인바운드 포트| **선택한 포트 허용**|
+    |인바운드 포트 선택| **RDP** |
 
-
-1.  Select the Management Tab and turn all the radio buttons to **Off**.
+1.  관리탭을 선택하고 모든 버튼을 **끄기**로 설정한다. 
 
      ![Screenshot](../Media/Module-2/4084f585-093d-465a-90b9-ebf85d57fb26.png)
 
-6.  Select **Review + create** and click **Create**.
+6.  **검토 + 만들기**를 선택하고, 유효성 검사를 통과하면 **만들기**를 클릭한다.
 
+1.  다음 설정을 사용하여 위의 과정을 반복한다. (가상 머신을 배포하는 데 몇 분이 소요됩니다. 가상 머신 배포가 완료된 후 다음 작업을 진행하십시오)
 
-1.  Complete the above steps again, with the following changes (The VMs take a few minutes to create. Do not continue with the remaining  steps until both VMs are created.):
-
- |Setting|Value|
+ |설정|값|
  |---|---|
- |Name | myVM2|
- |Virtual network | myVirtualNetwork2|
+ |이름 | myVM2|
+ |가상 네트워크 | myVirtualNetwork2|
 
 
+#### 작업 4: 가상 머신 간 통신
 
+1.  Azure 포털에서 **myVM1**을 탐색하여 선택한다. 
 
-#### Task 4: Communicate between VMs
+2.  *myVm1*에서 **연결**을 클릭하여 RDP 파일을 다운로드 하고, 원격 데스크톱에 접속한다. 
 
-1.  In the *Search* box at the top of the portal, begin typing *myVM1*. When **myVM1** appears in the search results, select it.
-2.  Create a remote desktop connection to the *myVm1* VM by selecting **Connect**.
+4.  **다른 옵션 선택**을 클릭하고, VM 생성 시 설정한 사용자 이름과 암호를 입력하여 인증한다.
 
-3.  To connect to the VM, open the downloaded RDP file. If prompted, select **Connect**.
-4.  Enter the user name and password you specified when creating the VM (you may need to select **More choices**, then **Use a different account**, to specify the credentials you entered when you created the VM), then select **OK**.
-5.  You may receive a certificate warning during the sign-in process. Select **Yes** to proceed with the connection.
-6.  In a later step, ping is used to communicate with the *myVm2* VM from the *myVm1* VM. Ping uses the Internet Control Message Protocol (ICMP), which is denied through the Windows Firewall, by default. On the *myVm1* VM, enable ICMP through the Windows firewall, so that you can ping this VM from *myVm2* in a later step, using PowerShell:
+5.  로그인 과정에서 보안 인증서 경고가 표시될 수 있다. **예**를 클릭하여 연결을 진행한다. 
+
+6.  이후 단계에서 ping은 *myVm1* VM에서 *myVm2* VM과 통신하는 데 사용된다. 핑은 기본적으로 윈도 방화벽을 통해 거부되는 ICMP(인터넷 제어 메시지 프로토콜)를 사용한다. *myVm1* VM의 윈도우즈 방화벽에서 ICMP를 사용하도록 설정하여 PowerShell을 통해 *myVm2*에서 *myVM1*을 ping할 수 있도록 한다. 다음 명령을 *myVM1*의 Powershell에 입력한다. 
 
     ```powershell
     New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
     ```
     
-    Though ping is used to communicate between VMs in this tutorial, allowing ICMP through the Windows Firewall for production deployments is not recommended.
+    이 튜토리얼에서는 VM 간 통신을 위해 ping이 사용되었지만, Windows 방화벽을 통해 ICMP를 허용하는 것은 프로덕션 환경에서 권장되지 않습니다. 
 
-7.  To connect to the *myVm2* VM, enter the following command from a command prompt on the *myVm1* VM:
+7.  *myVm1* VM의 명령 프롬프트에 다음 명령을 입력하여 *myVm2* VM에 연결한다.
 
     ```cli
     mstsc /v:10.1.0.4
     ```
     
-8.  Since you enabled ping on *myVm1*, you can now ping it by IP address:
+8.  *myVM1*에 대한 ping을 허용했기 때문에 IP 주소를 통해 ping 명령을 사용할 수 있다. 
 
     ```cli
     ping 10.0.0.4
     ```
     
-9.  Disconnect your RDP sessions to both *myVM1* and *myVM2*.
+9.  *myVM1*와 *myVM2*에 대한 RDP 세션을 종료한다. 
 
 
-10. Leave all resources running.  You will use them in a later lab.
+**참고**: 이 랩의 모든 리소스는 다음 랩에서 사용될 예정입니다. 
 
-
-
-**Results**: You have now completed this lab.
 

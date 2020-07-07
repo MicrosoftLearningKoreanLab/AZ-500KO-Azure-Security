@@ -8,52 +8,51 @@ lab:
 
 **Scenario**
 
-In this module, you will learn about DNS basics and specifically implementing Azure DNS. In the DNS Basics lesson you will review DNS domains, zones, record types, and resolution methods. In the Azure DNS lesson, we will cover delegation, metrics, alerts, and DNS hosting schemes. 
+이 모듈에서는 DNS 기본 사항과 Azure DNS를 구체적으로 구현하는 방법에 대해 학습합니다. DNS 기본사항에서는 DNS 도메인, 영역, 레코드 유형 및 resolution 방법을 검토하십시오. Azure DNS에서는 위임(delegation), 메트릭, 경고 및 DNS 호스팅 체계를 다룹니다.
 
-**Objectives**
+**목표**
 
-Lessons include:
+이 랩은 다음 내용을 포함합니다.
 
  * Azure DNS Basics
- * Implementing Azure DNS
+ * Azure DNS 구현
 
 
+### 연습 1: DNS 영역
 
-### Exercise 1: DNS Zones
+#### 작업 1: DNS 영역 생성
 
-#### Task 1: Create a DNS zone
+1.  Azure 포털에 로그인한다.
 
-1.  Sign in to the Azure Portal.
-2.  On the Hub menu, click **All services** and search for and select **DNS zone**.
+2.  **DNS 영역**을 탐색하여 클릭한다. 
 
      ![Screenshot](../Media/Module-2/2c8b996d-d6b5-4cfa-9832-55b2479aa5fe.png)
 
-1. Click **+ Add**.
+1. **+ 추가**를 클릭한다.
 
      ![Screenshot](../Media/Module-2/cb81d587-ad5d-45b7-a251-a6743fbf5a8b.png)
 
-4.  On the **Create DNS zone** blade enter the following values, then click **Review + create** and then click **Create**:
+4.  **DNS 영역 만들기** 블레이드에서 다음 값을 사용한 후, **검토 + 만들기**를 클릭한다. 유효성 검사에 통과하면 **만들기**를 클릭한다.
 
-     | **Setting** | **Value** | **Details** |
+     | **설정** | **값** | 
      |------|---|---|
-     |**Subscription**|_**Your subscription**_|Select a subscription to   create the DNS zone in.|
-     |**Resource group**|Create new: **_myResourceGroup_**|Create a resource  group. The resource group name must be unique within the subscription  you selected. 
-     |**Name**|**_see details**_|The name of the DNS zone (yours must be  unique) |
-     |**Location**|East US||
+     | **구독** | **이 랩에서 사용할 구독의 이름** |
+     | **리소스 그룹** | 새로 만들기: **az5000209** |
+     | **이름** | **고유한 이름으로 설정(예시 : krazurelab.com)** |
+     | **리소스 그룹 위치** | 동남아시아|
 
      ![Screenshot](../Media/Module-2/8a6454d2-1b27-4f54-91e8-69c764406c78.png)
 
-### Exercise 2: Manage DNS records and record sets by using the Azure portal
 
+### 연습 2: Azure 포털을 통한 DNS 레코드 및 레코드 셋 관리
 
-This exercise shows you how to manage record sets and records for your DNS zone by using the Azure portal.
+Azure 포털을 사용하여 DNS 레코드와 레코드 셋을 관리하는 방법을 실습합니다.
 
+#### 작업 1: 레코드 세트에 새로운 레코드 추가
 
-#### Task 1: Add a new record to a record set
+1.  Azure 포털에서 이전 작업에서 배포한 DNS 영역을 탐색하여 클릭한다. 
 
-1.  In the Azure Portal, navigate to **All resources** and select your DNS zone you created in the previous task.
-
-    **Note:** Each DNS zone is its own resource, and information such as number of record-sets and name servers are viewable from this view. 
+    **참고:** Each DNS zone is its own resource, and information such as number of record-sets and name servers are viewable from this view. 
 
  
 3.  Click **+ Record Set**.
