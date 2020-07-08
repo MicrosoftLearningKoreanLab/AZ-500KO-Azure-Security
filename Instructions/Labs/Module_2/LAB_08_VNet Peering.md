@@ -122,7 +122,7 @@ lab:
 
 5.  로그인 과정에서 보안 인증서 경고가 표시될 수 있다. **예**를 클릭하여 연결을 진행한다. 
 
-6.  이후 단계에서 ping은 *myVm1* VM에서 *myVm2* VM과 통신하는 데 사용된다. 핑은 기본적으로 윈도 방화벽을 통해 거부되는 ICMP(인터넷 제어 메시지 프로토콜)를 사용한다. *myVm1* VM의 윈도우즈 방화벽에서 ICMP를 사용하도록 설정하여 PowerShell을 통해 *myVm2*에서 *myVM1*을 ping할 수 있도록 한다. 다음 명령을 *myVM1*의 Powershell에 입력한다. 
+6.  이후 단계에서 ping은 *myVm1* VM에서 *myVm2* VM과 통신하는 데 사용된다. ping은 기본적으로 윈도 방화벽을 통해 거부되는 ICMP(인터넷 제어 메시지 프로토콜)를 사용한다. *myVm1* VM의 윈도우즈 방화벽에서 ICMP를 사용하도록 설정하여 PowerShell을 통해 *myVm2*에서 *myVM1*을 ping할 수 있도록 한다. 다음 명령을 *myVM1*의 Powershell에 입력한다. 
 
     ```powershell
     New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4

@@ -4,9 +4,10 @@ lab:
     module: '모듈 02 - 플랫폼 보호'
 ---
 
+
 # 랩: Azure DNS
 
-**Scenario**
+**시나리오**
 
 이 모듈에서는 DNS 기본 사항과 Azure DNS를 구체적으로 구현하는 방법에 대해 학습합니다. DNS 기본사항에서는 DNS 도메인, 영역, 레코드 유형 및 resolution 방법을 검토하십시오. Azure DNS에서는 위임(delegation), 메트릭, 경고 및 DNS 호스팅 체계를 다룹니다.
 
@@ -52,65 +53,88 @@ Azure 포털을 사용하여 DNS 레코드와 레코드 셋을 관리하는 방�
 
 1.  Azure 포털에서 이전 작업에서 배포한 DNS 영역을 탐색하여 클릭한다. 
 
-    **참고:** Each DNS zone is its own resource, and information such as number of record-sets and name servers are viewable from this view. 
+    **참고:** 각 DNS 영역은 자체 자원이며, 이 보기에서 레코드 집합 수, 네임 서버 등의 정보를 볼 수 있습니다.
 
- 
-3.  Click **+ Record Set**.
+3.  **+ 레코드 집합**을 클릭한다.
  
      ![Screenshot](../Media/Module-2/51a2fd36-c2df-468d-91f7-9eb0791dd7ba.png)
 
-4.  Enter **testrecord** for the name and **1.2.3.4** as the IP address and click **OK**.
+4.  이름에 **testrecord**를 입력하고, IP 주소에 **1.2.3.4**를 입력하여 **확인**을 클릭한다.
 
      ![Screenshot](../Media/Module-2/6e491490-0b00-4dda-b0e3-28a3f1784171.png)
 
-#### Task 2: Update a record
 
-1.  In the Overview blade for your DNS zone, select the testrecord you created.
+#### 작업 2: 레코드 업데이트
+
+1.  DNS 영역의 개요 블레이드에서 이전 작업에서 생성한 testrecord를 클릭한다. 
 
       ![Screenshot](../Media/Module-2/8c10684e-05bf-46dd-9d85-599bcd4cb54b.png)
  
-2.  Under IP Address add the test address of **4.3.2.1** and click **Save**.
+2.  IP 주소 아래 **4.3.2.1**을 추가하고 **저장**을 클릭한다.
 
      ![Screenshot](../Media/Module-2/cf207752-7e3b-4b88-9514-c272d5cdd971.png)
  
-#### Task 3: Remove a record from a record set
 
+#### 작업 3: 레코드 집합에서 레코드 제거
 
-You can use the Azure portal to remove records from a record set. Note that removing the last record from a record set does not delete the record set.
+Azure 포털을 사용하여 레코드 세트에서 레코드를 제거할 수 있습니다. 레코드 집합에서 마지막 레코드를 제거해도 레코드 집합은 삭제되지 않는다는 점에 유의하십시오.
 
-
-1.  In the Overview pane for your DNS zone, select the testrecord you created.
+1.  DNS 영역의 개요 블레이드에서 이전 작업에서 생성한 testrecord를 클릭한다. 
 
      ![Screenshot](../Media/Module-2/8c10684e-05bf-46dd-9d85-599bcd4cb54b.png)
 
-2.  Select **Delete** and click **Yes** when prompted.
+2.  **삭제**를 선택하고, 확인 메시지가 뜨면 **예**를 클릭한다. 
 
       ![Screenshot](../Media/Module-2/e841dc4f-440d-4244-a3a8-386d10c65dec.png)
  
+**NS 레코드와 SOA 레코드**
 
-**Work with NS and SOA records**
+자동으로 생성되는 NS 및 SOA 레코드는 다른 레코드 유형과 다르게 관리됩니다. 
 
-NS and SOA records that are automatically created are managed differently from other record types.
+**SOA 레코드 수정**
 
-**Modify SOA records**
+zone apex (name = "\@")에서 자동으로 생성된 SOA 레코드 집합에서 레코드를 추가하거나 제거할 수 없습니다. 그러나 SOA 레코드("Host" 제외) 및 레코드 집합 TTL의 매개변수를 수정할 수 있습니다.
 
-You cannot add or remove records from the automatically created SOA record set at the zone apex (name = "\@"). However, you can modify any of the parameters within the SOA record (except "Host") and the record set TTL.
+**zone apex에서 NS 레코드 수정**
 
-**Modify NS records at the zone apex**
+zone apex에서 설정된 NS 레코드는 각 DNS 영역과 함께 자동으로 생성됩니다. 영역에 할당된 Azure DNS 이름 서버의 이름을 포함합니다.
 
-The NS record set at the zone apex is automatically created with each DNS zone. It contains the names of the Azure DNS name servers assigned to the zone.
+해당 NS 레코드 집합에 이름 서버를 추가하여 둘 이상의 DNS provider가 있는 도메인을 공동 호스팅할 수 있습니다. 이 레코드 집합에 대한 TTL 및 메타데이터도 수정할 수 있습니다. 그러나 미리 입력된 Azure DNS 이름 서버는 제거하거나 수정할 수 없습니다.
 
-You can add additional name servers to this NS record set, to support co-hosting domains with more than one DNS provider. You can also modify the TTL and metadata for this record set. However, you cannot remove or modify the pre-populated Azure DNS name servers.
+이는 zone apex에 있는 NS 레코드 집합에만 적용된다는 점에 유의하십시오. 영역에 있는 다른 NS 레코드 집합(child zones을 위임하는 데 사용)은 제한 없이 수정할 수 있습니다.
 
-Note that this applies only to the NS record set at the zone apex. Other NS record sets in your zone (as used to delegate child zones) can be modified without constraint.
+**SOA 레코드 집합 또는 NS 레코드 집합 삭제**
 
-**Delete SOA or NS record sets**
+영역 생성 시 자동으로 만들어진 zone apex (name = "\@")의 SOA 및 NS 레코드 집합은 삭제할 수 없습니다. 이 레코드 집합은 영역을 삭제하면 자동으로 삭제됩니다. 
 
-You cannot delete the SOA and NS record sets at the zone apex (name = "\@") that are created automatically when the zone is created. They are deleted automatically when you delete the zone.
-
-
-You are then prompted to confirm you are wanting to delete the DNS zone. Deleting a DNS zone also deletes all records that are contained in the zone.
+DNS 영역을 삭제할지 확인하는 메시지가 표시됩니다. DNS 영역을 삭제하면 영역에 포함된 모든 레코드도 삭제됩니다.
 
 
-| WARNING: Prior to continuing you should remove all resources used for this lab.  To do this in the **Azure Portal** click **Resource groups**.  Select any resources groups you have created.  On the resource group blade click **Delete Resource group**, enter the Resource Group Name and click **Delete**.  Repeat the process for any additional Resource Groups you may have created. **Failure to do this may cause issues with other labs.** |
-| --- |
+### 연습 3: 랩 리소스 삭제
+
+#### 작업 1: Cloud Shell 열기
+
+1. Azure 포털 상단에서 **Cloud Shell** 아이콘을 클릭하여 Cloud Shell 창을 엽니다.
+
+1. Cloud Shell 인터페이스에서 **Bash**를 선택합니다.
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 나열합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv
+    ```
+
+1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인합니다. 이 그룹은 다음 작업에서 삭제됩니다.
+
+
+#### 작업 2: 리소스 그룹 삭제하기
+
+1. **Cloud Shell** 명령 프롬프트에서 다음 명령을 입력하고 **Enter**를 눌러 이 랩에서 생성한 모든 리소스 그룹을 삭제합니다.
+
+    ```sh
+    az group list --query "[?starts_with(name,'az500')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+    ```
+
+1. **Cloud Shell** 명령 프롬프트를 닫습니다.
+
+> **결과**: 이 연습을 완료한 후 이 랩에서 사용된 리소스 그룹을 제거했습니다.

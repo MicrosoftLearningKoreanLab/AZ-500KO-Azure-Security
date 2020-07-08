@@ -8,6 +8,7 @@ lab:
 
 Azure Function Apps는 Azure App Service 인프라를 사용합니다. 이 랩에서는 Azure Portal에서 Function App을 만드는 방법을 알아봅니다. Function App은 개별 함수의 실행을 호스팅하는 컨테이너입니다. Function App을 App Service Plan에 만들면 Function App이 App Service의 모든 기능을 사용할 수 있습니다.
 
+
 ### 연습 1: Function과 트리거 생성
 
 #### 작업 1: 랩 설정
@@ -51,6 +52,7 @@ Azure Function Apps는 Azure App Service 인프라를 사용합니다. 이 랩�
 
 PS1 HTTP 트리거가 생성되었습니다.
 
+
 #### 작업 3: HTTP 트리거를 이용하여 REST 호출 테스트
 
 1. Function App 이름을 확인한다. (**function app 아이콘 옆**).
@@ -88,6 +90,7 @@ PS1 HTTP 트리거가 생성되었습니다.
 
 HTTP 트리거를 가지는 Function App을 생성하고 PowerShell 스크립트를 이용하여 Function App을 테스트 해봤습니다.
 
+
 ### 연습 2: 랩 리소스 삭제
 
 #### 작업 1: Cloud Shell 열기
@@ -103,6 +106,7 @@ HTTP 트리거를 가지는 Function App을 생성하고 PowerShell 스크립트
    ```
 
 1. 출력된 결과가 이 랩에서 생성한 리소스 그룹만 포함되어 있는지 확인한다. 이 그룹은 다음 작업에서 삭제된다.
+
 
 #### 작업 2: 리소스 그룹 삭제하기
 
