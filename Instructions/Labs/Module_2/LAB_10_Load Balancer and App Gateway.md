@@ -4,6 +4,7 @@ lab:
     module: '모듈 02 - 플랫폼 보호'
 ---
 
+
 # 랩: 부하 분산 장치
 
 **시나리오**
@@ -209,7 +210,7 @@ lab:
 
 1.  템플릿 블레이드에 다음 설정을 입력한다. 
 
-      - 리소스 그룹:  **myResourceGroupLB**
+      - 리소스 그룹:  **az5000210LB**
       - Admin Username:  **localadmin**
       - Admin Password:  **Pa55w.rd1234**
 
@@ -243,7 +244,7 @@ lab:
 1.  애플리케이션 게이트웨이 만들기 블레이드의 기본 사항에 다음 설정을 입력하고, **다음**을 클릭한다.
 
     - 게이트웨이 이름 : *myAppGateway*
-    - 리소스 그룹 : *myResourceGroupLB* 
+    - 리소스 그룹 : *az5000210LB* 
     - 가상 네트워크 : *myVnet* 
       </br>
     
